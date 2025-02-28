@@ -1,22 +1,33 @@
 require_relative '../../node_modules/react-native/scripts/react_native_pods'
+require_relative '../../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, min_ios_version_supported
+platform :ios, '13.4'
 prepare_react_native_project!
+
+def common_pods
+  pod 'boost', :podspec => '../../node_modules/react-native/third-party-podspecs/boost.podspec'
+  pod 'RCT-Folly', :podspec => '../../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec', :modular_headers => true
+end
 
 target 'widgetoshinoko' do
   config = use_native_modules!
-
   use_react_native!(
-    :path => '../../node_modules/react-native',
-    :hermes_enabled => true,
-    :fabric_enabled => false
+    :path => config[:reactNativePath],
+    :hermes_enabled => false
   )
-end
 
-post_install do |installer|
-  react_native_post_install(
-    installer,
-    '../../node_modules/react-native',
-    :mac_catalyst_enabled => false
-  )
+  common_pods()
+  
+  pod 'react-native-safe-area-context', :path => '../../node_modules/react-native-safe-area-context'
+
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['ENABLE_USER_SCRIPT_SANDBOXING'] = 'NO'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.4'
+        config.build_settings['HEADER_SEARCH_PATHS'] = ['$(inherited)', '/opt/homebrew/opt/boost/include']
+        config.build_settings['LIBRARY_SEARCH_PATHS'] = ['$(inherited)', '/opt/homebrew/opt/boost/lib']
+      end
+    end
+  end
 end
