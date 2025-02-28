@@ -1,46 +1,14 @@
-require_relative '../../node_modules/react-native/scripts/react_native_pods'
-require_relative '../../node_modules/@react-native-community/cli-platform-ios/native_modules'
-
-platform :ios, '12.4'
-install! 'cocoapods', :deterministic_uuids => false
-
-# boostのソースを変更
-def pod_from_jfrog(name, version)
-  url = "https://boostorg.jfrog.io/artifactory/main/release/#{version}/source/#{name}_#{version.gsub('.','_')}.tar.bz2"
-  Pod::Downloader::Request.new(:url => url, :type => :tgz)
-end
-
-pod 'boost', :podspec => '../../node_modules/react-native/third-party-podspecs/boost.podspec' do |p|
-  p.source = pod_from_jfrog("boost", "1.87.0")
-end
+platform :ios, '18.2'
+use_frameworks!
 
 target 'widgetoshinoko' do
-  config = use_native_modules!
-
-  # Flags change depending on the env values.
-  flags = get_default_flags()
-
-  use_react_native!(
-    :path => config[:reactNativePath],
-    # to enable hermes on iOS, change `false` to `true` and then install pods
-    :hermes_enabled => flags[:hermes_enabled],
-    :fabric_enabled => flags[:fabric_enabled],
-    # An absolute path to your application root.
-    :app_path => "#{Pod::Config.instance.installation_root}/.."
-  )
-
-  pod 'RNVectorIcons', :path => '../../node_modules/react-native-vector-icons'
+  # 必要なPodがあれば追加
 
   target 'widgetoshinokoTests' do
-    inherit! :complete
-    # Pods for testing
+    inherit! :search_paths
   end
 
-  # Flipperを無効化
-  # use_flipper!()
-
-  post_install do |installer|
-    react_native_post_install(installer)
-    __apply_Xcode_12_5_M1_post_install_workaround(installer)
+  target 'widgetoshinokoUITests' do
+    inherit! :search_paths
   end
 end
