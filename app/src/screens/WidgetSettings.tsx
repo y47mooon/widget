@@ -1,33 +1,35 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, View, Text, StyleSheet, useColorScheme } from 'react-native';
-import { SettingItem } from '../components/SettingItem';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
 import { useWidgetSettings } from '../hooks/useWidgetSettings';
+import SettingItem from '../components/SettingItem';
 
-export const WidgetSettings: React.FC = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+export const WidgetSettings = () => {
   const { settings, updateSetting } = useWidgetSettings();
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View style={styles.header}>
-          <Text style={styles.title}>Widget Settings</Text>
-        </View>
-        
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Display Options</Text>
-          <SettingItem
-            label="Enable Dark Mode"
-            value={settings.isDarkMode}
-            onValueChange={(value) => updateSetting('isDarkMode', value)}
-          />
-          <SettingItem
-            label="Enable Notifications"
-            value={settings.isNotificationEnabled}
-            onValueChange={(value) => updateSetting('isNotificationEnabled', value)}
-          />
-        </View>
-      </ScrollView>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Widget Settings</Text>
+      </View>
+      
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Display Options</Text>
+        <SettingItem
+          label="Dark Mode"
+          value={settings.isDarkMode}
+          onValueChange={(value) => updateSetting('isDarkMode', value)}
+        />
+        <SettingItem
+          label="Notifications"
+          value={settings.isNotificationEnabled}
+          onValueChange={(value) => updateSetting('isNotificationEnabled', value)}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -40,9 +42,9 @@ const styles = StyleSheet.create({
   header: {
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: '#e1e1e1',
   },
-  title: {
+  headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
   },
@@ -55,3 +57,5 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 });
+
+export default WidgetSettings;

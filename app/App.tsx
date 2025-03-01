@@ -9,22 +9,24 @@
  */
 
 import React from 'react';
-import { StatusBar, useColorScheme } from 'react-native';
-import { WidgetSettings } from './src/screens/WidgetSettings';
-import { useWidgetSettings } from './src/hooks/useWidgetSettings';
+import {
+  SafeAreaView,
+  StatusBar,
+  useColorScheme,
+} from 'react-native';
+import WidgetSettings from './src/screens/WidgetSettings';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const { settings, updateSetting } = useWidgetSettings();
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={isDarkMode ? '#000' : '#fff'}
+        backgroundColor={isDarkMode ? '#000000' : '#ffffff'}
       />
       <WidgetSettings />
-    </>
+    </SafeAreaView>
   );
 };
 

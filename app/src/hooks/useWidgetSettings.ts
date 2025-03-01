@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import WidgetDataManager from '../native/WidgetDataManager';
 
 export type WidgetSettings = {
   isDarkMode: boolean;
@@ -12,17 +13,39 @@ export const useWidgetSettings = () => {
     isNotificationEnabled: false,
   });
 
-  const updateSetting = useCallback(<K extends keyof WidgetSettings>(
-    key: K,
-    value: WidgetSettings[K]
-  ) => {
-    setSettings(prev => ({
-      ...prev,
-      [key]: value,
-    }));
-    // TODO: 設定を永続化する処理を追加
-    // AsyncStorageなどを使用して保存
+  // 初期設定を読み込む
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const savedSettings = await WidgetDataManager.getWidgetData();
+        setSettings(savedSettings);
+      } catch (error) {
+        console.error('Failed to load widget settings:', error);
+      }
+    };
+
+    loadSettings();
   }, []);
+
+  // 設定を更新する
+  const updateSetting = useCallback(async (
+    key: keyof WidgetSettings,
+    value: boolean
+  ) => {
+    try {
+      const newSettings = {
+        ...settings,
+        [key]: value,
+      };
+      
+      await WidgetDataManager.setWidgetData(newSettings);
+      setSettings(newSettings);
+      return true;
+    } catch (error) {
+      console.error('Failed to update widget settings:', error);
+      return false;
+    }
+  }, [settings]);
 
   return {
     settings,
