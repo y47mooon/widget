@@ -70,13 +70,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		CA9F1E542D744A6400BB4695 /* Exceptions for "widgetoshinoko" folder in "widgetoshinoko" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = CAFFCD0D2D6F0639009D794D /* widgetoshinoko */;
-		};
 		CAFFCD562D6F0707009D794D /* Exceptions for "gaudyoshinoko" folder in "gaudyoshinokoExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -89,9 +82,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CAFFCD102D6F0639009D794D /* widgetoshinoko */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				CA9F1E542D744A6400BB4695 /* Exceptions for "widgetoshinoko" folder in "widgetoshinoko" target */,
-			);
 			path = widgetoshinoko;
 			sourceTree = "<group>";
 		};

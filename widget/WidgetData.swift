@@ -52,6 +52,33 @@ enum WidgetStyle: String, Codable, CaseIterable {
     }
 }
 
+// 新しいモデルを追加
+struct HomeScreenItem: Identifiable, Codable {
+    var id = UUID()
+    var imageName: String
+    var title: String
+    var position: CGPoint
+    var size: CGSize
+    var isWidget: Bool
+    var widgetType: WidgetType?
+    
+    enum WidgetType: String, Codable, CaseIterable {
+        case calendar
+        case clock
+        case photo
+        case music
+        case custom
+    }
+}
+
+struct HomeScreenTheme: Identifiable, Codable {
+    var id = UUID()
+    var name: String
+    var backgroundImageName: String
+    var textColor: String
+    var isSelected: Bool
+}
+
 struct WidgetData: Codable {
     var userName: String
     var points: Int
@@ -60,6 +87,8 @@ struct WidgetData: Codable {
     var style: WidgetStyle
     var showPoints: Bool
     var showDate: Bool
+    var homeScreenItems: [HomeScreenItem]
+    var homeScreenThemes: [HomeScreenTheme]
     
     static let defaultData = WidgetData(
         userName: "ゲスト",
@@ -68,6 +97,12 @@ struct WidgetData: Codable {
         theme: .light,
         style: .standard,
         showPoints: true,
-        showDate: true
+        showDate: true,
+        homeScreenItems: [],
+        homeScreenThemes: [
+            HomeScreenTheme(name: "ピンク", backgroundImageName: "bg_pink", textColor: "#000000", isSelected: true),
+            HomeScreenTheme(name: "ダーク", backgroundImageName: "bg_dark", textColor: "#FFFFFF", isSelected: false),
+            HomeScreenTheme(name: "ブルー", backgroundImageName: "bg_blue", textColor: "#000000", isSelected: false)
+        ]
     )
 } 

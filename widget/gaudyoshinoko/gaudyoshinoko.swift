@@ -8,6 +8,52 @@
 import WidgetKit
 import SwiftUI
 
+// CustomWidgetConfigの定義
+struct CustomWidgetConfig: Codable, Identifiable {
+    var id = UUID()
+    var name: String
+    var backgroundColor: String // HEX形式の色コード
+    var textColor: String // HEX形式の色コード
+    var imageName: String?
+    var text: String
+    var fontSize: Double
+    var showBorder: Bool
+    var borderColor: String
+    var cornerRadius: Double
+    
+    static let defaultConfig = CustomWidgetConfig(
+        name: "マイウィジェット",
+        backgroundColor: "#FFFFFF",
+        textColor: "#000000",
+        imageName: nil,
+        text: "カスタムテキスト",
+        fontSize: 16.0,
+        showBorder: true,
+        borderColor: "#CCCCCC",
+        cornerRadius: 12.0
+    )
+}
+
+// Color拡張を追加
+extension Color {
+    init?(hex: String) {
+        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+
+        var rgb: UInt64 = 0
+
+        guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else {
+            return nil
+        }
+
+        self.init(
+            red: Double((rgb & 0xFF0000) >> 16) / 255.0,
+            green: Double((rgb & 0x00FF00) >> 8) / 255.0,
+            blue: Double(rgb & 0x0000FF) / 255.0
+        )
+    }
+}
+
 enum WidgetTheme: String, Codable, CaseIterable {
     case light
     case dark
@@ -48,6 +94,7 @@ struct WidgetData: Codable {
     var style: WidgetStyle
     var showPoints: Bool
     var showDate: Bool
+    var customWidgets: [CustomWidgetConfig]
     
     static let defaultData = WidgetData(
         userName: "ゲスト",
@@ -56,7 +103,8 @@ struct WidgetData: Codable {
         theme: .light,
         style: .standard,
         showPoints: true,
-        showDate: true
+        showDate: true,
+        customWidgets: []
     )
 }
 
@@ -108,26 +156,223 @@ struct gaudyoshinokoEntryView : View {
     @Environment(\.widgetFamily) var family
 
     var body: some View {
+        switch entry.widgetData.style {
+        case .standard:
+            standardWidget
+        case .minimal:
+            minimalWidget
+        case .fancy:
+            fancyWidget
+        case .calendar:
+            calendarWidget
+        }
+        
+        // カスタムウィジェットを表示する場合
+        if !entry.widgetData.customWidgets.isEmpty,
+           let firstCustomWidget = entry.widgetData.customWidgets.first {
+            customWidgetView(config: firstCustomWidget)
+        }
+    }
+    
+    // スタンダードスタイル
+    var standardWidget: some View {
         ZStack {
-            Color(UIColor.systemBackground)
+            entry.widgetData.theme.backgroundColor
             
             VStack(alignment: .leading, spacing: 8) {
-                Text(entry.widgetData.userName)
-                    .font(.headline)
-                    .foregroundColor(.primary)
+                HStack {
+                    Text(entry.widgetData.userName)
+                        .font(.headline)
+                        .foregroundColor(entry.widgetData.theme.textColor)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "star.fill")
+                        .foregroundColor(.yellow)
+                }
                 
-                Text("\(entry.widgetData.points) pt")
-                    .font(.title)
-                    .foregroundColor(.blue)
+                if entry.widgetData.showPoints {
+                    Text("\(entry.widgetData.points) pt")
+                        .font(.title)
+                        .foregroundColor(.blue)
+                        .padding(.top, 4)
+                }
                 
                 Spacer()
                 
-                Text("更新: \(entry.widgetData.lastUpdated, style: .time)")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                if entry.widgetData.showDate {
+                    Text("更新: \(entry.widgetData.lastUpdated, style: .time)")
+                        .font(.caption)
+                        .foregroundColor(entry.widgetData.theme.textColor.opacity(0.7))
+                }
             }
             .padding()
         }
+    }
+    
+    // ミニマルスタイル
+    var minimalWidget: some View {
+        ZStack {
+            entry.widgetData.theme.backgroundColor
+            
+            VStack(spacing: 4) {
+                Text(entry.widgetData.userName)
+                    .font(.caption)
+                    .foregroundColor(entry.widgetData.theme.textColor)
+                
+                if entry.widgetData.showPoints {
+                    Text("\(entry.widgetData.points)")
+                        .font(.system(size: 32, weight: .bold))
+                        .foregroundColor(entry.widgetData.theme.textColor)
+                }
+                
+                if entry.widgetData.showDate {
+                    Text(entry.widgetData.lastUpdated, style: .time)
+                        .font(.caption2)
+                        .foregroundColor(entry.widgetData.theme.textColor.opacity(0.7))
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+    
+    // ファンシースタイル
+    var fancyWidget: some View {
+        ZStack {
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    entry.widgetData.theme.backgroundColor,
+                    entry.widgetData.theme == .light ? Color.blue.opacity(0.3) : Color.purple.opacity(0.5)
+                ]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            
+            VStack {
+                HStack {
+                    Image(systemName: "sparkles")
+                        .foregroundColor(.yellow)
+                    
+                    Text(entry.widgetData.userName)
+                        .font(.headline)
+                        .foregroundColor(entry.widgetData.theme.textColor)
+                    
+                    Image(systemName: "sparkles")
+                        .foregroundColor(.yellow)
+                }
+                
+                if entry.widgetData.showPoints {
+                    Text("\(entry.widgetData.points)")
+                        .font(.system(size: 36, weight: .bold))
+                        .foregroundColor(entry.widgetData.theme.textColor)
+                        .shadow(color: .black.opacity(0.2), radius: 1, x: 1, y: 1)
+                    
+                    Text("ポイント")
+                        .font(.caption)
+                        .foregroundColor(entry.widgetData.theme.textColor.opacity(0.8))
+                }
+                
+                if entry.widgetData.showDate {
+                    Text(entry.widgetData.lastUpdated, style: .date)
+                        .font(.caption2)
+                        .foregroundColor(entry.widgetData.theme.textColor.opacity(0.7))
+                }
+            }
+            .padding()
+        }
+    }
+    
+    // カレンダースタイル
+    var calendarWidget: some View {
+        ZStack {
+            entry.widgetData.theme.backgroundColor
+            
+            VStack(spacing: 0) {
+                // カレンダーヘッダー
+                HStack {
+                    Text(monthString(from: entry.date))
+                        .font(.caption)
+                        .foregroundColor(entry.widgetData.theme.textColor)
+                    
+                    Spacer()
+                    
+                    Text(entry.widgetData.userName)
+                        .font(.caption)
+                        .foregroundColor(entry.widgetData.theme.textColor)
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(Color.blue.opacity(0.2))
+                
+                // 日付
+                Text("\(dayNumber(from: entry.date))")
+                    .font(.system(size: 42, weight: .bold))
+                    .foregroundColor(entry.widgetData.theme.textColor)
+                    .padding(.vertical, 8)
+                
+                // ポイント
+                if entry.widgetData.showPoints {
+                    HStack {
+                        Text("ポイント:")
+                            .font(.caption)
+                            .foregroundColor(entry.widgetData.theme.textColor.opacity(0.8))
+                        
+                        Spacer()
+                        
+                        Text("\(entry.widgetData.points)")
+                            .font(.headline)
+                            .foregroundColor(.blue)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(Color.gray.opacity(0.1))
+                }
+            }
+        }
+    }
+    
+    // 日付フォーマット用ヘルパー関数
+    func monthString(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy年MM月"
+        return formatter.string(from: date)
+    }
+    
+    func dayNumber(from date: Date) -> Int {
+        return Calendar.current.component(.day, from: date)
+    }
+    
+    // カスタムウィジェット表示
+    func customWidgetView(config: CustomWidgetConfig) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: config.cornerRadius)
+                .fill(Color(hex: config.backgroundColor) ?? .white)
+                .overlay(
+                    RoundedRectangle(cornerRadius: config.cornerRadius)
+                        .stroke(config.showBorder ? Color(hex: config.borderColor) ?? .gray : Color.clear, lineWidth: 2)
+                )
+            
+            VStack {
+                if let imageName = config.imageName, let uiImage = loadImageFromDisk(named: imageName) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 60)
+                }
+                
+                Text(config.text)
+                    .font(.system(size: config.fontSize))
+                    .foregroundColor(Color(hex: config.textColor) ?? .black)
+                    .padding(.top, 4)
+            }
+            .padding()
+        }
+    }
+    
+    private func loadImageFromDisk(named: String) -> UIImage? {
+        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let imageURL = documentDirectory.appendingPathComponent("\(named).jpg")
+        return UIImage(contentsOfFile: imageURL.path)
     }
 }
 
@@ -153,7 +398,8 @@ struct gaudyoshinoko_Previews: PreviewProvider {
             theme: .light,
             style: .standard,
             showPoints: true,
-            showDate: true
+            showDate: true,
+            customWidgets: []
         )
         gaudyoshinokoEntryView(entry: SimpleEntry(date: Date(), widgetData: sampleData))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
