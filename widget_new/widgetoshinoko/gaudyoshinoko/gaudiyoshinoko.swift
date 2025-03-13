@@ -24,7 +24,7 @@ struct SimpleEntry: TimelineEntry {
     let configuration: ConfigurationAppIntent
 }
 
-struct gaudyoshinokoEntryView : View {
+struct gaudiyoshinokoEntryView : View {
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
 
@@ -63,12 +63,12 @@ struct gaudyoshinokoEntryView : View {
     }
 }
 
-struct gaudyoshinoko: Widget {
-    let kind: String = "gaudyoshinoko"
+struct gaudiyoshinoko: Widget {
+    let kind: String = "gaudiyoshinoko"
 
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
-            gaudyoshinokoEntryView(entry: entry)
+            gaudiyoshinokoEntryView(entry: entry)
                 .containerBackground(.clear, for: .widget)
                 .padding(-20)
         }

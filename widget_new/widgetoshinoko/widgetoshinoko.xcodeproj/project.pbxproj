@@ -10,6 +10,8 @@
 		CA49F3092D747E780021F472 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA49F3082D747E780021F472 /* WidgetKit.framework */; };
 		CA49F30B2D747E780021F472 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA49F30A2D747E780021F472 /* SwiftUI.framework */; };
 		CA49F31C2D747E7A0021F472 /* gaudyoshinokoExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA49F3062D747E780021F472 /* gaudyoshinokoExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CAB05BA82D82D9B4000CFE6C /* SwiftUI.framework in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA49F30A2D747E780021F472 /* SwiftUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CAB05BA92D82D9C3000CFE6C /* WidgetKit.framework in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA49F3082D747E780021F472 /* WidgetKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				CAB05BA92D82D9C3000CFE6C /* WidgetKit.framework in Embed Foundation Extensions */,
+				CAB05BA82D82D9B4000CFE6C /* SwiftUI.framework in Embed Foundation Extensions */,
 				CA49F31C2D747E7A0021F472 /* gaudyoshinokoExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -521,7 +525,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = widgetoshinoko/widgetoshinoko.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -541,7 +544,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinoko;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudiy.widgetoshinoko;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -554,7 +557,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = widgetoshinoko/widgetoshinoko.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -574,7 +576,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinoko;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudiy.widgetoshinoko;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -592,7 +594,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinokoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudiy.widgetoshinokoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -611,7 +613,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinokoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudiy.widgetoshinokoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -628,7 +630,7 @@
 				DEVELOPMENT_TEAM = 5SKZVB6NZF;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinokoUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudiy.widgetoshinokoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -645,7 +647,7 @@
 				DEVELOPMENT_TEAM = 5SKZVB6NZF;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinokoUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudiy.widgetoshinokoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -673,7 +675,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinoko.gaudyoshinoko;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudiy.widgetoshinoko.gaudiyoshinoko;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -701,7 +703,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinoko.gaudyoshinoko;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudiy.widgetoshinoko.gaudiyoshinoko;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;

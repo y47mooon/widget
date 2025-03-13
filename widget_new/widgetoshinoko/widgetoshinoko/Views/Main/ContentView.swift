@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedTab: Int = 0
+    @State private var selectedTab = 0
     @State private var selectedCategory = 0
     @State private var showCreateMenu = false
     @State private var selectedCreationType: WidgetCreationType?
@@ -22,23 +22,11 @@ struct ContentView: View {
             MainContentView(selectedCategory: $selectedCategory, 
                           categories: categories, 
                           filterTags: filterTags)
-                .tabItem {
-                    VStack {
-                        Image(systemName: "house.fill")
-                        Text("ホーム")
-                    }
-                }
-                .tag(0)
-            
-            // 検索タブ
-            SearchView()
-                .tabItem {
-                    VStack {
-                        Image(systemName: "magnifyingglass")
-                        Text("検索")
-                    }
-                }
-                .tag(1)
+            .tabItem {
+                Image(systemName: "house")
+                Text("ホーム")
+            }
+            .tag(0)
             
             // 作成タブ
             Button(action: { showCreateMenu = true }) {
@@ -46,37 +34,19 @@ struct ContentView: View {
                 Text("作成")
             }
             .tabItem {
-                VStack {
-                    Image(systemName: "plus.circle.fill")
-                    Text("作成")
-                }
+                Image(systemName: "plus.circle")
+                Text("作成")
             }
-            .tag(2)
-            
-            // お気に入りタブ
-            FavoritesView()
-                .tabItem {
-                    VStack {
-                        Image(systemName: "heart.fill")
-                        Text("お気に入り")
-                    }
-                }
-                .tag(3)
+            .tag(1)
             
             // 設定タブ
             Text("設定")
                 .tabItem {
-                    VStack {
-                        Image(systemName: "gearshape.fill")
-                        Text("設定")
-                    }
+                    Image(systemName: "gear")
+                    Text("設定")
                 }
-                .tag(4)
+                .tag(2)
         }
-        .accentColor(.pink)
-        .tint(.pink)
-        .edgesIgnoringSafeArea(.bottom)
-        .preferredColorScheme(.light)
         .fullScreenCover(isPresented: $showCreateMenu) {
             CreateMenuView(isPresented: $showCreateMenu, 
                          selectedCreationType: $selectedCreationType)

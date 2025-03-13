@@ -1,6 +1,6 @@
 //
-//  gaudyoshinokoLiveActivity.swift
-//  gaudyoshinoko
+//  gaudiyoshinokoLiveActivity.swift
+//  gaudiyoshinoko
 //
 //  Created by ゆぅ on 2025/03/02.
 //
@@ -9,7 +9,7 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-struct gaudyoshinokoAttributes: ActivityAttributes {
+struct gaudiyoshinokoAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
         var emoji: String
@@ -19,9 +19,9 @@ struct gaudyoshinokoAttributes: ActivityAttributes {
     var name: String
 }
 
-struct gaudyoshinokoLiveActivity: Widget {
+struct gaudiyoshinokoLiveActivity: Widget {
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: gaudyoshinokoAttributes.self) { context in
+        ActivityConfiguration(for: gaudiyoshinokoAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack {
                 Text("Hello \(context.state.emoji)")
@@ -56,25 +56,25 @@ struct gaudyoshinokoLiveActivity: Widget {
     }
 }
 
-extension gaudyoshinokoAttributes {
-    fileprivate static var preview: gaudyoshinokoAttributes {
-        gaudyoshinokoAttributes(name: "World")
+extension gaudiyoshinokoAttributes {
+    fileprivate static var preview: gaudiyoshinokoAttributes {
+        gaudiyoshinokoAttributes(name: "World")
     }
 }
 
-extension gaudyoshinokoAttributes.ContentState {
-    fileprivate static var smiley: gaudyoshinokoAttributes.ContentState {
-        gaudyoshinokoAttributes.ContentState(emoji: "😀")
+extension gaudiyoshinokoAttributes.ContentState {
+    fileprivate static var smiley: gaudiyoshinokoAttributes.ContentState {
+        gaudiyoshinokoAttributes.ContentState(emoji: "😀")
      }
      
-     fileprivate static var starEyes: gaudyoshinokoAttributes.ContentState {
-         gaudyoshinokoAttributes.ContentState(emoji: "🤩")
+     fileprivate static var starEyes: gaudiyoshinokoAttributes.ContentState {
+         gaudiyoshinokoAttributes.ContentState(emoji: "🤩")
      }
 }
 
-#Preview("Notification", as: .content, using: gaudyoshinokoAttributes.preview) {
-   gaudyoshinokoLiveActivity()
+#Preview("Notification", as: .content, using: gaudiyoshinokoAttributes.preview) {
+   gaudiyoshinokoLiveActivity()
 } contentStates: {
-    gaudyoshinokoAttributes.ContentState.smiley
-    gaudyoshinokoAttributes.ContentState.starEyes
+    gaudiyoshinokoAttributes.ContentState.smiley
+    gaudiyoshinokoAttributes.ContentState.starEyes
 }

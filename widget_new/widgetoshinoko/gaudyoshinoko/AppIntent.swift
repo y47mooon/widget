@@ -1,6 +1,6 @@
 //
 //  AppIntent.swift
-//  gaudyoshinoko
+//  gaudiyoshinoko
 //
 //  Created by ゆぅ on 2025/03/02.
 //
