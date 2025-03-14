@@ -1,6 +1,6 @@
 //
-//  gaudyoshinokoControl.swift
-//  gaudyoshinoko
+//  gaudiyoshinokoControl.swift
+//  gaudiyoshinoko
 //
 //  Created by ゆぅ on 2025/03/02.
 //
@@ -9,8 +9,8 @@ import AppIntents
 import SwiftUI
 import WidgetKit
 
-struct gaudyoshinokoControl: ControlWidget {
-    static let kind: String = "gaudy.widgetoshinoko.gaudyoshinoko"
+struct gaudiyoshinokoControl: ControlWidget {
+    static let kind: String = "gaudiy.widgetoshinoko.gaudiyoshinoko"
 
     var body: some ControlWidgetConfiguration {
         AppIntentControlConfiguration(
@@ -30,7 +30,7 @@ struct gaudyoshinokoControl: ControlWidget {
     }
 }
 
-extension gaudyoshinokoControl {
+extension gaudiyoshinokoControl {
     struct Value {
         var isRunning: Bool
         var name: String
@@ -38,12 +38,12 @@ extension gaudyoshinokoControl {
 
     struct Provider: AppIntentControlValueProvider {
         func previewValue(configuration: TimerConfiguration) -> Value {
-            gaudyoshinokoControl.Value(isRunning: false, name: configuration.timerName)
+            gaudiyoshinokoControl.Value(isRunning: false, name: configuration.timerName)
         }
 
         func currentValue(configuration: TimerConfiguration) async throws -> Value {
             let isRunning = true // Check if the timer is running
-            return gaudyoshinokoControl.Value(isRunning: isRunning, name: configuration.timerName)
+            return gaudiyoshinokoControl.Value(isRunning: isRunning, name: configuration.timerName)
         }
     }
 }
