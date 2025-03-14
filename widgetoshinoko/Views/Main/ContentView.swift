@@ -7,64 +7,107 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @State private var selectedTab = 0
-    @State private var selectedCategory = 0
-    @State private var showCreateMenu = false
-    @State private var selectedCreationType: WidgetCreationType?
-    
-    let categories = ["全て", "テンプレート", "ウィジェット", "アイコン", "壁紙", "ロック画面"]
-    let filterTags = ["おしゃれ", "シンプル", "白", "モノクロ", "かわいい", "きれい"]
+struct CustomTabItem: View {
+    let imageName: String
+    let text: String
+    let isSelected: Bool
     
     var body: some View {
-        TabView(selection: $selectedTab) {
-            // ホームタブ
-            MainContentView(selectedCategory: $selectedCategory, 
-                          categories: categories, 
-                          filterTags: filterTags)
-            .tabItem {
-                Image(systemName: "house")
-                Text("ホーム")
+        VStack {
+            Image(systemName: imageName)
+                .font(.system(size: 24))
+            if isSelected {
+                Text(text)
+                    .font(.system(size: 10))
             }
-            .tag(0)
-            
-            // 作成タブ
-            Button(action: { showCreateMenu = true }) {
-                Image(systemName: "plus.circle.fill")
-                Text("作成")
-            }
-            .tabItem {
-                Image(systemName: "plus.circle")
-                Text("作成")
-            }
-            .tag(1)
-            
-            // 設定タブ
-            Text("設定")
+        }
+    }
+}
+
+struct ContentView: View {
+    @State private var selectedTab: Int = 0
+    @State private var showingCreateMenu = false
+    @State private var selectedCreationType: WidgetCreationType?
+    @State private var selectedCategory: Int = 0
+    @State private var previousTab: Int = 0
+    
+    var body: some View {
+        ZStack {
+            TabView(selection: $selectedTab) {
+                MainContentView(
+                    selectedCategory: $selectedCategory,
+                    categories: AppConstants.categories,
+                    filterTags: AppConstants.topFilterTags
+                )
                 .tabItem {
-                    Image(systemName: "gear")
-                    Text("設定")
+                    CustomTabItem(
+                        imageName: "house.fill",
+                        text: "ホーム",
+                        isSelected: selectedTab == 0
+                    )
                 }
-                .tag(2)
+                .tag(0)
+                
+                SearchView()
+                    .tabItem {
+                        CustomTabItem(
+                            imageName: "magnifyingglass",
+                            text: "検索",
+                            isSelected: selectedTab == 1
+                        )
+                    }
+                    .tag(1)
+                
+                Color.clear
+                    .tabItem {
+                        Image(systemName: "plus.circle.fill")
+                            .environment(\.symbolVariants, .fill)
+                        Text("作成")
+                    }
+                    .tag(2)
+                
+                FavoritesView()
+                    .tabItem {
+                        CustomTabItem(
+                            imageName: "heart.fill",
+                            text: "お気に入り",
+                            isSelected: selectedTab == 3
+                        )
+                    }
+                    .tag(3)
+                
+                MyPageView()
+                    .tabItem {
+                        CustomTabItem(
+                            imageName: "person.fill",
+                            text: "マイページ",
+                            isSelected: selectedTab == 4
+                        )
+                    }
+                    .tag(4)
+            }
+            .tint(.pink)
+            .edgesIgnoringSafeArea(.bottom)
+            .onChange(of: selectedTab) { newValue in
+                if newValue == 2 {
+                    showingCreateMenu = true
+                    selectedTab = previousTab
+                } else {
+                    previousTab = newValue
+                }
+            }
         }
-        .fullScreenCover(isPresented: $showCreateMenu) {
-            CreateMenuView(isPresented: $showCreateMenu, 
-                         selectedCreationType: $selectedCreationType)
+        .sheet(isPresented: $showingCreateMenu) {
+            CreateMenuView(
+                isPresented: $showingCreateMenu,
+                selectedCreationType: $selectedCreationType
+            )
+            .presentationDetents([.height(400)])
         }
-        .sheet(item: $selectedCreationType) { type in
-            switch type {
-            case .widget:
-                WidgetCreationView()
-            case .icon:
-                Text("アイコン作成")
-            case .template:
-                Text("テンプレート作成")
-            case .lockScreen:
-                Text("ロック画面作成")
-            case .liveWallpaper:
-                Text("ライブ壁紙作成")
-            case .cancel:
-                EmptyView()
+        .onChange(of: selectedCreationType) { newValue in
+            if let type = newValue {
+                print("Selected type: \(type)")
+                selectedCreationType = nil
             }
         }
     }
