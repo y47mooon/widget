@@ -33,25 +33,25 @@ struct gaudiyoshinokoEntryView : View {
             ZStack {
                 switch family {
                 case .systemSmall:
-                    Image("demo-small")
+                    Image("WidgetBackgroundSmall")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: geometry.size.width + 20, height: geometry.size.height + 20)
                         .position(x: geometry.size.width/2, y: geometry.size.height/2)
                 case .systemMedium:
-                    Image("demo-medium")
+                    Image("WidgetBackgroundMedium")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: geometry.size.width + 20, height: geometry.size.height + 20)
                         .position(x: geometry.size.width/2, y: geometry.size.height/2)
                 case .systemLarge:
-                    Image("demo-large")
+                    Image("WidgetBackgroundLarge")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: geometry.size.width + 20, height: geometry.size.height + 20)
                         .position(x: geometry.size.width/2, y: geometry.size.height/2)
                 default:
-                    Image("demo-small")
+                    Image("WidgetBackgroundSmall")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: geometry.size.width + 20, height: geometry.size.height + 20)
