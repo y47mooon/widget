@@ -1,0 +1,764 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CA49F3092D747E780021F472 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA49F3082D747E780021F472 /* WidgetKit.framework */; };
+		CA49F30B2D747E780021F472 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA49F30A2D747E780021F472 /* SwiftUI.framework */; };
+		CA49F31C2D747E7A0021F472 /* gaudyoshinokoExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA49F3062D747E780021F472 /* gaudyoshinokoExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CA49F2E62D747E2E0021F472 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA49F2CD2D747E2D0021F472 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA49F2D42D747E2D0021F472;
+			remoteInfo = widgetoshinoko;
+		};
+		CA49F2F02D747E2E0021F472 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA49F2CD2D747E2D0021F472 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA49F2D42D747E2D0021F472;
+			remoteInfo = widgetoshinoko;
+		};
+		CA49F31A2D747E7A0021F472 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA49F2CD2D747E2D0021F472 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA49F3052D747E780021F472;
+			remoteInfo = gaudyoshinokoExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CA49F3212D747E7A0021F472 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CA49F31C2D747E7A0021F472 /* gaudyoshinokoExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CA49F2D52D747E2D0021F472 /* widgetoshinoko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = widgetoshinoko.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA49F2E52D747E2E0021F472 /* widgetoshinokoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = widgetoshinokoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA49F2EF2D747E2E0021F472 /* widgetoshinokoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = widgetoshinokoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA49F3062D747E780021F472 /* gaudyoshinokoExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = gaudyoshinokoExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA49F3082D747E780021F472 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		CA49F30A2D747E780021F472 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		CA49F3272D7485E70021F472 /* gaudyoshinokoExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = gaudyoshinokoExtension.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CA49F31D2D747E7A0021F472 /* Exceptions for "gaudyoshinoko" folder in "gaudyoshinokoExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CA49F3052D747E780021F472 /* gaudyoshinokoExtension */;
+		};
+		CA49F3282D74866C0021F472 /* Exceptions for "widgetoshinoko" folder in "widgetoshinoko" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CA49F2D42D747E2D0021F472 /* widgetoshinoko */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		CA49F2D72D747E2D0021F472 /* widgetoshinoko */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CA49F3282D74866C0021F472 /* Exceptions for "widgetoshinoko" folder in "widgetoshinoko" target */,
+			);
+			path = widgetoshinoko;
+			sourceTree = "<group>";
+		};
+		CA49F2E82D747E2E0021F472 /* widgetoshinokoTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = widgetoshinokoTests;
+			sourceTree = "<group>";
+		};
+		CA49F2F22D747E2E0021F472 /* widgetoshinokoUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = widgetoshinokoUITests;
+			sourceTree = "<group>";
+		};
+		CA49F30C2D747E780021F472 /* gaudyoshinoko */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CA49F31D2D747E7A0021F472 /* Exceptions for "gaudyoshinoko" folder in "gaudyoshinokoExtension" target */,
+			);
+			path = gaudyoshinoko;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CA49F2D22D747E2D0021F472 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA49F2E22D747E2E0021F472 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA49F2EC2D747E2E0021F472 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA49F3032D747E780021F472 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA49F30B2D747E780021F472 /* SwiftUI.framework in Frameworks */,
+				CA49F3092D747E780021F472 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CA49F2CC2D747E2D0021F472 = {
+			isa = PBXGroup;
+			children = (
+				CA49F3272D7485E70021F472 /* gaudyoshinokoExtension.entitlements */,
+				CA49F2D72D747E2D0021F472 /* widgetoshinoko */,
+				CA49F2E82D747E2E0021F472 /* widgetoshinokoTests */,
+				CA49F2F22D747E2E0021F472 /* widgetoshinokoUITests */,
+				CA49F30C2D747E780021F472 /* gaudyoshinoko */,
+				CA49F3072D747E780021F472 /* Frameworks */,
+				CA49F2D62D747E2D0021F472 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CA49F2D62D747E2D0021F472 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CA49F2D52D747E2D0021F472 /* widgetoshinoko.app */,
+				CA49F2E52D747E2E0021F472 /* widgetoshinokoTests.xctest */,
+				CA49F2EF2D747E2E0021F472 /* widgetoshinokoUITests.xctest */,
+				CA49F3062D747E780021F472 /* gaudyoshinokoExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CA49F3072D747E780021F472 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CA49F3082D747E780021F472 /* WidgetKit.framework */,
+				CA49F30A2D747E780021F472 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CA49F2D42D747E2D0021F472 /* widgetoshinoko */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA49F2F92D747E2E0021F472 /* Build configuration list for PBXNativeTarget "widgetoshinoko" */;
+			buildPhases = (
+				CA49F2D12D747E2D0021F472 /* Sources */,
+				CA49F2D22D747E2D0021F472 /* Frameworks */,
+				CA49F2D32D747E2D0021F472 /* Resources */,
+				CA49F3212D747E7A0021F472 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CA49F31B2D747E7A0021F472 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CA49F2D72D747E2D0021F472 /* widgetoshinoko */,
+			);
+			name = widgetoshinoko;
+			packageProductDependencies = (
+			);
+			productName = widgetoshinoko;
+			productReference = CA49F2D52D747E2D0021F472 /* widgetoshinoko.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CA49F2E42D747E2E0021F472 /* widgetoshinokoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA49F2FC2D747E2E0021F472 /* Build configuration list for PBXNativeTarget "widgetoshinokoTests" */;
+			buildPhases = (
+				CA49F2E12D747E2E0021F472 /* Sources */,
+				CA49F2E22D747E2E0021F472 /* Frameworks */,
+				CA49F2E32D747E2E0021F472 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CA49F2E72D747E2E0021F472 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CA49F2E82D747E2E0021F472 /* widgetoshinokoTests */,
+			);
+			name = widgetoshinokoTests;
+			packageProductDependencies = (
+			);
+			productName = widgetoshinokoTests;
+			productReference = CA49F2E52D747E2E0021F472 /* widgetoshinokoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CA49F2EE2D747E2E0021F472 /* widgetoshinokoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA49F2FF2D747E2E0021F472 /* Build configuration list for PBXNativeTarget "widgetoshinokoUITests" */;
+			buildPhases = (
+				CA49F2EB2D747E2E0021F472 /* Sources */,
+				CA49F2EC2D747E2E0021F472 /* Frameworks */,
+				CA49F2ED2D747E2E0021F472 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CA49F2F12D747E2E0021F472 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CA49F2F22D747E2E0021F472 /* widgetoshinokoUITests */,
+			);
+			name = widgetoshinokoUITests;
+			packageProductDependencies = (
+			);
+			productName = widgetoshinokoUITests;
+			productReference = CA49F2EF2D747E2E0021F472 /* widgetoshinokoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		CA49F3052D747E780021F472 /* gaudyoshinokoExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA49F31E2D747E7A0021F472 /* Build configuration list for PBXNativeTarget "gaudyoshinokoExtension" */;
+			buildPhases = (
+				CA49F3022D747E780021F472 /* Sources */,
+				CA49F3032D747E780021F472 /* Frameworks */,
+				CA49F3042D747E780021F472 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CA49F30C2D747E780021F472 /* gaudyoshinoko */,
+			);
+			name = gaudyoshinokoExtension;
+			packageProductDependencies = (
+			);
+			productName = gaudyoshinokoExtension;
+			productReference = CA49F3062D747E780021F472 /* gaudyoshinokoExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CA49F2CD2D747E2D0021F472 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					CA49F2D42D747E2D0021F472 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					CA49F2E42D747E2E0021F472 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = CA49F2D42D747E2D0021F472;
+					};
+					CA49F2EE2D747E2E0021F472 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = CA49F2D42D747E2D0021F472;
+					};
+					CA49F3052D747E780021F472 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = CA49F2D02D747E2D0021F472 /* Build configuration list for PBXProject "widgetoshinoko" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CA49F2CC2D747E2D0021F472;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = CA49F2D62D747E2D0021F472 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CA49F2D42D747E2D0021F472 /* widgetoshinoko */,
+				CA49F2E42D747E2E0021F472 /* widgetoshinokoTests */,
+				CA49F2EE2D747E2E0021F472 /* widgetoshinokoUITests */,
+				CA49F3052D747E780021F472 /* gaudyoshinokoExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CA49F2D32D747E2D0021F472 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA49F2E32D747E2E0021F472 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA49F2ED2D747E2E0021F472 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA49F3042D747E780021F472 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CA49F2D12D747E2D0021F472 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA49F2E12D747E2E0021F472 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA49F2EB2D747E2E0021F472 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA49F3022D747E780021F472 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CA49F2E72D747E2E0021F472 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA49F2D42D747E2D0021F472 /* widgetoshinoko */;
+			targetProxy = CA49F2E62D747E2E0021F472 /* PBXContainerItemProxy */;
+		};
+		CA49F2F12D747E2E0021F472 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA49F2D42D747E2D0021F472 /* widgetoshinoko */;
+			targetProxy = CA49F2F02D747E2E0021F472 /* PBXContainerItemProxy */;
+		};
+		CA49F31B2D747E7A0021F472 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA49F3052D747E780021F472 /* gaudyoshinokoExtension */;
+			targetProxy = CA49F31A2D747E7A0021F472 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		CA49F2F72D747E2E0021F472 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CA49F2F82D747E2E0021F472 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CA49F2FA2D747E2E0021F472 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = widgetoshinoko/widgetoshinoko.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"widgetoshinoko/Preview Content\"";
+				DEVELOPMENT_TEAM = 5SKZVB6NZF;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = widgetoshinoko/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = widgetoshinoko;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinoko;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CA49F2FB2D747E2E0021F472 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = widgetoshinoko/widgetoshinoko.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"widgetoshinoko/Preview Content\"";
+				DEVELOPMENT_TEAM = 5SKZVB6NZF;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = widgetoshinoko/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = widgetoshinoko;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinoko;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CA49F2FD2D747E2E0021F472 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5SKZVB6NZF;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinokoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/widgetoshinoko.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/widgetoshinoko";
+			};
+			name = Debug;
+		};
+		CA49F2FE2D747E2E0021F472 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5SKZVB6NZF;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinokoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/widgetoshinoko.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/widgetoshinoko";
+			};
+			name = Release;
+		};
+		CA49F3002D747E2E0021F472 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5SKZVB6NZF;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinokoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = widgetoshinoko;
+			};
+			name = Debug;
+		};
+		CA49F3012D747E2E0021F472 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5SKZVB6NZF;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinokoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = widgetoshinoko;
+			};
+			name = Release;
+		};
+		CA49F31F2D747E7A0021F472 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = gaudyoshinokoExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5SKZVB6NZF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = gaudyoshinoko/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = gaudyoshinoko;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinoko.gaudyoshinoko;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CA49F3202D747E7A0021F472 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = gaudyoshinokoExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5SKZVB6NZF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = gaudyoshinoko/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = gaudyoshinoko;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudy.widgetoshinoko.gaudyoshinoko;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CA49F2D02D747E2D0021F472 /* Build configuration list for PBXProject "widgetoshinoko" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA49F2F72D747E2E0021F472 /* Debug */,
+				CA49F2F82D747E2E0021F472 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA49F2F92D747E2E0021F472 /* Build configuration list for PBXNativeTarget "widgetoshinoko" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA49F2FA2D747E2E0021F472 /* Debug */,
+				CA49F2FB2D747E2E0021F472 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA49F2FC2D747E2E0021F472 /* Build configuration list for PBXNativeTarget "widgetoshinokoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA49F2FD2D747E2E0021F472 /* Debug */,
+				CA49F2FE2D747E2E0021F472 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA49F2FF2D747E2E0021F472 /* Build configuration list for PBXNativeTarget "widgetoshinokoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA49F3002D747E2E0021F472 /* Debug */,
+				CA49F3012D747E2E0021F472 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA49F31E2D747E7A0021F472 /* Build configuration list for PBXNativeTarget "gaudyoshinokoExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA49F31F2D747E7A0021F472 /* Debug */,
+				CA49F3202D747E7A0021F472 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CA49F2CD2D747E2D0021F472 /* Project object */;
+}
