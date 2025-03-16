@@ -153,11 +153,11 @@ struct MainContentView: View {
                 .padding(.horizontal)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 15) {
+                    HStack(spacing: 15) {
                         ForEach(0..<4) { _ in
                             RoundedRectangle(cornerRadius: 12)
                                 .fill(Color.gray.opacity(0.2))
-                                .frame(width: 150, height: 280)
+                                .frame(width: 200, height: 400)
                         }
                     }
                     .padding(.horizontal)
@@ -170,7 +170,7 @@ struct MainContentView: View {
                     Text("人気のウィジェット")
                         .font(.headline)
                     Spacer()
-                    NavigationLink(destination: WidgetDetailView(title: "人気のウィジェット")) {
+                    NavigationLink(destination: CategoryDetailView(title: "人気のウィジェット")) {
                         HStack {
                             Text("もっと見る")
                                 .font(.system(size: 14))
@@ -182,11 +182,11 @@ struct MainContentView: View {
                 .padding(.horizontal)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 15) {
+                    HStack(spacing: 15) {
                         ForEach(0..<3) { _ in
                             RoundedRectangle(cornerRadius: 12)
                                 .fill(Color.gray.opacity(0.2))
-                                .frame(width: 200, height: 100)
+                                .frame(width: 300, height: 150)
                         }
                     }
                     .padding(.horizontal)
@@ -323,16 +323,17 @@ struct CategoryDetailView: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [
-                GridItem(.flexible()),
-                GridItem(.flexible())
+                GridItem(.flexible(), spacing: 16),
+                GridItem(.flexible(), spacing: 16)
             ], spacing: 16) {
-                ForEach(0..<20) { _ in
-                    RoundedRectangle(cornerRadius: 12)
+                ForEach(0..<4) { _ in
+                    RoundedRectangle(cornerRadius: 20)
                         .fill(Color.gray.opacity(0.2))
-                        .frame(height: 200)
+                        .frame(width: (UIScreen.main.bounds.width - 48) / 2,
+                               height: UIScreen.main.bounds.height * 0.5)
                 }
             }
-            .padding()
+            .padding(16)
         }
         .navigationTitle(title)
     }
