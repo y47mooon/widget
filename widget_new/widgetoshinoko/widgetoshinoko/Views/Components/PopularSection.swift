@@ -1,8 +1,9 @@
 import SwiftUI
 
-struct PopularSection: View {
+struct PopularSection<D: View>: View {
     let title: String
     let items: Int
+    let destination: D
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -10,10 +11,13 @@ struct PopularSection: View {
                 Text(title)
                     .font(.headline)
                 Spacer()
-                Button(action: {}) {
-                    Text("もっとみる")
-                        .font(.system(size: 14))
-                        .foregroundColor(.gray)
+                NavigationLink(destination: destination) {
+                    HStack {
+                        Text("もっと見る")
+                            .font(.system(size: 14))
+                        Image(systemName: "chevron.right")
+                    }
+                    .foregroundColor(.gray)
                 }
             }
             .padding(.horizontal)
@@ -30,5 +34,15 @@ struct PopularSection: View {
                 .padding(.horizontal)
             }
         }
+    }
+}
+
+#Preview {
+    NavigationView {
+        PopularSection(
+            title: "人気のウィジェット",
+            items: 3,
+            destination: Text("詳細ビュー")
+        )
     }
 }
