@@ -67,10 +67,15 @@ struct gaudiyoshinoko: Widget {
     let kind: String = "gaudiyoshinoko"
 
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
+        StaticConfiguration(
+            kind: kind,
+            provider: Provider()
+        ) { entry in
             gaudiyoshinokoEntryView(entry: entry)
-                .containerBackground(.clear, for: .widget)
-                .padding(-20)
         }
+        .configurationDisplayName("My Widget")
+        .description("This is an example widget.")
+        .supportedFamilies([.systemSmall])  // 必要なサイズのみ指定
+        .contentMarginsDisabled()  // パフォーマンス向上のため
     }
 }

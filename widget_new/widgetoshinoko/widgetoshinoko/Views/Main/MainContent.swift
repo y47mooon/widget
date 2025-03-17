@@ -163,7 +163,7 @@ struct MainContent: View {
     
     private var allContentView: some View {
         VStack(spacing: 24) {
-            // 各セクションを表示
+            // 人気のホーム画面セクション
             ContentCategorySection(
                 title: TemplateCategory.popular.rawValue,
                 items: templateViewModel.items,
@@ -171,10 +171,48 @@ struct MainContent: View {
                 contentType: .template
             )
             
-            // ウィジェットセクションは既存のまま
+            // 人気のウィジェットセクション
             popularWidgetsSection
             
-            // 他のセクションも同様に実装
+            // 人気のロック画面セクション
+            ContentCategorySection(
+                title: LockScreenCategory.popular.rawValue,
+                items: lockScreenViewModel.items,
+                category: LockScreenCategory.popular,
+                contentType: .lockScreen
+            )
+            
+            // おしゃれセクション
+            ContentCategorySection(
+                title: LockScreenCategory.stylish.rawValue,
+                items: lockScreenViewModel.items,
+                category: LockScreenCategory.stylish,
+                contentType: .lockScreen
+            )
+            
+            // シンプルセクション
+            ContentCategorySection(
+                title: LockScreenCategory.simple.rawValue,
+                items: lockScreenViewModel.items,
+                category: LockScreenCategory.simple,
+                contentType: .lockScreen
+            )
+            
+            // 星野アイセクション
+            ContentCategorySection(
+                title: LockScreenCategory.ai.rawValue,
+                items: lockScreenViewModel.items,
+                category: LockScreenCategory.ai,
+                contentType: .lockScreen
+            )
+            
+            // 星野ルビーセクション
+            ContentCategorySection(
+                title: LockScreenCategory.ruby.rawValue,
+                items: lockScreenViewModel.items,
+                category: LockScreenCategory.ruby,
+                contentType: .lockScreen
+            )
         }
     }
     

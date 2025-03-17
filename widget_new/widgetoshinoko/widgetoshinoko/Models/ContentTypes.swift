@@ -34,12 +34,12 @@ enum WallpaperCategory: String, CaseIterable, CategoryType {
 }
 
 // ロック画面用カテゴリー
-enum LockScreenCategory: String, CaseIterable, CategoryType {
+enum LockScreenCategory: String, CategoryType, CaseIterable {
     case popular = "人気のロック画面"
-    case new = "新着"
-    case clock = "時計"
-    case weather = "天気"
-    case calendar = "カレンダー"
+    case stylish = "おしゃれ"
+    case simple = "シンプル"
+    case ai = "星野アイ"
+    case ruby = "星野ルビー"
 }
 
 // 動く壁紙用カテゴリー
