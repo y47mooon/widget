@@ -5,10 +5,11 @@ struct WidgetListView: View {
     @State private var showingSortOptions = false
     @State private var sortOrder: SortOrder = .popular
     @State private var selectedSize: WidgetSize = .small
+    let category: WidgetCategory
     
-    init(viewModel: WidgetListViewModel? = nil) {
-        let vm = viewModel ?? WidgetListViewModel(repository: MockWidgetRepository())
-        _viewModel = StateObject(wrappedValue: vm)
+    init(viewModel: WidgetListViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        self.category = viewModel.category
     }
     
     var body: some View {
@@ -37,7 +38,7 @@ struct WidgetListView: View {
         .navigationBarBackButtonHidden(false)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text("人気のウィジェット")
+                Text(category.rawValue)
                     .font(.headline)
                     .foregroundColor(.primary)
             }

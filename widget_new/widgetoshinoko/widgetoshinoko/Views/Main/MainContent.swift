@@ -95,237 +95,144 @@ final class ImageCache {
     }
 }
 
-struct MainContentView: View {
-    @Binding var selectedCategory: Int
-    let categories: [String]
-    let filterTags: [String]
+struct MainContent: View {
+    @State private var selectedSection = 0
+    @StateObject private var templateViewModel = ContentListViewModel(
+        repository: MockContentRepository(),
+        category: TemplateCategory.popular
+    )
+    @StateObject private var wallpaperViewModel = ContentListViewModel(
+        repository: MockContentRepository(),
+        category: WallpaperCategory.popular
+    )
+    @StateObject private var lockScreenViewModel = ContentListViewModel(
+        repository: MockContentRepository(),
+        category: LockScreenCategory.popular
+    )
     
     var body: some View {
-        NavigationView {  // NavigationViewを追加
+        NavigationView {
             ScrollView {
-                LazyVStack(spacing: 20) {
-                    CategoryScrollView(selectedCategory: $selectedCategory, 
-                                    categories: categories)
+                VStack(spacing: 24) {
+                    // カテゴリー選択
+                    CategoryScrollView(
+                        selectedCategory: $selectedSection,
+                        categories: AppConstants.categories
+                    )
+                    .padding()
                     
-                    if selectedCategory == 0 {
-                        mainContent
-                    } else {
-                        selectedCategoryContent
+                    // フィルタータグ
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 12) {
+                            ForEach(AppConstants.topFilterTags, id: \.self) { tag in
+                                Text(tag)
+                                    .font(.footnote)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 6)
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(16)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    
+                    // 既存のコンテンツ
+                    switch selectedSection {
+                    case 0: // 全て
+                        allContentView
+                    case 1: // テンプレート
+                        ContentCategorySection(
+                            title: TemplateCategory.popular.rawValue,
+                            items: templateViewModel.items,
+                            category: .popular,
+                            contentType: .template
+                        )
+                    case 2: // ウィジェット
+                        WidgetCategoryListView()
+                    // 他のケースも同様に実装
+                    default:
+                        Text(AppConstants.categories[selectedSection])
                     }
                 }
             }
-        }
-        .onDisappear {
-            ImageCache.shared.removeImage(for: "current_category")
+            .task {
+                await loadInitialData()
+            }
         }
     }
     
-    // メインコンテンツビュー
-    private var mainContent: some View {
-        LazyVStack(spacing: 20) {
-            // フィルタータグセクション
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 10) {
-                    ForEach(filterTags, id: \.self) { tag in
-                        FilterChipView(title: tag)
-                    }
-                }
-                .padding(.horizontal)
-            }
+    private var allContentView: some View {
+        VStack(spacing: 24) {
+            // 各セクションを表示
+            ContentCategorySection(
+                title: TemplateCategory.popular.rawValue,
+                items: templateViewModel.items,
+                category: .popular,
+                contentType: .template
+            )
             
-            // 人気のホーム画面セクション
-            VStack {
-                HStack {
-                    Text("人気のホーム画面")
-                        .font(.headline)
-                    Spacer()
-                    NavigationLink(destination: CategoryDetailView(title: "人気のホーム画面")) {
-                        HStack {
-                            Text("もっと見る")
-                                .font(.system(size: 14))
-                            Image(systemName: "chevron.right")
-                        }
-                        .foregroundColor(.gray)
-                    }
-                }
-                .padding(.horizontal)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 15) {
-                        ForEach(0..<4) { _ in
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.2))
-                                .frame(width: 200, height: 400)
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-            }
-            
-            // 人気のウィジェットセクション
+            // ウィジェットセクションは既存のまま
             popularWidgetsSection
             
-            // 人気のロック画面セクション
-            VStack {
-                HStack {
-                    Text("人気のロック画面")
-                        .font(.headline)
-                    Spacer()
-                    NavigationLink(destination: CategoryDetailView(title: "人気のロック画面")) {
-                        HStack {
-                            Text("もっと見る")
-                                .font(.system(size: 14))
-                            Image(systemName: "chevron.right")
-                        }
-                        .foregroundColor(.gray)
-                    }
-                }
-                .padding(.horizontal)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 15) {
-                        ForEach(0..<4) { _ in
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.2))
-                                .frame(width: 150, height: 280)
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-            }
+            // 他のセクションも同様に実装
         }
     }
     
-    // カテゴリー選択時のコンテンツビュー
-    private var selectedCategoryContent: some View {
-        LazyVStack(spacing: 20) {
-            // 人気のコンテンツ
-            VStack {
-                HStack {
-                    Text("人気の\(categories[selectedCategory])")
-                        .font(.headline)
-                    Spacer()
-                    NavigationLink(destination: CategoryDetailView(title: "人気の\(categories[selectedCategory])")) {
-                        HStack {
-                            Text("もっと見る")
-                                .font(.system(size: 14))
-                            Image(systemName: "chevron.right")
-                        }
-                        .foregroundColor(.gray)
-                    }
-                }
-                .padding(.horizontal)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 15) {
-                        ForEach(0..<4) { _ in
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.2))
-                                .frame(width: 150, height: 280)
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-            }
-            
-            // 新着のコンテンツ
-            VStack {
-                HStack {
-                    Text("新着の\(categories[selectedCategory])")
-                        .font(.headline)
-                    Spacer()
-                    NavigationLink(destination: CategoryDetailView(title: "新着の\(categories[selectedCategory])")) {
-                        HStack {
-                            Text("もっと見る")
-                                .font(.system(size: 14))
-                            Image(systemName: "chevron.right")
-                        }
-                        .foregroundColor(.gray)
-                    }
-                }
-                .padding(.horizontal)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 15) {
-                        ForEach(0..<4) { _ in
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.2))
-                                .frame(width: 150, height: 280)
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-            }
-            
-            // おしゃれなコンテンツ
-            VStack {
-                HStack {
-                    Text("おしゃれな\(categories[selectedCategory])")
-                        .font(.headline)
-                    Spacer()
-                    NavigationLink(destination: CategoryDetailView(title: "おしゃれな\(categories[selectedCategory])")) {
-                        HStack {
-                            Text("もっと見る")
-                                .font(.system(size: 14))
-                            Image(systemName: "chevron.right")
-                        }
-                        .foregroundColor(.gray)
-                    }
-                }
-                .padding(.horizontal)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 15) {
-                        ForEach(0..<4) { _ in
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.2))
-                                .frame(width: 150, height: 280)
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-            }
-        }
+    private func loadInitialData() async {
+        await templateViewModel.loadItems(limit: 5)
+        await wallpaperViewModel.loadItems(limit: 5)
+        await lockScreenViewModel.loadItems(limit: 5)
     }
     
     // 人気のウィジェットセクション
     private var popularWidgetsSection: some View {
-        PopularSection(
+        let viewModel = WidgetListViewModel(
+            repository: MockWidgetRepository(),
+            category: WidgetCategory.popular
+        )
+        
+        return WidgetCategorySection(
             title: "人気のウィジェット",
             items: 3,
-            destination: WidgetListView(viewModel: .preview)
+            destination: WidgetListView(viewModel: viewModel)
         )
     }
 }
 
 struct CategoryDetailView: View {
     let title: String
+    let spacing: CGFloat = 16
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [
-                GridItem(.flexible(), spacing: 16),
-                GridItem(.flexible(), spacing: 16)
-            ], spacing: 16) {
-                ForEach(0..<4) { _ in
-                    RoundedRectangle(cornerRadius: 20)
+            LazyVGrid(
+                columns: [
+                    GridItem(.flexible(), spacing: 16),
+                    GridItem(.flexible(), spacing: 16)
+                ],
+                spacing: 16
+            ) {
+                ForEach(0..<10) { index in
+                    // 固定の縦幅を使用
+                    RoundedRectangle(cornerRadius: 12)
                         .fill(Color.gray.opacity(0.2))
-                        .frame(width: (UIScreen.main.bounds.width - 48) / 2,
-                               height: UIScreen.main.bounds.height * 0.5)
+                        .frame(height: UIScreen.main.bounds.height * 0.35) // 画面高さの35%
+                        .overlay(
+                            // 実際の画像がある場合はここに表示
+                            Image("placeholder")
+                                .resizable()
+                                .scaledToFill()
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                        )
                 }
             }
-            .padding(16)
+            .padding()
         }
-        .navigationTitle(title)
+        .navigationTitle("title")
     }
 }
 
+// プレビュー用
 #Preview {
-    @State var selectedCategory = 0
-    
-    return MainContentView(
-        selectedCategory: $selectedCategory,
-        categories: AppConstants.categories,
-        filterTags: AppConstants.topFilterTags
-    )
+    MainContent()
 }

@@ -11,7 +11,10 @@ extension WidgetItem {
 #if DEBUG
 extension WidgetListViewModel {
     static var preview: WidgetListViewModel {
-        let viewModel = WidgetListViewModel(repository: MockWidgetRepository())
+        let viewModel = WidgetListViewModel(
+            repository: MockWidgetRepository(),
+            category: .popular
+        )
         return viewModel
     }
 }

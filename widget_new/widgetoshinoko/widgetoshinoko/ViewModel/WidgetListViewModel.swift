@@ -9,9 +9,12 @@ final class WidgetListViewModel: ObservableObject {
     @Published var searchText: String = ""
     
     private let repository: WidgetRepositoryProtocol
+    let category: WidgetCategory
     
-    nonisolated init(repository: WidgetRepositoryProtocol = MockWidgetRepository()) {
+    nonisolated init(repository: WidgetRepositoryProtocol = MockWidgetRepository(),
+                     category: WidgetCategory) {
         self.repository = repository
+        self.category = category
     }
     
     func loadWidgets(category: String? = nil) async {

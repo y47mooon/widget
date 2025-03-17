@@ -1,9 +1,9 @@
 import SwiftUI
 
-struct PopularSection<D: View>: View {
+struct WidgetCategorySection<Destination: View>: View {
     let title: String
     let items: Int
-    let destination: D
+    let destination: Destination
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -27,8 +27,7 @@ struct PopularSection<D: View>: View {
                     ForEach(0..<items, id: \.self) { _ in
                         RoundedRectangle(cornerRadius: 12)
                             .fill(Color.gray.opacity(0.2))
-                            .frame(width: title.contains("ウィジェット") ? 200 : 150,
-                                   height: title.contains("ウィジェット") ? 100 : 280)
+                            .frame(width: 160, height: 80)
                     }
                 }
                 .padding(.horizontal)
@@ -39,7 +38,7 @@ struct PopularSection<D: View>: View {
 
 #Preview {
     NavigationView {
-        PopularSection(
+        WidgetCategorySection(
             title: "人気のウィジェット",
             items: 3,
             destination: Text("詳細ビュー")

@@ -8,19 +8,12 @@
 import Foundation
 import SwiftUI
 
-// テンプレートの種類を定義
-enum TemplateCategory: String, CaseIterable {
-    case popular = "人気のホーム画面"
-    case new = "新着"
-    case stylish = "おしゃれ"
-}
-
 // テンプレートアイテムのモデル
 struct TemplateItem: Identifiable {
     let id: UUID
     let imageUrl: String
     let title: String
-    let category: TemplateCategory
+    let category: TemplateCategory  // ContentTypes.swiftで定義されているenumを使用
     // 必要に応じて他のプロパティを追加
 }
 

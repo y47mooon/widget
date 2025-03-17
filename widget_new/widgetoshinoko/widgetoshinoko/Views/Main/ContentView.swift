@@ -34,19 +34,15 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             TabView(selection: $selectedTab) {
-                MainContentView(
-                    selectedCategory: $selectedCategory,
-                    categories: AppConstants.categories,
-                    filterTags: AppConstants.topFilterTags
-                )
-                .tabItem {
-                    CustomTabItem(
-                        imageName: "house.fill",
-                        text: "ホーム",
-                        isSelected: selectedTab == 0
-                    )
-                }
-                .tag(0)
+                MainContent()
+                    .tabItem {
+                        CustomTabItem(
+                            imageName: "house",
+                            text: "ホーム",
+                            isSelected: selectedTab == 0
+                        )
+                    }
+                    .tag(0)
                 
                 SearchView()
                     .tabItem {
