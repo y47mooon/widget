@@ -2,26 +2,33 @@ import SwiftUI
 import WidgetKit
 import AppIntents
 
-// Providerの定義を追加
-struct Provider: AppIntentTimelineProvider {
+// まず、ウィジェットに表示する情報の型を決めます
+struct SimpleEntry: TimelineEntry {
+    let date: Date                                  // 日付
+    let configuration: ConfigurationAppIntent       // 設定情報
+}
+
+// 次に、その情報を提供する「Provider」を作ります
+struct Provider: TimelineProvider {
+    // 3つの基本機能を実装します
+    
+    // その1：読み込み中の表示
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
     }
-
-    func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: configuration)
+    
+    // その2：プレビューの表示
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
+        let entry = SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
+        completion(entry)
     }
     
-    func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-        let entry = SimpleEntry(date: Date(), configuration: configuration)
-        return Timeline(entries: [entry], policy: .never)
+    // その3：実際のウィジェット表示
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
+        let entry = SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
+        let timeline = Timeline(entries: [entry], policy: .atEnd)
+        completion(timeline)
     }
-}
-
-// SimpleEntryの定義を追加
-struct SimpleEntry: TimelineEntry {
-    let date: Date
-    let configuration: ConfigurationAppIntent
 }
 
 struct gaudiyoshinokoEntryView : View {
@@ -64,18 +71,19 @@ struct gaudiyoshinokoEntryView : View {
 }
 
 struct gaudiyoshinoko: Widget {
-    let kind: String = "gaudiyoshinoko"
-
     var body: some WidgetConfiguration {
         StaticConfiguration(
-            kind: kind,
+            kind: "gaudiyoshinoko",
             provider: Provider()
         ) { entry in
             gaudiyoshinokoEntryView(entry: entry)
         }
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
-        .supportedFamilies([.systemSmall])  // 必要なサイズのみ指定
-        .contentMarginsDisabled()  // パフォーマンス向上のため
+        .supportedFamilies([
+            .systemSmall,    // 小サイズ
+            .systemMedium,   // 中サイズ
+            .systemLarge     // 大サイズ
+        ])
     }
 }

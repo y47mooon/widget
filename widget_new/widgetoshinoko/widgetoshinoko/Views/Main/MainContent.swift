@@ -113,30 +113,26 @@ struct MainContent: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: 24) {
-                    // カテゴリー選択
+                VStack(spacing: 16) {
+                    // カテゴリー選択部分（既存のまま）
                     CategoryScrollView(
                         selectedCategory: $selectedSection,
                         categories: AppConstants.categories
                     )
-                    .padding()
                     
-                    // フィルタータグ
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 12) {
-                            ForEach(AppConstants.topFilterTags, id: \.self) { tag in
-                                Text(tag)
-                                    .font(.footnote)
-                                    .padding(.horizontal, 12)
-                                    .padding(.vertical, 6)
-                                    .background(Color.gray.opacity(0.1))
-                                    .cornerRadius(16)
+                    // フィルタータグ（全ての時のみ表示）
+                    if selectedSection == 0 {  // "全て"が選択されている時のみ
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 12) {
+                                ForEach(AppConstants.topFilterTags, id: \.self) { tag in
+                                    FilterChipView(title: tag)
+                                }
                             }
+                            .padding(.horizontal)
                         }
-                        .padding(.horizontal)
                     }
                     
-                    // 既存のコンテンツ
+                    // コンテンツ表示部分（既存のまま）
                     switch selectedSection {
                     case 0: // 全て
                         allContentView
