@@ -5,20 +5,20 @@ struct WidgetCategoryListView: View {
     
     var body: some View {
         ScrollView {
-            LazyVStack(spacing: 24) {
+            VStack(spacing: 24) {
                 ForEach(WidgetCategory.allCases, id: \.self) { category in
                     GenericSectionView(
                         title: category.rawValue,
-                        items: viewModel.getWidgetItems(for: category), // モックデータの代わりにviewModelから取得
+                        items: viewModel.getWidgetItems(for: category),
                         destination: WidgetListView(
                             viewModel: WidgetListViewModel(
                                 repository: MockWidgetRepository(),
                                 category: category
                             )
                         ),
-                        itemBuilder: { item, _ in
+                        itemBuilder: { item, index in
                             AnyView(
-                                WidgetItemView(widget: item, height: 80)
+                                WidgetItemView(widget: item)
                             )
                         }
                     )
@@ -29,7 +29,6 @@ struct WidgetCategoryListView: View {
     }
 }
 
-// プレビュー用
 #Preview {
     WidgetCategoryListView(viewModel: MainContentViewModel())
 }

@@ -51,38 +51,24 @@ struct HomeContentView: View {
     
     // ウィジェットセクション
     private var widgetSection: some View {
-        GenericSectionView(
-            title: "人気のウィジェット",
-            items: (0..<10).map { $0 }, // インデックスのみの配列
+        let dummyItems: [Any] = viewModel.widgetItems.isEmpty ? [0, 1, 2, 3, 4] : viewModel.widgetItems
+        
+        return GenericSectionView<Any, WidgetListView>(
+            title: WidgetCategory.popular.rawValue,
+            items: dummyItems,
             destination: WidgetListView(
                 viewModel: WidgetListViewModel(
                     repository: MockWidgetRepository(),
                     category: .popular
                 )
             ),
-            itemBuilder: { index, _ in
+            itemBuilder: { item, index in
                 AnyView(
-                    // 条件演算子を使用して決定
-                    index % 2 == 0 ?
-                    // 細長いウィジェット
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.gray.opacity(0.2))
-                        .frame(width: 140, height: 80)
-                        .overlay(
-                            Text("時計ウィジェット")
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                        )
-                    :
-                    // 正方形のアイコンサイズウィジェット
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.gray.opacity(0.2))
-                        .frame(width: 80, height: 80)
-                        .overlay(
-                            Text("天気")
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                        )
+                    WidgetItemView(
+                        widget: item is Int ? 
+                            createDummyWidget(index: index) : 
+                            item as! WidgetItem
+                    )
                 )
             }
         )
@@ -148,6 +134,18 @@ struct HomeContentView: View {
                     )
                 )
             }
+        )
+    }
+    
+    private func createDummyWidget(index: Int) -> WidgetItem {
+        WidgetItem(
+            id: UUID(),
+            title: "ダミーウィジェット \(index + 1)",
+            description: "ダミーの説明文です",
+            imageUrl: "placeholder",
+            category: WidgetCategory.popular.rawValue,
+            popularity: 100,
+            createdAt: Date()
         )
     }
 }
