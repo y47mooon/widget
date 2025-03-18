@@ -28,9 +28,14 @@ enum TemplateCategory: String, CaseIterable, CategoryType {
 enum WallpaperCategory: String, CaseIterable, CategoryType {
     case popular = "人気の壁紙"
     case new = "新着"
-    case nature = "自然"
-    case abstract = "抽象"
+    case recommended = "おすすめ"
+    case seasonal = "季節もの"
     case anime = "アニメ"
+    case character = "キャラクター"
+    
+    var displayName: String {
+        return self.rawValue
+    }
 }
 
 // ロック画面用カテゴリー
@@ -46,7 +51,12 @@ enum LockScreenCategory: String, CategoryType, CaseIterable {
 enum MovingWallpaperCategory: String, CaseIterable, CategoryType {
     case popular = "人気の動く壁紙"
     case new = "新着"
+    case recommended = "おすすめ"
+    case ocean = "海"
     case nature = "自然"
     case abstract = "抽象"
-    case anime = "アニメ"
+    
+    var displayName: String {
+        return self.rawValue
+    }
 }

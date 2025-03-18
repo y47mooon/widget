@@ -8,15 +8,6 @@
 import Foundation
 import SwiftUI
 
-// テンプレートアイテムのモデル
-struct TemplateItem: Identifiable {
-    let id: UUID
-    let imageUrl: String
-    let title: String
-    let category: TemplateCategory  // ContentTypes.swiftで定義されているenumを使用
-    // 必要に応じて他のプロパティを追加
-}
-
 // TemplateViewModelの追加
 class TemplateViewModel: ObservableObject {
     @Published var itemsByCategory: [TemplateCategory: [TemplateItem]] = [:]

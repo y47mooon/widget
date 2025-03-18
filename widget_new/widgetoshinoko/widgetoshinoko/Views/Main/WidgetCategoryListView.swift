@@ -1,19 +1,26 @@
 import SwiftUI
 
 struct WidgetCategoryListView: View {
+    @ObservedObject var viewModel: MainContentViewModel
+    
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 24) {
                 ForEach(WidgetCategory.allCases, id: \.self) { category in
-                    WidgetCategorySection(
+                    GenericSectionView(
                         title: category.rawValue,
-                        items: 3,
+                        items: viewModel.getWidgetItems(for: category), // モックデータの代わりにviewModelから取得
                         destination: WidgetListView(
                             viewModel: WidgetListViewModel(
                                 repository: MockWidgetRepository(),
                                 category: category
                             )
-                        )
+                        ),
+                        itemBuilder: { item, _ in
+                            AnyView(
+                                WidgetItemView(widget: item, height: 80)
+                            )
+                        }
                     )
                 }
             }
@@ -24,5 +31,5 @@ struct WidgetCategoryListView: View {
 
 // プレビュー用
 #Preview {
-    WidgetCategoryListView()
+    WidgetCategoryListView(viewModel: MainContentViewModel())
 }
