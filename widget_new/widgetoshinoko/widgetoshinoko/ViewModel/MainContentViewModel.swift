@@ -25,6 +25,9 @@ final class MainContentViewModel: ObservableObject {
     private let lockScreenRepository: ContentRepositoryProtocol
     private let wallpaperRepository: ContentRepositoryProtocol
     
+    // アイコン関連のプロパティ
+    @Published private(set) var iconItemsByCategory: [IconCategory: [IconSet]] = [:]
+    
     // 初期化
     init(
         templateRepository: ContentRepositoryProtocol = MockContentRepository(),
@@ -56,6 +59,22 @@ final class MainContentViewModel: ObservableObject {
         
         // 動く壁紙データの読み込み
         loadMovingWallpaperItems()
+        
+        // アイコンデータの読み込み
+        for category in IconCategory.allCases {
+            iconItemsByCategory[category] = (0..<5).map { index in
+                IconSet(
+                    id: UUID(),
+                    title: "\(category.rawValue) セット \(index + 1)",
+                    icons: (0..<4).map { _ in 
+                        IconSet.Icon(id: UUID(), imageUrl: "placeholder", targetAppBundleId: nil)
+                    },
+                    category: category,
+                    popularity: 100,
+                    createdAt: Date()
+                )
+            }
+        }
         
         isLoading = false
     }
@@ -175,5 +194,10 @@ final class MainContentViewModel: ObservableObject {
                 popularity: Int.random(in: 10...100)
             )
         }
+    }
+    
+    // アイコンデータを取得
+    func getIconItems(for category: IconCategory) -> [IconSet] {
+        return iconItemsByCategory[category] ?? []
     }
 }

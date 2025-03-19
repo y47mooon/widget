@@ -14,12 +14,3 @@ struct IconSet: Identifiable {
         let targetAppBundleId: String? // 設定対象のアプリのバンドルID
     }
 }
-
-enum IconCategory: String, CaseIterable {
-    case popular = "人気のアイコンセット"
-    case new = "新着"
-    case cute = "かわいい"
-    case cool = "おしゃれ"
-    case white = "白"
-    case dark = "ダーク"
-}

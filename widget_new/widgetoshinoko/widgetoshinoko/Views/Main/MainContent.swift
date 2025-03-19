@@ -130,7 +130,7 @@ struct MainContent: View {
                 case .widget:
                     WidgetCategoryListView(viewModel: viewModel)
                 case .icon:
-                    IconCategoryListView()
+                    IconCategoryListView(viewModel: viewModel)
                 case .wallpaper:
                     WallpaperContentView(viewModel: viewModel)
                 case .lockScreen:

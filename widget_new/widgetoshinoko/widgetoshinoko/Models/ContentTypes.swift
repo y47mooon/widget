@@ -60,3 +60,13 @@ enum MovingWallpaperCategory: String, CaseIterable, CategoryType {
         return self.rawValue
     }
 }
+
+// アイコン用カテゴリー
+enum IconCategory: String, CaseIterable, CategoryType {
+    case popular = "人気のアイコンセット"
+    case new = "新着"
+    case cute = "かわいい"
+    case cool = "おしゃれ"
+    case white = "白"
+    case dark = "ダーク"
+}
