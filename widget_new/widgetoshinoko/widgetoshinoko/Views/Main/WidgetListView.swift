@@ -5,6 +5,7 @@ struct WidgetListView: View {
     @State private var showingSortOptions = false
     @State private var sortOrder: SortOrder = .popular
     @State private var selectedSize: WidgetSize = .small
+    @State private var searchText: String = ""
     let category: WidgetCategory
     
     init(viewModel: WidgetListViewModel) {
@@ -13,35 +14,36 @@ struct WidgetListView: View {
     }
     
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 0) {
             // 検索バー
-            CustomSearchBar(searchText: $viewModel.searchText)
+            CustomSearchBar(searchText: $searchText)
+                .padding()
             
-            // サイズ選択セグメント
-            Picker("サイズ", selection: $selectedSize) {
+            // サイズ選択
+            Picker("ウィジェットサイズ", selection: $selectedSize) {
                 ForEach(WidgetSize.allCases, id: \.self) { size in
                     Text(size.rawValue)
                         .tag(size)
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-            .padding(.horizontal)
+            .padding()
             
-            // ウィジェット表示部分
-            if viewModel.isLoading {
-                ProgressView()
-            } else {
-                widgetGridBySize
+            // ウィジェット一覧
+            ScrollView {
+                switch selectedSize {
+                case .small:
+                    smallWidgetGrid
+                case .medium:
+                    mediumWidgetList
+                case .large:
+                    largeWidgetList
+                }
             }
         }
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(category.rawValue)
         .navigationBarBackButtonHidden(false)
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text(category.rawValue)
-                    .font(.headline)
-                    .foregroundColor(.primary)
-            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: { showingSortOptions = true }) {
                     Image(systemName: "arrow.up.arrow.down")
@@ -66,54 +68,40 @@ struct WidgetListView: View {
         }
     }
     
-    // サイズに応じたグリッド表示
-    private var widgetGridBySize: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            LazyVStack(spacing: 16) {
-                switch selectedSize {
-                case .small:
-                    smallWidgetGrid
-                case .medium:
-                    mediumWidgetGrid
-                case .large:
-                    largeWidgetGrid
-                }
-            }
-            .padding()
-        }
-    }
-    
-    // Small サイズのグリッド
+    // Small サイズのグリッド（2列）
     private var smallWidgetGrid: some View {
         LazyVGrid(
             columns: [
-                GridItem(.flexible()),
-                GridItem(.flexible())
+                GridItem(.flexible(), spacing: 16),
+                GridItem(.flexible(), spacing: 16)
             ],
             spacing: 16
         ) {
             ForEach(viewModel.widgets) { widget in
-                WidgetItemView(widget: widget, height: 150)
+                WidgetSizeView(size: .small, title: widget.title)
             }
         }
+        .padding()
     }
     
-    // Medium サイズのグリッド
-    private var mediumWidgetGrid: some View {
+    // Medium サイズのリスト（1列）
+    private var mediumWidgetList: some View {
         LazyVStack(spacing: 16) {
             ForEach(viewModel.widgets) { widget in
-                WidgetItemView(widget: widget, height: 200)
+                WidgetSizeView(size: .medium, title: widget.title)
             }
         }
+        .padding()
     }
     
-    // Large サイズのグリッド
-    private var largeWidgetGrid: some View {
+    // Large サイズのリスト（1列）
+    private var largeWidgetList: some View {
         LazyVStack(spacing: 16) {
             ForEach(viewModel.widgets) { widget in
-                WidgetItemView(widget: widget, height: 300)
+                WidgetSizeView(size: .large, title: widget.title)
             }
         }
+        .padding()
     }
 }
 
