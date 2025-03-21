@@ -32,6 +32,7 @@ struct HomeContentView: View {
     private var templateSection: some View {
         GenericSectionView(
             title: TemplateCategory.popular.rawValue,
+            seeMoreText: "button_see_more".localized,
             items: viewModel.templateItems,
             destination: ContentListView(
                 category: TemplateCategory.popular,
@@ -51,11 +52,10 @@ struct HomeContentView: View {
     
     // ウィジェットセクション
     private var widgetSection: some View {
-        let dummyItems: [Any] = viewModel.widgetItems.isEmpty ? [0, 1, 2, 3, 4] : viewModel.widgetItems
-        
-        return GenericSectionView<Any, WidgetListView>(
-            title: WidgetCategory.popular.rawValue,
-            items: dummyItems,
+        GenericSectionView(
+            title: "Popular Widgets",
+            seeMoreText: "button_see_more".localized,
+            items: viewModel.widgetItems.isEmpty ? getDummyWidgets() : viewModel.widgetItems,
             destination: WidgetListView(
                 viewModel: WidgetListViewModel(
                     repository: MockWidgetRepository(),
@@ -64,20 +64,28 @@ struct HomeContentView: View {
             ),
             itemBuilder: { item, index in
                 AnyView(
-                    WidgetItemView(
-                        widget: item is Int ? 
-                            createDummyWidget(index: index) : 
-                            item as! WidgetItem
-                    )
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(width: calculateWidgetWidth(), height: 100)
+                        .cornerRadius(12)
                 )
             }
         )
+    }
+    
+    // ウィジェットの横幅を計算するヘルパーメソッド
+    private func calculateWidgetWidth() -> CGFloat {
+        let screenWidth = UIScreen.main.bounds.width
+        let padding: CGFloat = 16 * 2  // 画面の左右パディング
+        let spacing: CGFloat = 16      // アイテム間の間隔
+        return (screenWidth - padding - spacing) / 2  // 2列表示
     }
     
     // ロック画面セクション
     private var lockScreenSection: some View {
         GenericSectionView(
             title: LockScreenCategory.popular.rawValue,
+            seeMoreText: "button_see_more".localized,
             items: viewModel.lockScreenItems,
             destination: ContentListView(
                 category: LockScreenCategory.popular,
@@ -99,6 +107,7 @@ struct HomeContentView: View {
     private var wallpaperSection: some View {
         GenericSectionView(
             title: WallpaperCategory.popular.rawValue,
+            seeMoreText: "button_see_more".localized,
             items: viewModel.wallpaperItems,
             destination: ContentListView(
                 category: WallpaperCategory.popular,
@@ -120,6 +129,7 @@ struct HomeContentView: View {
     private var movingWallpaperSection: some View {
         GenericSectionView(
             title: MovingWallpaperCategory.popular.rawValue,
+            seeMoreText: "button_see_more".localized,
             items: viewModel.movingWallpaperItems,
             destination: ContentListView(
                 category: MovingWallpaperCategory.popular,
@@ -137,16 +147,19 @@ struct HomeContentView: View {
         )
     }
     
-    private func createDummyWidget(index: Int) -> WidgetItem {
-        WidgetItem(
-            id: UUID(),
-            title: "ダミーウィジェット \(index + 1)",
-            description: "ダミーの説明文です",
-            imageUrl: "placeholder",
-            category: WidgetCategory.popular.rawValue,
-            popularity: 100,
-            createdAt: Date()
-        )
+    // ダミーデータを生成する関数
+    private func getDummyWidgets() -> [WidgetItem] {
+        return (0..<5).map { index in
+            WidgetItem(
+                id: UUID(),
+                title: "ダミーウィジェット \(index + 1)",
+                description: "ダミーの説明文です",
+                imageUrl: "placeholder",
+                category: WidgetCategory.popular.rawValue,
+                popularity: 100,
+                createdAt: Date()
+            )
+        }
     }
 }
 

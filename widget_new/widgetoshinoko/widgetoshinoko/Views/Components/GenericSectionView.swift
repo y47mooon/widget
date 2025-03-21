@@ -3,6 +3,7 @@ import SwiftUI
 struct GenericSectionView<Item, Destination: View>: View {
     // プロパティ
     let title: String
+    let seeMoreText: String
     let items: [Item]
     let destination: Destination
     let itemsPerRow: Int
@@ -11,12 +12,14 @@ struct GenericSectionView<Item, Destination: View>: View {
     // 初期化
     init(
         title: String,
+        seeMoreText: String = "button_see_more".localized,
         items: [Item],
         destination: Destination,
         itemsPerRow: Int = 1,
         @ViewBuilder itemBuilder: @escaping (Item, Int) -> AnyView
     ) {
         self.title = title
+        self.seeMoreText = seeMoreText
         self.items = items
         self.destination = destination
         self.itemsPerRow = itemsPerRow
@@ -31,12 +34,9 @@ struct GenericSectionView<Item, Destination: View>: View {
                     .font(.headline)
                 Spacer()
                 NavigationLink(destination: destination) {
-                    HStack {
-                        Text("もっと見る")
-                            .font(.system(size: 14))
-                        Image(systemName: "chevron.right")
-                    }
-                    .foregroundColor(.gray)
+                    Text(seeMoreText)
+                        .font(.subheadline)
+                        .foregroundColor(.blue)
                 }
             }
             .padding(.horizontal)

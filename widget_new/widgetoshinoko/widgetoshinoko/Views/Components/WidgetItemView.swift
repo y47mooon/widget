@@ -6,7 +6,7 @@ struct WidgetItemView: View {
     var body: some View {
         Rectangle()
             .fill(Color.gray.opacity(0.2))
-            .frame(width: calculateWidth(), height: 80)  // 横幅を計算し、高さを調整
+            .frame(width: calculateWidth(), height: 30)  // 高さを80から60に変更
             .cornerRadius(12)
             .overlay(
                 VStack(alignment: .leading) {

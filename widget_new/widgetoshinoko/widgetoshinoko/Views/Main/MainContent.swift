@@ -1,12 +1,5 @@
 import SwiftUI
 
-// ウィジェットサイズの列挙型
-enum WidgetSize: String, CaseIterable {
-    case small = "Small"
-    case medium = "Medium"
-    case large = "Large"
-}
-
 // メインカテゴリーの列挙型
 enum MainCategory: Int, CaseIterable {
     case all = 0
@@ -19,13 +12,13 @@ enum MainCategory: Int, CaseIterable {
     
     var title: String {
         switch self {
-        case .all: return "全て"
-        case .template: return "テンプレート"
-        case .widget: return "ウィジェット"
-        case .icon: return "アイコン"
-        case .wallpaper: return "壁紙"
-        case .lockScreen: return "ロック画面"
-        case .movingWallpaper: return "動く壁紙"
+        case .all: return "category_all".localized
+        case .template: return "category_template".localized
+        case .widget: return "category_widget".localized
+        case .icon: return "category_icon".localized
+        case .wallpaper: return "category_wallpaper".localized
+        case .lockScreen: return "category_lockScreen".localized
+        case .movingWallpaper: return "category_movingWallpaper".localized
         }
     }
 }

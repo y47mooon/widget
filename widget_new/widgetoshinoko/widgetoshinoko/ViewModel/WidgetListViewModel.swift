@@ -1,31 +1,42 @@
-import Foundation
 import SwiftUI
 
 @MainActor
 final class WidgetListViewModel: ObservableObject {
-    @Published private(set) var widgets: [WidgetItem] = []
+    @Published private(set) var widgetItems: [WidgetItem] = []
     @Published private(set) var isLoading = false
     @Published var errorMessage: String?
     @Published var searchText: String = ""
     
-    private let repository: WidgetRepositoryProtocol
     let category: WidgetCategory
+    private let repository: WidgetRepositoryProtocol
     
-    nonisolated init(repository: WidgetRepositoryProtocol = MockWidgetRepository(),
-                     category: WidgetCategory) {
-        self.repository = repository
-        self.category = category
+    var filteredWidgets: [WidgetItem] {
+        if searchText.isEmpty {
+            return widgetItems
+        }
+        return widgetItems.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
     }
     
-    func loadWidgets(category: String? = nil) async {
+    nonisolated init(repository: WidgetRepositoryProtocol = MockWidgetRepository(),
+         category: WidgetCategory) {
+        self.repository = repository
+        self.category = category
+        // 非同期で初期データを読み込む
+        Task { @MainActor in
+            await self.loadWidgets()
+        }
+    }
+    
+    func loadWidgets() async {
+        guard !isLoading else { return }
+        
         isLoading = true
         errorMessage = nil
         
         do {
-            widgets = try await repository.fetchWidgets(category: category)
+            widgetItems = try await repository.fetchWidgets(category: category.rawValue)
         } catch let error as APIError {
             errorMessage = error.errorDescription
-            // 開発時はエラーの詳細を出力
             #if DEBUG
             print("Error: \(error)")
             #endif
@@ -36,16 +47,22 @@ final class WidgetListViewModel: ObservableObject {
         isLoading = false
     }
     
+    // ソート機能の実装
     func applySortOrder(_ order: SortOrder) {
-        withAnimation {
-            switch order {
-            case .popular:
-                widgets.sort { $0.popularity > $1.popularity }
-            case .newest:
-                widgets.sort { $0.createdAt > $1.createdAt }
-            case .oldest:
-                widgets.sort { $0.createdAt < $1.createdAt }
-            }
+        switch order {
+        case .popular:
+            widgetItems.sort { $0.popularity > $1.popularity }
+        case .newest:
+            widgetItems.sort { $0.createdAt > $1.createdAt }
+        case .oldest:
+            widgetItems.sort { $0.createdAt < $1.createdAt }
         }
+    }
+    
+    // プレビュー用
+    static var previewViewModel: WidgetListViewModel {
+        let viewModel = WidgetListViewModel(category: .popular)
+        viewModel.widgetItems = PreviewData.widgetItems
+        return viewModel
     }
 }

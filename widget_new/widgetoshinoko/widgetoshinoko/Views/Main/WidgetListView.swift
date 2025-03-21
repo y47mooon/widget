@@ -6,11 +6,29 @@ struct WidgetListView: View {
     @State private var sortOrder: SortOrder = .popular
     @State private var selectedSize: WidgetSize = .small
     @State private var searchText: String = ""
-    let category: WidgetCategory
+    
+    var filteredWidgets: [WidgetItem] {
+        let widgets = viewModel.widgetItems
+        if searchText.isEmpty {
+            return widgets
+        }
+        return widgets.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+    }
+    
+    var columns: [GridItem] {
+        switch selectedSize {
+        case .small:
+            return [
+                GridItem(.flexible(), spacing: 16),
+                GridItem(.flexible(), spacing: 16)
+            ]
+        case .medium, .large:
+            return [GridItem(.flexible())]
+        }
+    }
     
     init(viewModel: WidgetListViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
-        self.category = viewModel.category
     }
     
     var body: some View {
@@ -20,9 +38,9 @@ struct WidgetListView: View {
                 .padding()
             
             // サイズ選択
-            Picker("ウィジェットサイズ", selection: $selectedSize) {
+            Picker("widget_size".localized, selection: $selectedSize) {
                 ForEach(WidgetSize.allCases, id: \.self) { size in
-                    Text(size.rawValue)
+                    Text(size.displayName)
                         .tag(size)
                 }
             }
@@ -31,17 +49,22 @@ struct WidgetListView: View {
             
             // ウィジェット一覧
             ScrollView {
-                switch selectedSize {
-                case .small:
-                    smallWidgetGrid
-                case .medium:
-                    mediumWidgetList
-                case .large:
-                    largeWidgetList
+                LazyVGrid(columns: columns, spacing: 16) {
+                    if viewModel.filteredWidgets.isEmpty {
+                        // データがない場合はダミーのウィジェットを表示
+                        ForEach(0..<10) { _ in
+                            WidgetSizeView(size: selectedSize)
+                        }
+                    } else {
+                        ForEach(viewModel.filteredWidgets, id: \.id) { widget in
+                            WidgetSizeView(size: selectedSize)
+                        }
+                    }
                 }
+                .padding()
             }
         }
-        .navigationTitle(category.rawValue)
+        .navigationTitle(viewModel.category.displayName)
         .navigationBarBackButtonHidden(false)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -67,46 +90,10 @@ struct WidgetListView: View {
             await viewModel.loadWidgets()
         }
     }
-    
-    // Small サイズのグリッド（2列）
-    private var smallWidgetGrid: some View {
-        LazyVGrid(
-            columns: [
-                GridItem(.flexible(), spacing: 16),
-                GridItem(.flexible(), spacing: 16)
-            ],
-            spacing: 16
-        ) {
-            ForEach(viewModel.widgets) { widget in
-                WidgetSizeView(size: .small, title: widget.title)
-            }
-        }
-        .padding()
-    }
-    
-    // Medium サイズのリスト（1列）
-    private var mediumWidgetList: some View {
-        LazyVStack(spacing: 16) {
-            ForEach(viewModel.widgets) { widget in
-                WidgetSizeView(size: .medium, title: widget.title)
-            }
-        }
-        .padding()
-    }
-    
-    // Large サイズのリスト（1列）
-    private var largeWidgetList: some View {
-        LazyVStack(spacing: 16) {
-            ForEach(viewModel.widgets) { widget in
-                WidgetSizeView(size: .large, title: widget.title)
-            }
-        }
-        .padding()
-    }
 }
 
 #Preview {
     NavigationView {
-        WidgetListView(viewModel: .preview)
+        WidgetListView(viewModel: .previewViewModel)
     }
 }

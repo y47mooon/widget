@@ -2,35 +2,30 @@ import SwiftUI
 
 struct WidgetGridView: View {
     let widgets: [WidgetItem]
+    let selectedSize: WidgetSize
+    
+    var columns: [GridItem] {
+        switch selectedSize {
+        case .small:
+            return [GridItem(.flexible()), GridItem(.flexible())]
+        case .medium, .large:
+            return [GridItem(.flexible())]
+        }
+    }
     
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [
-                GridItem(.flexible()),
-                GridItem(.flexible())
-            ], spacing: 16) {
-                ForEach(widgets) { widget in
-                    VStack {
-                        // プレースホルダーまたは実際の画像
-                        Rectangle()
-                            .fill(Color.gray.opacity(0.2))
-                            .frame(height: 200)
-                            .cornerRadius(12)
-                        
-                        Text(widget.title)
-                            .lineLimit(1)
-                            .padding(.horizontal, 8)
-                    }
-                }
+        LazyVGrid(columns: columns, spacing: 16) {
+            ForEach(widgets, id: \.id) { widget in
+                WidgetSizeView(size: selectedSize)
             }
-            .padding()
         }
+        .padding()
     }
 }
 
 // プレビュー用のモックデータがある場合のみ表示
 #if DEBUG
 #Preview {
-    WidgetGridView(widgets: MockData.widgets)
+    WidgetGridView(widgets: MockData.widgets, selectedSize: .small)
 }
 #endif

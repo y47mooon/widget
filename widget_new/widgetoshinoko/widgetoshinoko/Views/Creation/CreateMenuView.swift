@@ -1,38 +1,26 @@
 import SwiftUI
+
 struct CreateMenuView: View {
-    @Binding var isPresented: Bool
-    @Binding var selectedCreationType: WidgetCreationType?
-    
+    @Binding var selectedType: WidgetCreationType?
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
-        VStack(spacing: 0) {
-            Text("作成する")
-                .font(.headline)
-                .padding(.vertical)
-            
-            ForEach(WidgetCreationType.allCases.dropLast(), id: \.self) { type in
+        List {
+            ForEach(WidgetCreationType.allCases, id: \.self) { type in
                 Button(action: {
-                    selectedCreationType = type
-                    isPresented = false
+                    selectedType = type
+                    dismiss()
                 }) {
-                    Text(type.title)
-                        .foregroundColor(.blue)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
+                    HStack {
+                        Image(systemName: type.iconName)
+                        Text(type.displayName)
+                    }
                 }
-                Divider()
-            }
-            
-            Button(action: {
-                isPresented = false
-            }) {
-                Text("キャンセル")
-                    .foregroundColor(.blue)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
             }
         }
-        .background(Color(UIColor.systemBackground))
-        .cornerRadius(12)
-        .padding()
     }
+}
+
+#Preview {
+    CreateMenuView(selectedType: .constant(nil))
 }

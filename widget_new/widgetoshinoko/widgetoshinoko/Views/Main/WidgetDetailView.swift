@@ -29,16 +29,13 @@ struct WidgetDetailView: View {
                     spacing: 16
                 ) {
                     ForEach(0..<visibleItems, id: \.self) { index in
-                        WidgetSizeView(
-                            size: selectedSize,
-                            title: "ダミーウィジェット \(index + 1)"  // タイトルを追加
-                        )
-                        .onAppear {
-                            // 最後のアイテムが表示されたら、さらにアイテムを追加
-                            if index == visibleItems - 1 && visibleItems < 20 {
-                                visibleItems += 5
+                        WidgetSizeView(size: selectedSize)
+                            .onAppear {
+                                // 最後のアイテムが表示されたら、さらにアイテムを追加
+                                if index == visibleItems - 1 && visibleItems < 20 {
+                                    visibleItems += 5
+                                }
                             }
-                        }
                     }
                 }
                 .padding()

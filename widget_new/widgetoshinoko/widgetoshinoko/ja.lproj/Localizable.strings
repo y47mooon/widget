@@ -1,0 +1,114 @@
+/* 
+  Localizable.strings
+  widgetoshinoko
+
+  Created by ゆぅ on 2025/03/21.
+  
+*/
+// Tab Items
+"tab_home" = "ホーム";
+"tab_search" = "検索";
+"tab_create" = "作成";
+"tab_favorites" = "お気に入り";
+"tab_mypage" = "マイページ";
+
+// Main Categories
+"category_all" = "全て";
+"category_template" = "テンプレート";
+"category_widget" = "ウィジェット";
+"category_icon" = "アイコン";
+"category_wallpaper" = "壁紙";
+"category_lockScreen" = "ロック画面";
+"category_movingWallpaper" = "動く壁紙";
+
+// Widget Categories
+"widget_popular" = "人気のウィジェット";
+"widget_weather" = "天気";
+"widget_clock" = "時計";
+"widget_calendar" = "カレンダー";
+"widget_reminder" = "リマインダー";
+"widget_date" = "日付";
+"widget_anniversary" = "記念日";
+"widget_fortune" = "占い";
+"widget_memo" = "メモ";
+
+// Customization
+"customization_title" = "詳細設定";
+"customization_border" = "枠線を表示";
+"customization_border_width" = "枠線の太さ";
+"customization_corner_radius" = "角の丸み";
+"customization_opacity" = "透明度";
+
+// Buttons
+"button_cancel" = "閉じる";
+"button_see_more" = "もっと見る";
+
+// Filter Tags
+"filter_simple" = "シンプル";
+"filter_white" = "白";
+"filter_monochrome" = "モノクロ";
+"filter_cute" = "かわいい";
+"filter_beautiful" = "綺麗";
+"filter_aqua" = "星野アクア";
+"filter_ruby" = "星野ルビー";
+"filter_kana" = "有馬かな";
+"filter_ai" = "星野アイ";
+"filter_akane" = "早川あかね";
+"filter_memcho" = "MEMちょ";
+
+// Template Categories
+"template_popular" = "人気のホーム画面";
+"template_new" = "新着";
+"template_simple" = "シンプル";
+"template_minimal" = "ミニマル";
+"template_stylish" = "おしゃれ";
+
+// Wallpaper Categories
+"wallpaper_popular" = "人気の壁紙";
+"wallpaper_new" = "新着";
+"wallpaper_recommended" = "おすすめ";
+"wallpaper_seasonal" = "季節もの";
+"wallpaper_anime" = "アニメ";
+"wallpaper_character" = "キャラクター";
+
+// Lock Screen Categories
+"lockscreen_popular" = "人気のロック画面";
+"lockscreen_stylish" = "おしゃれ";
+"lockscreen_simple" = "シンプル";
+"lockscreen_ai" = "星野アイ";
+"lockscreen_ruby" = "星野ルビー";
+
+// Moving Wallpaper Categories
+"movingwallpaper_popular" = "人気の動く壁紙";
+"movingwallpaper_new" = "新着";
+"movingwallpaper_recommended" = "おすすめ";
+"movingwallpaper_ocean" = "海";
+"movingwallpaper_nature" = "自然";
+"movingwallpaper_abstract" = "抽象";
+
+// Icon Categories
+"icon_popular" = "人気のアイコンセット";
+"icon_new" = "新着";
+"icon_cute" = "かわいい";
+"icon_cool" = "おしゃれ";
+"icon_white" = "白";
+"icon_dark" = "ダーク";
+
+"search_placeholder" = "検索";
+
+// MyPage
+"mypage_settings" = "設定";
+"mypage_notifications" = "お知らせ";
+"mypage_help" = "ヘルプ";
+"mypage_terms" = "利用規約";
+"mypage_privacy" = "プライバシーポリシー";
+"mypage_about" = "このアプリについて";
+
+// MyPage Menu
+"mypage_download_history" = "ダウンロード履歴";
+"mypage_account" = "アカウント";
+"mypage_fanlink" = "Fanlink (連携)";
+"mypage_payment" = "決済情報";
+"mypage_notification" = "通知";
+"mypage_contact" = "お問い合わせ";
+"mypage_logout" = "ログアウト";
