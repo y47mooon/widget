@@ -1,0 +1,6 @@
+framework module Pods_widgetoshinoko_widgetoshinokoUITests {
+  umbrella header "Pods-widgetoshinoko-widgetoshinokoUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

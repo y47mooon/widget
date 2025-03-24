@@ -1,0 +1,6 @@
+framework module Pods_gaudyoshinokoExtension {
+  umbrella header "Pods-gaudyoshinokoExtension-umbrella.h"
+
+  export *
+  module * { export * }
+}

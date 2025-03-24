@@ -8,22 +8,6 @@
 import Foundation
 import SwiftUI
 
-// テンプレートの種類を定義
-enum TemplateCategory: String, CaseIterable {
-    case popular = "人気のホーム画面"
-    case new = "新着"
-    case stylish = "おしゃれ"
-}
-
-// テンプレートアイテムのモデル
-struct TemplateItem: Identifiable {
-    let id = UUID()
-    let imageUrl: String
-    let title: String
-    let category: TemplateCategory
-    // 必要に応じて他のプロパティを追加
-}
-
 // TemplateViewModelの追加
 class TemplateViewModel: ObservableObject {
     @Published var itemsByCategory: [TemplateCategory: [TemplateItem]] = [:]
@@ -33,6 +17,7 @@ class TemplateViewModel: ObservableObject {
         for category in TemplateCategory.allCases {
             itemsByCategory[category] = (0..<4).map { index in
                 TemplateItem(
+                    id: UUID(),
                     imageUrl: "dummy_url",
                     title: "\(category.rawValue) \(index + 1)",
                     category: category
@@ -173,6 +158,7 @@ class TemplateListViewModel: ObservableObject {
             // テストデータの追加（実際のAPIレスポンスに置き換え）
             let newItems = (0..<10).map { _ in
                 TemplateItem(
+                    id: UUID(),
                     imageUrl: "dummy_url",
                     title: "Template \(self.items.count + 1)",
                     category: .popular

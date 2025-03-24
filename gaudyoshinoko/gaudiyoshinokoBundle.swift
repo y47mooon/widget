@@ -12,7 +12,6 @@ import SwiftUI
 struct gaudiyoshinokoBundle: WidgetBundle {
     var body: some Widget {
         gaudiyoshinoko()
-        gaudiyoshinokoControl()
         gaudiyoshinokoLiveActivity()
     }
 }

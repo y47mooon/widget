@@ -1,0 +1,116 @@
+/* 
+  Localizable.strings
+  widgetoshinoko
+
+  Created by ゆぅ on 2025/03/21.
+  
+*/
+// Tab Items
+"tab_home" = "Home";
+"tab_search" = "Search";
+"tab_create" = "Create";
+"tab_favorites" = "Favorites";
+"tab_mypage" = "My Page";
+
+// Main Categories
+"category_all" = "All";
+"category_template" = "Template";
+"category_widget" = "Widget";
+"category_icon" = "Icon";
+"category_wallpaper" = "Wallpaper";
+"category_lockScreen" = "Lock Screen";
+"category_movingWallpaper" = "Live Wallpaper";
+
+// Widget Categories
+"widget_popular" = "Popular Widgets";
+"widget_weather" = "Weather";
+"widget_clock" = "Clock";
+"widget_calendar" = "Calendar";
+"widget_reminder" = "Reminder";
+"widget_date" = "Date";
+"widget_anniversary" = "Anniversary";
+"widget_fortune" = "Fortune";
+"widget_memo" = "Memo";
+
+// Customization
+"customization_title" = "Settings";
+"customization_border" = "Show Border";
+"customization_border_width" = "Border Width";
+"customization_corner_radius" = "Corner Radius";
+"customization_opacity" = "Opacity";
+
+// Buttons
+"button_cancel" = "Close";
+"button_see_more" = "See More";
+
+// Filter Tags
+"filter_simple" = "Simple";
+"filter_white" = "White";
+"filter_monochrome" = "Monochrome";
+"filter_cute" = "Cute";
+"filter_beautiful" = "Beautiful";
+"filter_aqua" = "Hoshino Aqua";
+"filter_ruby" = "Hoshino Ruby";
+"filter_kana" = "Arima Kana";
+"filter_ai" = "Hoshino Ai";
+"filter_akane" = "Hayakawa Akane";
+"filter_memcho" = "MEMcho";
+
+// Template Categories
+"template_popular" = "Popular Home Screens";
+"template_new" = "New";
+"template_simple" = "Simple";
+"template_minimal" = "Minimal";
+"template_stylish" = "Stylish";
+
+// Wallpaper Categories
+"wallpaper_popular" = "Popular Wallpapers";
+"wallpaper_new" = "New";
+"wallpaper_recommended" = "Recommended";
+"wallpaper_seasonal" = "Seasonal";
+"wallpaper_anime" = "Anime";
+"wallpaper_character" = "Character";
+
+// Lock Screen Categories
+"lockscreen_popular" = "Popular Lock Screens";
+"lockscreen_stylish" = "Stylish";
+"lockscreen_simple" = "Simple";
+"lockscreen_ai" = "Hoshino Ai";
+"lockscreen_ruby" = "Hoshino Ruby";
+
+// Moving Wallpaper Categories
+"movingwallpaper_popular" = "Popular Live Wallpapers";
+"movingwallpaper_new" = "New";
+"movingwallpaper_recommended" = "Recommended";
+"movingwallpaper_ocean" = "Ocean";
+"movingwallpaper_nature" = "Nature";
+"movingwallpaper_abstract" = "Abstract";
+
+// Icon Categories
+"icon_popular" = "Popular Icon Sets";
+"icon_new" = "New";
+"icon_cute" = "Cute";
+"icon_cool" = "Cool";
+"icon_white" = "White";
+"icon_dark" = "Dark";
+
+"search_placeholder" = "Search";
+
+// MyPage
+"mypage_settings" = "Settings";
+"mypage_notifications" = "Notifications";
+"mypage_help" = "Help";
+"mypage_terms" = "Terms of Service";
+"mypage_privacy" = "Privacy Policy";
+"mypage_about" = "About This App";
+
+// MyPage Menu
+"mypage_download_history" = "Download History";
+"mypage_account" = "Account";
+"mypage_fanlink" = "Fanlink";
+"mypage_payment" = "Payment Information";
+"mypage_notification" = "Notifications";
+"mypage_help" = "Help";
+"mypage_contact" = "Contact Us";
+"mypage_logout" = "Log Out";
+

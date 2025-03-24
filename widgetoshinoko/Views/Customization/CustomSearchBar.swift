@@ -16,8 +16,8 @@ struct CustomSearchBar: View {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.gray)
             
-            TextField("検索", text: $searchText)
-                .textFieldStyle(PlainTextFieldStyle())
+            TextField("search_placeholder".localized, text: $searchText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
             
             if !searchText.isEmpty {
                 Button(action: {
@@ -28,10 +28,7 @@ struct CustomSearchBar: View {
                 }
             }
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .background(Color.gray.opacity(0.1))
         .cornerRadius(10)
-        .padding(.horizontal)
+        .padding(.horizontal, 16)
     }
 }

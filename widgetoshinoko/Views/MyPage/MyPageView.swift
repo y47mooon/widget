@@ -3,20 +3,27 @@ import SwiftUI
 struct MyPageListItem: View {
     let iconName: String
     let title: String
-    let textColor: Color
+    var textColor: Color = .black
+    var showChevron: Bool = true
     
     var body: some View {
-        HStack {
+        HStack(spacing: 12) {
             Image(systemName: iconName)
                 .font(.system(size: 20))
-                .frame(width: 24)
+                .foregroundColor(textColor)
+                .frame(width: 24, height: 24)
+            
             Text(title)
                 .foregroundColor(textColor)
+            
             Spacer()
-            Image(systemName: "chevron.right")
-                .foregroundColor(.gray)
+            
+            if showChevron && textColor != .red {
+                Image(systemName: "chevron.forward")
+                    .foregroundColor(.gray)
+                    .font(.system(size: 14))
+            }
         }
-        .padding(.horizontal, 16)
         .padding(.vertical, 12)
     }
 }
@@ -26,87 +33,99 @@ struct MyPageView: View {
         NavigationView {
             List {
                 Group {
-                    ZStack {
-                        MyPageListItem(iconName: "cube.fill", title: "ダウンロード履歴", textColor: .primary)
-                        NavigationLink(destination: Text("ダウンロード履歴")) {
-                            EmptyView()
-                        }
-                        .opacity(0)
+                    NavigationLink {
+                        DownloadHistoryView()
+                    } label: {
+                        MyPageListItem(
+                            iconName: "square.and.arrow.down",
+                            title: "mypage_download_history".localized,
+                            showChevron: false
+                        )
+                    }
+                    
+                    NavigationLink {
+                        AccountView()
+                    } label: {
+                        MyPageListItem(
+                            iconName: "person.2",
+                            title: "mypage_account".localized,
+                            showChevron: false
+                        )
+                    }
+                    
+                    NavigationLink {
+                        FanlinkView()
+                    } label: {
+                        MyPageListItem(
+                            iconName: "house",
+                            title: "mypage_fanlink".localized,
+                            showChevron: false
+                        )
+                    }
+                    
+                    NavigationLink {
+                        PaymentView()
+                    } label: {
+                        MyPageListItem(
+                            iconName: "creditcard",
+                            title: "mypage_payment".localized,
+                            showChevron: false
+                        )
+                    }
+                    
+                    NavigationLink {
+                        NotificationSettingsView()
+                    } label: {
+                        MyPageListItem(
+                            iconName: "bell",
+                            title: "mypage_notification".localized,
+                            showChevron: false
+                        )
                     }
                 }
-                .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
-                .background(Color.white)
+                .listRowBackground(Color.white)
                 
                 Group {
-                    ZStack {
-                        MyPageListItem(iconName: "person.2.fill", title: "アカウント", textColor: .primary)
-                        NavigationLink(destination: Text("アカウント設定")) {
-                            EmptyView()
-                        }
-                        .opacity(0)
+                    NavigationLink {
+                        HelpView()
+                    } label: {
+                        MyPageListItem(
+                            iconName: "questionmark.circle",
+                            title: "mypage_help".localized,
+                            showChevron: false
+                        )
                     }
                     
-                    ZStack {
-                        MyPageListItem(iconName: "house.fill", title: "Fanlink (連携)", textColor: .primary)
-                        NavigationLink(destination: Text("Fanlink設定")) {
-                            EmptyView()
-                        }
-                        .opacity(0)
-                    }
-                    
-                    ZStack {
-                        MyPageListItem(iconName: "creditcard.fill", title: "決済情報", textColor: .primary)
-                        NavigationLink(destination: Text("決済情報")) {
-                            EmptyView()
-                        }
-                        .opacity(0)
-                    }
-                    
-                    ZStack {
-                        MyPageListItem(iconName: "bell.fill", title: "通知", textColor: .primary)
-                        NavigationLink(destination: Text("通知設定")) {
-                            EmptyView()
-                        }
-                        .opacity(0)
+                    NavigationLink {
+                        ContactView()
+                    } label: {
+                        MyPageListItem(
+                            iconName: "headphones",
+                            title: "mypage_contact".localized,
+                            showChevron: false
+                        )
                     }
                 }
-                .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
-                .background(Color.white)
-                
-                Group {
-                    ZStack {
-                        MyPageListItem(iconName: "questionmark.circle.fill", title: "ヘルプ", textColor: .primary)
-                        NavigationLink(destination: Text("ヘルプ")) {
-                            EmptyView()
-                        }
-                        .opacity(0)
-                    }
-                    
-                    ZStack {
-                        MyPageListItem(iconName: "headphones", title: "お問い合わせ", textColor: .primary)
-                        NavigationLink(destination: Text("お問い合わせ")) {
-                            EmptyView()
-                        }
-                        .opacity(0)
-                    }
-                }
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-                .background(Color.white)
+                .listRowBackground(Color.white)
                 
                 Button(action: {
-                    // ログアウト処理
-                    print("ログアウト")
+                    // ログアウト処理をここに実装
                 }) {
-                    MyPageListItem(iconName: "rectangle.portrait.and.arrow.right", title: "ログアウト", textColor: .red)
+                    MyPageListItem(
+                        iconName: "rectangle.portrait.and.arrow.right",
+                        title: "mypage_logout".localized,
+                        textColor: .red,
+                        showChevron: false
+                    )
                 }
-                .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
-                .background(Color.white)
+                .listRowBackground(Color.white)
             }
             .listStyle(PlainListStyle())
+            .navigationTitle("tab_mypage".localized)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

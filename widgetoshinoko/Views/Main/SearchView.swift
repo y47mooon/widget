@@ -49,7 +49,7 @@ struct SearchBarView: View {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.gray)
             
-            TextField("検索", text: $searchText)
+            TextField("search_placeholder".localized, text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
             
             if !searchText.isEmpty {

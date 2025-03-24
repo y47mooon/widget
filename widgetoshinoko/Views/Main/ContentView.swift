@@ -34,25 +34,21 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             TabView(selection: $selectedTab) {
-                MainContentView(
-                    selectedCategory: $selectedCategory,
-                    categories: AppConstants.categories,
-                    filterTags: AppConstants.topFilterTags
-                )
-                .tabItem {
-                    CustomTabItem(
-                        imageName: "house.fill",
-                        text: "ホーム",
-                        isSelected: selectedTab == 0
-                    )
-                }
-                .tag(0)
+                MainContent()
+                    .tabItem {
+                        CustomTabItem(
+                            imageName: "house",
+                            text: "tab_home".localized,
+                            isSelected: selectedTab == 0
+                        )
+                    }
+                    .tag(0)
                 
                 SearchView()
                     .tabItem {
                         CustomTabItem(
                             imageName: "magnifyingglass",
-                            text: "検索",
+                            text: "tab_search".localized,
                             isSelected: selectedTab == 1
                         )
                     }
@@ -62,7 +58,7 @@ struct ContentView: View {
                     .tabItem {
                         Image(systemName: "plus.circle.fill")
                             .environment(\.symbolVariants, .fill)
-                        Text("作成")
+                        Text("tab_create".localized)
                     }
                     .tag(2)
                 
@@ -70,7 +66,7 @@ struct ContentView: View {
                     .tabItem {
                         CustomTabItem(
                             imageName: "heart.fill",
-                            text: "お気に入り",
+                            text: "tab_favorites".localized,
                             isSelected: selectedTab == 3
                         )
                     }
@@ -80,7 +76,7 @@ struct ContentView: View {
                     .tabItem {
                         CustomTabItem(
                             imageName: "person.fill",
-                            text: "マイページ",
+                            text: "tab_mypage".localized,
                             isSelected: selectedTab == 4
                         )
                     }
@@ -98,11 +94,8 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $showingCreateMenu) {
-            CreateMenuView(
-                isPresented: $showingCreateMenu,
-                selectedCreationType: $selectedCreationType
-            )
-            .presentationDetents([.height(400)])
+            CreateMenuView(selectedType: $selectedCreationType)
+                .presentationDetents([.height(400)])
         }
         .onChange(of: selectedCreationType) { newValue in
             if let type = newValue {
