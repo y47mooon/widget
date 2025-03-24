@@ -31,7 +31,7 @@ struct HomeContentView: View {
     // テンプレートセクション
     private var templateSection: some View {
         GenericSectionView(
-            title: TemplateCategory.popular.rawValue,
+            title: "template_popular".localized,
             seeMoreText: "button_see_more".localized,
             items: viewModel.templateItems,
             destination: ContentListView(
@@ -53,7 +53,7 @@ struct HomeContentView: View {
     // ウィジェットセクション
     private var widgetSection: some View {
         GenericSectionView(
-            title: "Popular Widgets",
+            title: "section_popular_widgets".localized,
             seeMoreText: "button_see_more".localized,
             items: viewModel.widgetItems.isEmpty ? getDummyWidgets() : viewModel.widgetItems,
             destination: WidgetListView(
@@ -84,7 +84,7 @@ struct HomeContentView: View {
     // ロック画面セクション
     private var lockScreenSection: some View {
         GenericSectionView(
-            title: LockScreenCategory.popular.rawValue,
+            title: "lockscreen_popular".localized,
             seeMoreText: "button_see_more".localized,
             items: viewModel.lockScreenItems,
             destination: ContentListView(

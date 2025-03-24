@@ -10,6 +10,7 @@ protocol CategoryType {
 // コンテンツタイプの定義
 enum ContentType {
     case template
+    case icon
     case widget
     case wallpaper
     case lockScreen
@@ -37,6 +38,8 @@ enum WidgetCategory: String, CaseIterable, CategoryType {
 enum TemplateCategory: String, CaseIterable, CategoryType {
     case popular = "template_popular"
     case new = "template_new"
+    case recommended = "template_recommended"
+    case seasonal = "template_seasonal"
     case simple = "template_simple"
     case minimal = "template_minimal"
     case stylish = "template_stylish"

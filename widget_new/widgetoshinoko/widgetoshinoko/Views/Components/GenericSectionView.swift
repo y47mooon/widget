@@ -30,7 +30,7 @@ struct GenericSectionView<Item, Destination: View>: View {
         VStack(alignment: .leading, spacing: 10) {
             // ヘッダー
             HStack {
-                Text(title)
+                Text(title.localized)
                     .font(.headline)
                 Spacer()
                 NavigationLink(destination: destination) {

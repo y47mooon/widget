@@ -15,23 +15,21 @@ struct ContentItemView<Category: CategoryType>: View {
     }
     
     var body: some View {
-        RoundedRectangle(cornerRadius: 12)
-            .fill(Color.gray.opacity(0.2))
-            .frame(width: isInList ? listItemWidth : homeItemWidth, height: isInList ? UIScreen.main.bounds.height * 0.45 : UIScreen.main.bounds.height * 0.3)
-    }
-    
-    private var homeItemWidth: CGFloat {
-        let screenWidth = UIScreen.main.bounds.width
-        let padding: CGFloat = 16 * 2
-        let spacing: CGFloat = 15
-        return (screenWidth - padding - (spacing * 2)) / 3
-    }
-    
-    private var listItemWidth: CGFloat {
-        let screenWidth = UIScreen.main.bounds.width
-        let padding: CGFloat = 16 * 2
-        let spacing: CGFloat = 16
-        return (screenWidth - padding - spacing) / 2
+        let context: DisplayContext = {
+            switch contentType {
+            case .template: return .template
+            case .icon: return .icon
+            case .widget: return .widget
+            case .lockScreen: return .home
+            case .wallpaper: return .home
+            case .movingWallpaper: return .home
+            }
+        }()
+        
+        RoundedRectangle(cornerRadius: DesignConstants.Layout.cornerRadius)
+            .fill(DesignConstants.Colors.itemBackground)
+            .contextFrame(for: context, isInList: isInList)
+            .widgetTitleOverlay(item.title)
     }
 }
 

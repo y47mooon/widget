@@ -57,11 +57,13 @@
 "filter_memcho" = "MEMちょ";
 
 // Template Categories
-"template_popular" = "人気のホーム画面";
+"template_popular" = "人気のテンプレート";
 "template_new" = "新着";
 "template_simple" = "シンプル";
 "template_minimal" = "ミニマル";
 "template_stylish" = "おしゃれ";
+"template_recommended" = "おすすめテンプレート";
+"template_seasonal" = "季節のテンプレート";
 
 // Wallpaper Categories
 "wallpaper_popular" = "人気の壁紙";
@@ -112,3 +114,6 @@
 "mypage_notification" = "通知";
 "mypage_contact" = "お問い合わせ";
 "mypage_logout" = "ログアウト";
+
+// Popular Widgetsの部分を修正
+"section_popular_widgets" = "人気のウィジェット";

@@ -4,28 +4,27 @@ struct WidgetGridView: View {
     let widgets: [WidgetItem]
     let selectedSize: WidgetSize
     
-    var columns: [GridItem] {
-        switch selectedSize {
-        case .small:
-            return [GridItem(.flexible()), GridItem(.flexible())]
-        case .medium, .large:
-            return [GridItem(.flexible())]
-        }
-    }
-    
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 16) {
+        LazyVGrid(
+            columns: LayoutCalculator.gridColumns(for: selectedSize), 
+            spacing: DesignConstants.Layout.standardSpacing
+        ) {
             ForEach(widgets, id: \.id) { widget in
-                WidgetSizeView(size: selectedSize)
+                WidgetSizeView(size: selectedSize, title: widget.title)
             }
         }
         .padding()
     }
 }
 
-// プレビュー用のモックデータがある場合のみ表示
-#if DEBUG
 #Preview {
-    WidgetGridView(widgets: MockData.widgets, selectedSize: .small)
+    WidgetGridView(
+        widgets: [
+            WidgetItem.preview,
+            WidgetItem.preview,
+            WidgetItem.preview,
+            WidgetItem.preview
+        ],
+        selectedSize: .small
+    )
 }
-#endif
