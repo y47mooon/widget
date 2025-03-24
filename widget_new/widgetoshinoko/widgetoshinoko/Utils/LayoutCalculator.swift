@@ -119,4 +119,44 @@ struct LayoutCalculator {
             return Array(repeating: GridItem(.flexible(), spacing: spacing), count: Int(DesignConstants.Grid.templateColumns))
         }
     }
+    
+    // MARK: - デバイスタイプ判定
+    
+    static var isSmallDevice: Bool {
+        return UIScreen.main.bounds.width < 375 // iPhone SEなどの小型デバイス
+    }
+    
+    static var isLargeDevice: Bool {
+        return UIScreen.main.bounds.width >= 428 // iPhone Pro Maxなどの大型デバイス
+    }
+    
+    // MARK: - デバイスサイズに応じて列数を調整
+    
+    static func adjustedColumnCount(baseCount: CGFloat) -> CGFloat {
+        if isSmallDevice {
+            return max(baseCount - 1, 1) // 小型デバイスでは列数を減らす
+        } else if isLargeDevice {
+            return baseCount + 1 // 大型デバイスでは列数を増やす
+        }
+        return baseCount
+    }
+    
+    // MARK: - 向きの検出と対応
+    
+    static var isLandscape: Bool {
+        return UIDevice.current.orientation.isLandscape
+    }
+    
+    // MARK: - 向きに応じたグリッド列の調整
+    
+    static func gridColumnsForOrientation(for context: DisplayContext) -> [GridItem] {
+        if isLandscape {
+            // 横向きの場合は列数を増やす
+            let extraColumns: Int = context == .template ? 2 : 1
+            let baseCount = Int(DesignConstants.Grid.templateColumns) + extraColumns
+            return Array(repeating: GridItem(.flexible(), spacing: DesignConstants.Layout.smallSpacing), count: baseCount)
+        } else {
+            return gridColumns(for: context)
+        }
+    }
 }

@@ -1,17 +1,20 @@
-//
-//  widgetoshinokoApp.swift
-//  widgetoshinoko
-//
-//  Created by ゆぅ on 2025/03/02.
-//
-
 import SwiftUI
+import Firebase
 
 @main
-struct WidgetoshinokoApp: App {
+struct widgetoshinokoApp: App {
+    init() {
+        FirebaseApp.configure()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear {
+                    // ここでログを出力
+                    print("ContentView appeared")
+                    print("アプリが正常に起動しました")
+                }
         }
     }
 }
