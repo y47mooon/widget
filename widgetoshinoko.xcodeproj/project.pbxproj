@@ -7,21 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11EEFEBA5DBF3B1165760EFF /* Pods_gaudyoshinokoExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7406F4B75EBA3FD20082E19A /* Pods_gaudyoshinokoExtension.framework */; };
-		7C3E03AEDAFC56FFECF6B7EB /* Pods_widgetoshinoko.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A056B21B70B5EC2A9ED2A29 /* Pods_widgetoshinoko.framework */; };
-		C08A73650D6D7FD8E9506BD0 /* Pods_widgetoshinokoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA71AA7FC9C88ACE932F4813 /* Pods_widgetoshinokoTests.framework */; };
-		CA2151F02D911AC3002D9C92 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		CA2151F22D911AC3002D9C92 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		CA2151F42D911AC3002D9C92 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		CA2151F62D911AC3002D9C92 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		CA2151F82D911AC3002D9C92 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		CA2151FA2D911AC3002D9C92 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		10E34071845E92C86FD88528 /* Pods_widgetoshinoko.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2DFEAFEEEA36CF5473E326 /* Pods_widgetoshinoko.framework */; };
+		3AD67875913A3BFE5A1E671E /* Pods_gaudyoshinokoExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A89DA7C526830B039F5E25 /* Pods_gaudyoshinokoExtension.framework */; };
+		7CB8F1096B1D6B2AF31FF9B7 /* Pods_widgetoshinoko_widgetoshinokoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68176884A85FD70BB2BB9652 /* Pods_widgetoshinoko_widgetoshinokoUITests.framework */; };
 		CA49F3092D747E780021F472 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA49F3082D747E780021F472 /* WidgetKit.framework */; };
 		CA49F30B2D747E780021F472 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA49F30A2D747E780021F472 /* SwiftUI.framework */; };
 		CA49F31C2D747E7A0021F472 /* gaudyoshinokoExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA49F3062D747E780021F472 /* gaudyoshinokoExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CAB05BA82D82D9B4000CFE6C /* SwiftUI.framework in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA49F30A2D747E780021F472 /* SwiftUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CAB05BA92D82D9C3000CFE6C /* WidgetKit.framework in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA49F3082D747E780021F472 /* WidgetKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F9190F1322A8AC1063597633 /* Pods_widgetoshinoko_widgetoshinokoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B311EB267CD898B98733334F /* Pods_widgetoshinoko_widgetoshinokoUITests.framework */; };
+		E4C44F46BD00E3DB191256E7 /* Pods_widgetoshinokoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08585EB37470B0F3CC235175 /* Pods_widgetoshinokoTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,18 +59,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		13EEA3477FFB73508FB1CD0D /* Pods-gaudyoshinokoExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gaudyoshinokoExtension.debug.xcconfig"; path = "Target Support Files/Pods-gaudyoshinokoExtension/Pods-gaudyoshinokoExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		1811E27FDA1D740B3977E466 /* Pods-widgetoshinoko-widgetoshinokoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widgetoshinoko-widgetoshinokoUITests.debug.xcconfig"; path = "Target Support Files/Pods-widgetoshinoko-widgetoshinokoUITests/Pods-widgetoshinoko-widgetoshinokoUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		3A056B21B70B5EC2A9ED2A29 /* Pods_widgetoshinoko.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_widgetoshinoko.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		602683C34834ADC09DD9164C /* Pods-widgetoshinoko-widgetoshinokoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widgetoshinoko-widgetoshinokoUITests.release.xcconfig"; path = "Target Support Files/Pods-widgetoshinoko-widgetoshinokoUITests/Pods-widgetoshinoko-widgetoshinokoUITests.release.xcconfig"; sourceTree = "<group>"; };
-		7406F4B75EBA3FD20082E19A /* Pods_gaudyoshinokoExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gaudyoshinokoExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		93406F7A78E4F9DAA5060FB1 /* Pods-gaudyoshinokoExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gaudyoshinokoExtension.release.xcconfig"; path = "Target Support Files/Pods-gaudyoshinokoExtension/Pods-gaudyoshinokoExtension.release.xcconfig"; sourceTree = "<group>"; };
-		A48B80D85132A8DB036CD9DF /* Pods-widgetoshinokoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widgetoshinokoTests.release.xcconfig"; path = "Target Support Files/Pods-widgetoshinokoTests/Pods-widgetoshinokoTests.release.xcconfig"; sourceTree = "<group>"; };
-		ACC144E2F1550F26D158EB64 /* Pods-widgetoshinoko.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widgetoshinoko.debug.xcconfig"; path = "Target Support Files/Pods-widgetoshinoko/Pods-widgetoshinoko.debug.xcconfig"; sourceTree = "<group>"; };
-		B10A35168A6AFB3E27D6B7C6 /* Pods-widgetoshinoko.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widgetoshinoko.release.xcconfig"; path = "Target Support Files/Pods-widgetoshinoko/Pods-widgetoshinoko.release.xcconfig"; sourceTree = "<group>"; };
-		B311EB267CD898B98733334F /* Pods_widgetoshinoko_widgetoshinokoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_widgetoshinoko_widgetoshinokoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B8A49818C3F35B532B44CE1C /* Pods-widgetoshinokoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widgetoshinokoTests.debug.xcconfig"; path = "Target Support Files/Pods-widgetoshinokoTests/Pods-widgetoshinokoTests.debug.xcconfig"; sourceTree = "<group>"; };
-		BA71AA7FC9C88ACE932F4813 /* Pods_widgetoshinokoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_widgetoshinokoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		06B4B58F9BDBA3414CBF8D6E /* Pods-gaudyoshinokoExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gaudyoshinokoExtension.debug.xcconfig"; path = "Target Support Files/Pods-gaudyoshinokoExtension/Pods-gaudyoshinokoExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		08585EB37470B0F3CC235175 /* Pods_widgetoshinokoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_widgetoshinokoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C2DFEAFEEEA36CF5473E326 /* Pods_widgetoshinoko.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_widgetoshinoko.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		41D40EAFB348CA7C6F3B3CDE /* Pods-widgetoshinokoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widgetoshinokoTests.release.xcconfig"; path = "Target Support Files/Pods-widgetoshinokoTests/Pods-widgetoshinokoTests.release.xcconfig"; sourceTree = "<group>"; };
+		4FB0740AC78A96454E217F28 /* Pods-widgetoshinoko-widgetoshinokoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widgetoshinoko-widgetoshinokoUITests.release.xcconfig"; path = "Target Support Files/Pods-widgetoshinoko-widgetoshinokoUITests/Pods-widgetoshinoko-widgetoshinokoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		61A89DA7C526830B039F5E25 /* Pods_gaudyoshinokoExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gaudyoshinokoExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		68176884A85FD70BB2BB9652 /* Pods_widgetoshinoko_widgetoshinokoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_widgetoshinoko_widgetoshinokoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C2D519E2209D7DEA3E27A7B /* Pods-widgetoshinoko.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widgetoshinoko.release.xcconfig"; path = "Target Support Files/Pods-widgetoshinoko/Pods-widgetoshinoko.release.xcconfig"; sourceTree = "<group>"; };
+		AA7C79D419BEA7D48286C2F8 /* Pods-widgetoshinoko-widgetoshinokoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widgetoshinoko-widgetoshinokoUITests.debug.xcconfig"; path = "Target Support Files/Pods-widgetoshinoko-widgetoshinokoUITests/Pods-widgetoshinoko-widgetoshinokoUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		B6F7141E1D872BC11F25109D /* Pods-widgetoshinokoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widgetoshinokoTests.debug.xcconfig"; path = "Target Support Files/Pods-widgetoshinokoTests/Pods-widgetoshinokoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CA49F2D52D747E2D0021F472 /* widgetoshinoko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = widgetoshinoko.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA49F2E52D747E2E0021F472 /* widgetoshinokoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = widgetoshinokoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA49F2EF2D747E2E0021F472 /* widgetoshinokoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = widgetoshinokoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +76,8 @@
 		CA49F3082D747E780021F472 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		CA49F30A2D747E780021F472 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		CA49F3272D7485E70021F472 /* gaudyoshinokoExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = gaudyoshinokoExtension.entitlements; sourceTree = "<group>"; };
+		D34DE3590063C1C3091EE608 /* Pods-gaudyoshinokoExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gaudyoshinokoExtension.release.xcconfig"; path = "Target Support Files/Pods-gaudyoshinokoExtension/Pods-gaudyoshinokoExtension.release.xcconfig"; sourceTree = "<group>"; };
+		E69E2B77F60CAD1C6DA5A274 /* Pods-widgetoshinoko.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widgetoshinoko.debug.xcconfig"; path = "Target Support Files/Pods-widgetoshinoko/Pods-widgetoshinoko.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -114,15 +108,11 @@
 		};
 		CA49F2E82D747E2E0021F472 /* widgetoshinokoTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = widgetoshinokoTests;
 			sourceTree = "<group>";
 		};
 		CA49F2F22D747E2E0021F472 /* widgetoshinokoUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = widgetoshinokoUITests;
 			sourceTree = "<group>";
 		};
@@ -141,13 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA2151F42D911AC3002D9C92 /* BuildFile in Frameworks */,
-				CA2151F62D911AC3002D9C92 /* BuildFile in Frameworks */,
-				CA2151F82D911AC3002D9C92 /* BuildFile in Frameworks */,
-				CA2151F02D911AC3002D9C92 /* BuildFile in Frameworks */,
-				CA2151F22D911AC3002D9C92 /* BuildFile in Frameworks */,
-				CA2151FA2D911AC3002D9C92 /* BuildFile in Frameworks */,
-				7C3E03AEDAFC56FFECF6B7EB /* Pods_widgetoshinoko.framework in Frameworks */,
+				10E34071845E92C86FD88528 /* Pods_widgetoshinoko.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,7 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C08A73650D6D7FD8E9506BD0 /* Pods_widgetoshinokoTests.framework in Frameworks */,
+				E4C44F46BD00E3DB191256E7 /* Pods_widgetoshinokoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9190F1322A8AC1063597633 /* Pods_widgetoshinoko_widgetoshinokoUITests.framework in Frameworks */,
+				7CB8F1096B1D6B2AF31FF9B7 /* Pods_widgetoshinoko_widgetoshinokoUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,24 +157,24 @@
 			files = (
 				CA49F30B2D747E780021F472 /* SwiftUI.framework in Frameworks */,
 				CA49F3092D747E780021F472 /* WidgetKit.framework in Frameworks */,
-				11EEFEBA5DBF3B1165760EFF /* Pods_gaudyoshinokoExtension.framework in Frameworks */,
+				3AD67875913A3BFE5A1E671E /* Pods_gaudyoshinokoExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		088522F9DDB70151A63CD0B6 /* Pods */ = {
+		1ACF74DFCFB66701B4882585 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				13EEA3477FFB73508FB1CD0D /* Pods-gaudyoshinokoExtension.debug.xcconfig */,
-				93406F7A78E4F9DAA5060FB1 /* Pods-gaudyoshinokoExtension.release.xcconfig */,
-				ACC144E2F1550F26D158EB64 /* Pods-widgetoshinoko.debug.xcconfig */,
-				B10A35168A6AFB3E27D6B7C6 /* Pods-widgetoshinoko.release.xcconfig */,
-				1811E27FDA1D740B3977E466 /* Pods-widgetoshinoko-widgetoshinokoUITests.debug.xcconfig */,
-				602683C34834ADC09DD9164C /* Pods-widgetoshinoko-widgetoshinokoUITests.release.xcconfig */,
-				B8A49818C3F35B532B44CE1C /* Pods-widgetoshinokoTests.debug.xcconfig */,
-				A48B80D85132A8DB036CD9DF /* Pods-widgetoshinokoTests.release.xcconfig */,
+				06B4B58F9BDBA3414CBF8D6E /* Pods-gaudyoshinokoExtension.debug.xcconfig */,
+				D34DE3590063C1C3091EE608 /* Pods-gaudyoshinokoExtension.release.xcconfig */,
+				E69E2B77F60CAD1C6DA5A274 /* Pods-widgetoshinoko.debug.xcconfig */,
+				6C2D519E2209D7DEA3E27A7B /* Pods-widgetoshinoko.release.xcconfig */,
+				AA7C79D419BEA7D48286C2F8 /* Pods-widgetoshinoko-widgetoshinokoUITests.debug.xcconfig */,
+				4FB0740AC78A96454E217F28 /* Pods-widgetoshinoko-widgetoshinokoUITests.release.xcconfig */,
+				B6F7141E1D872BC11F25109D /* Pods-widgetoshinokoTests.debug.xcconfig */,
+				41D40EAFB348CA7C6F3B3CDE /* Pods-widgetoshinokoTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -205,7 +189,7 @@
 				CA49F30C2D747E780021F472 /* gaudyoshinoko */,
 				CA49F3072D747E780021F472 /* Frameworks */,
 				CA49F2D62D747E2D0021F472 /* Products */,
-				088522F9DDB70151A63CD0B6 /* Pods */,
+				1ACF74DFCFB66701B4882585 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -225,10 +209,10 @@
 			children = (
 				CA49F3082D747E780021F472 /* WidgetKit.framework */,
 				CA49F30A2D747E780021F472 /* SwiftUI.framework */,
-				7406F4B75EBA3FD20082E19A /* Pods_gaudyoshinokoExtension.framework */,
-				3A056B21B70B5EC2A9ED2A29 /* Pods_widgetoshinoko.framework */,
-				B311EB267CD898B98733334F /* Pods_widgetoshinoko_widgetoshinokoUITests.framework */,
-				BA71AA7FC9C88ACE932F4813 /* Pods_widgetoshinokoTests.framework */,
+				61A89DA7C526830B039F5E25 /* Pods_gaudyoshinokoExtension.framework */,
+				2C2DFEAFEEEA36CF5473E326 /* Pods_widgetoshinoko.framework */,
+				68176884A85FD70BB2BB9652 /* Pods_widgetoshinoko_widgetoshinokoUITests.framework */,
+				08585EB37470B0F3CC235175 /* Pods_widgetoshinokoTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -240,12 +224,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA49F2F92D747E2E0021F472 /* Build configuration list for PBXNativeTarget "widgetoshinoko" */;
 			buildPhases = (
-				8C8826CD0EC153AD2CF14E91 /* [CP] Check Pods Manifest.lock */,
+				1E01D9E15CB2C7C88944D30B /* [CP] Check Pods Manifest.lock */,
 				CA49F2D12D747E2D0021F472 /* Sources */,
 				CA49F2D22D747E2D0021F472 /* Frameworks */,
 				CA49F2D32D747E2D0021F472 /* Resources */,
 				CA49F3212D747E7A0021F472 /* Embed Foundation Extensions */,
-				AB893CF727E5C2BEE1810D3F /* [CP] Embed Pods Frameworks */,
+				9637971D9BFFEF420021681D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -264,7 +248,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA49F2FC2D747E2E0021F472 /* Build configuration list for PBXNativeTarget "widgetoshinokoTests" */;
 			buildPhases = (
-				915815B8C2DBD431B064B615 /* [CP] Check Pods Manifest.lock */,
+				8EE06EABDBBD3CB4FA78EC89 /* [CP] Check Pods Manifest.lock */,
 				CA49F2E12D747E2E0021F472 /* Sources */,
 				CA49F2E22D747E2E0021F472 /* Frameworks */,
 				CA49F2E32D747E2E0021F472 /* Resources */,
@@ -286,11 +270,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA49F2FF2D747E2E0021F472 /* Build configuration list for PBXNativeTarget "widgetoshinokoUITests" */;
 			buildPhases = (
-				FE447C65A3E11A29C1B77479 /* [CP] Check Pods Manifest.lock */,
+				6AD455DB940B3AF78A45A01B /* [CP] Check Pods Manifest.lock */,
 				CA49F2EB2D747E2E0021F472 /* Sources */,
 				CA49F2EC2D747E2E0021F472 /* Frameworks */,
 				CA49F2ED2D747E2E0021F472 /* Resources */,
-				C17DD23488D94145598D0015 /* [CP] Embed Pods Frameworks */,
+				DF7127556C8AD1116490B19C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -309,7 +293,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA49F31E2D747E7A0021F472 /* Build configuration list for PBXNativeTarget "gaudyoshinokoExtension" */;
 			buildPhases = (
-				D4199373880703FD7A0A6AC3 /* [CP] Check Pods Manifest.lock */,
+				69EDDF3485806012713B653D /* [CP] Check Pods Manifest.lock */,
 				CA49F3022D747E780021F472 /* Sources */,
 				CA49F3032D747E780021F472 /* Frameworks */,
 				CA49F3042D747E780021F472 /* Resources */,
@@ -407,7 +391,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8C8826CD0EC153AD2CF14E91 /* [CP] Check Pods Manifest.lock */ = {
+		1E01D9E15CB2C7C88944D30B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -429,63 +413,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		915815B8C2DBD431B064B615 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-widgetoshinokoTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AB893CF727E5C2BEE1810D3F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-widgetoshinoko/Pods-widgetoshinoko-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-widgetoshinoko/Pods-widgetoshinoko-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-widgetoshinoko/Pods-widgetoshinoko-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C17DD23488D94145598D0015 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-widgetoshinoko-widgetoshinokoUITests/Pods-widgetoshinoko-widgetoshinokoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-widgetoshinoko-widgetoshinokoUITests/Pods-widgetoshinoko-widgetoshinokoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-widgetoshinoko-widgetoshinokoUITests/Pods-widgetoshinoko-widgetoshinokoUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D4199373880703FD7A0A6AC3 /* [CP] Check Pods Manifest.lock */ = {
+		69EDDF3485806012713B653D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -507,7 +435,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FE447C65A3E11A29C1B77479 /* [CP] Check Pods Manifest.lock */ = {
+		6AD455DB940B3AF78A45A01B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -527,6 +455,62 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8EE06EABDBBD3CB4FA78EC89 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-widgetoshinokoTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9637971D9BFFEF420021681D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-widgetoshinoko/Pods-widgetoshinoko-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-widgetoshinoko/Pods-widgetoshinoko-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-widgetoshinoko/Pods-widgetoshinoko-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DF7127556C8AD1116490B19C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-widgetoshinoko-widgetoshinokoUITests/Pods-widgetoshinoko-widgetoshinokoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-widgetoshinoko-widgetoshinokoUITests/Pods-widgetoshinoko-widgetoshinokoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-widgetoshinoko-widgetoshinokoUITests/Pods-widgetoshinoko-widgetoshinokoUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -586,7 +570,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -650,7 +633,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -704,7 +686,7 @@
 		};
 		CA49F2FA2D747E2E0021F472 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ACC144E2F1550F26D158EB64 /* Pods-widgetoshinoko.debug.xcconfig */;
+			baseConfigurationReference = E69E2B77F60CAD1C6DA5A274 /* Pods-widgetoshinoko.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -733,13 +715,12 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
 		CA49F2FB2D747E2E0021F472 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B10A35168A6AFB3E27D6B7C6 /* Pods-widgetoshinoko.release.xcconfig */;
+			baseConfigurationReference = 6C2D519E2209D7DEA3E27A7B /* Pods-widgetoshinoko.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -773,7 +754,7 @@
 		};
 		CA49F2FD2D747E2E0021F472 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8A49818C3F35B532B44CE1C /* Pods-widgetoshinokoTests.debug.xcconfig */;
+			baseConfigurationReference = B6F7141E1D872BC11F25109D /* Pods-widgetoshinokoTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -793,7 +774,7 @@
 		};
 		CA49F2FE2D747E2E0021F472 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A48B80D85132A8DB036CD9DF /* Pods-widgetoshinokoTests.release.xcconfig */;
+			baseConfigurationReference = 41D40EAFB348CA7C6F3B3CDE /* Pods-widgetoshinokoTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -813,7 +794,7 @@
 		};
 		CA49F3002D747E2E0021F472 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1811E27FDA1D740B3977E466 /* Pods-widgetoshinoko-widgetoshinokoUITests.debug.xcconfig */;
+			baseConfigurationReference = AA7C79D419BEA7D48286C2F8 /* Pods-widgetoshinoko-widgetoshinokoUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -831,7 +812,7 @@
 		};
 		CA49F3012D747E2E0021F472 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 602683C34834ADC09DD9164C /* Pods-widgetoshinoko-widgetoshinokoUITests.release.xcconfig */;
+			baseConfigurationReference = 4FB0740AC78A96454E217F28 /* Pods-widgetoshinoko-widgetoshinokoUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -849,7 +830,7 @@
 		};
 		CA49F31F2D747E7A0021F472 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 13EEA3477FFB73508FB1CD0D /* Pods-gaudyoshinokoExtension.debug.xcconfig */;
+			baseConfigurationReference = 06B4B58F9BDBA3414CBF8D6E /* Pods-gaudyoshinokoExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -878,7 +859,7 @@
 		};
 		CA49F3202D747E7A0021F472 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 93406F7A78E4F9DAA5060FB1 /* Pods-gaudyoshinokoExtension.release.xcconfig */;
+			baseConfigurationReference = D34DE3590063C1C3091EE608 /* Pods-gaudyoshinokoExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;

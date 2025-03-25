@@ -28,6 +28,28 @@ final class MainContentViewModel: ObservableObject {
     // アイコン関連のプロパティ
     @Published private(set) var iconItemsByCategory: [IconCategory: [IconSet]] = [:]
     
+    @Published var widgetCategories: [WidgetCategory] = []
+    @Published var selectedSection: String = ""
+    
+    @Published var clockPresets: [ClockPreset] = [
+        ClockPreset(
+            title: "シンプルデジタル",
+            description: "シンプルなデジタル時計",
+            thumbnailImageName: "clock_digital",
+            configuration: ClockConfiguration(style: .digital),
+            category: .simple,
+            createdBy: "system"
+        ),
+        ClockPreset(
+            title: "クラシックアナログ",
+            description: "クラシックなアナログ時計",
+            thumbnailImageName: "clock_analog",
+            configuration: ClockConfiguration(style: .analog),
+            category: .classic,
+            createdBy: "system"
+        )
+    ]
+    
     // 初期化
     init(
         templateRepository: ContentRepositoryProtocol = MockContentRepository(),
@@ -39,6 +61,23 @@ final class MainContentViewModel: ObservableObject {
         self.widgetRepository = widgetRepository
         self.lockScreenRepository = lockScreenRepository
         self.wallpaperRepository = wallpaperRepository
+        
+        // ウィジェットカテゴリーの初期化
+        widgetCategories = [
+            .popular,
+            .weather,
+            .calendar,
+            .reminder,
+            .date,
+            .anniversary,
+            .fortune,
+            .memo
+        ]
+        
+        // 初期データのロード
+        Task {
+            await loadInitialData()
+        }
     }
     
     // 全データをロード
@@ -199,5 +238,15 @@ final class MainContentViewModel: ObservableObject {
     // アイコンデータを取得
     func getIconItems(for category: IconCategory) -> [IconSet] {
         return iconItemsByCategory[category] ?? []
+    }
+    
+    private func loadInitialData() async {
+        // ダミーデータを生成
+        self.widgetItems = [
+            WidgetItem(id: UUID(), title: "天気予報", description: "現在の天気", imageUrl: "", category: WidgetCategory.weather.rawValue, popularity: 100, createdAt: Date()),
+            WidgetItem(id: UUID(), title: "週間天気", description: "週間天気予報", imageUrl: "", category: WidgetCategory.weather.rawValue, popularity: 90, createdAt: Date()),
+            WidgetItem(id: UUID(), title: "月間カレンダー", description: "月間カレンダー", imageUrl: "", category: WidgetCategory.calendar.rawValue, popularity: 95, createdAt: Date()),
+            WidgetItem(id: UUID(), title: "週間カレンダー", description: "週間カレンダー", imageUrl: "", category: WidgetCategory.calendar.rawValue, popularity: 85, createdAt: Date())
+        ]
     }
 }

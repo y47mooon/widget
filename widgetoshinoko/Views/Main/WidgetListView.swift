@@ -1,34 +1,21 @@
 import SwiftUI
 
 struct WidgetListView: View {
-    @StateObject private var viewModel: WidgetListViewModel
-    @State private var showingSortOptions = false
-    @State private var sortOrder: SortOrder = .popular
+    @ObservedObject var viewModel: WidgetListViewModel
     @State private var selectedSize: WidgetSize = .small
-    @State private var searchText: String = ""
+    @State private var searchText = ""
+    @State private var showingSortOptions = false
+    @State private var sortOrder: SortOrder = .newest
     
-    var filteredWidgets: [WidgetItem] {
-        let widgets = viewModel.widgetItems
-        if searchText.isEmpty {
-            return widgets
-        }
-        return widgets.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+    let itemBuilder: (WidgetSize) -> any View
+    
+    init(viewModel: WidgetListViewModel, itemBuilder: @escaping (WidgetSize) -> any View) {
+        self.viewModel = viewModel
+        self.itemBuilder = itemBuilder
     }
     
-    var columns: [GridItem] {
-        switch selectedSize {
-        case .small:
-            return [
-                GridItem(.flexible(), spacing: 16),
-                GridItem(.flexible(), spacing: 16)
-            ]
-        case .medium, .large:
-            return [GridItem(.flexible())]
-        }
-    }
-    
-    init(viewModel: WidgetListViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+    private var columns: [GridItem] {
+        LayoutCalculator.gridColumns(for: selectedSize)
     }
     
     var body: some View {
@@ -51,13 +38,12 @@ struct WidgetListView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
                     if viewModel.filteredWidgets.isEmpty {
-                        // データがない場合はダミーのウィジェットを表示
                         ForEach(0..<10) { _ in
-                            WidgetSizeView(size: selectedSize)
+                            AnyView(itemBuilder(selectedSize))
                         }
                     } else {
                         ForEach(viewModel.filteredWidgets, id: \.id) { widget in
-                            WidgetSizeView(size: selectedSize)
+                            AnyView(itemBuilder(selectedSize))
                         }
                     }
                 }
@@ -94,6 +80,8 @@ struct WidgetListView: View {
 
 #Preview {
     NavigationView {
-        WidgetListView(viewModel: .previewViewModel)
+        WidgetListView(viewModel: .previewViewModel, itemBuilder: { size in
+            WidgetSizeView(size: size)
+        })
     }
 }

@@ -60,7 +60,10 @@ struct HomeContentView: View {
                 viewModel: WidgetListViewModel(
                     repository: MockWidgetRepository(),
                     category: .popular
-                )
+                ),
+                itemBuilder: { size in
+                    WidgetSizeView(size: size)
+                }
             ),
             itemBuilder: { item, index in
                 AnyView(

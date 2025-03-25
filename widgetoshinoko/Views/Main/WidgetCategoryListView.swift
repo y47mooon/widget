@@ -3,37 +3,95 @@ import SwiftUI
 struct WidgetCategoryListView: View {
     @ObservedObject var viewModel: MainContentViewModel
     
+    init(viewModel: MainContentViewModel) {
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                ForEach(WidgetCategory.allCases, id: \.self) { category in
-                    GenericSectionView(
-                        title: category.displayName,
-                        seeMoreText: "button_see_more".localized,
-                        items: getDummyWidgets(for: category),
-                        destination: WidgetListView(
-                            viewModel: WidgetListViewModel(
-                                repository: MockWidgetRepository(),
-                                category: category
-                            )
-                        ),
-                        itemBuilder: { item, index in
-                            AnyView(
-                                Rectangle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .frame(width: calculateWidgetWidth(), height: 100)
-                                    .cornerRadius(12)
-                                    .overlay(
-                                        Text((item as! WidgetItem).title)
-                                            .font(.system(size: 14, weight: .medium))
-                                            .foregroundColor(.black)
-                                            .lineLimit(1)
-                                            .padding(.horizontal, 8)
-                                    )
-                            )
+                // 時計セクション
+                GenericSectionView<ClockPreset, AnyView>(
+                    title: "widget_clock".localized,
+                    seeMoreText: "button_see_more".localized,
+                    items: viewModel.clockPresets,
+                    destination: ClockPresetListView(),
+                    itemBuilder: { item, _ in
+                        AnyView(
+                            WidgetSizeView(size: .small)
+                                .widgetFrame(for: .small)
+                                .overlay(
+                                    ClockWidgetView(size: .small)
+                                )
+                        )
+                    }
+                )
+                
+                // 天気セクション
+                GenericSectionView<WidgetItem, AnyView>(
+                    title: "widget_weather".localized,
+                    seeMoreText: "button_see_more".localized,
+                    items: viewModel.widgetItems.filter { $0.category == WidgetCategory.weather.rawValue },
+                    destination: WidgetListView(
+                        viewModel: WidgetListViewModel(category: .weather),
+                        itemBuilder: { size in
+                            WidgetSizeView(size: size)
                         }
-                    )
-                }
+                    ),
+                    itemBuilder: { item, _ in
+                        AnyView(
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                LazyHGrid(rows: [GridItem(.fixed(100))], spacing: 16) {
+                                    ForEach(viewModel.widgetItems.filter { $0.category == WidgetCategory.weather.rawValue }) { widget in
+                                        WidgetSizeView(size: .small)
+                                            .frame(width: 100, height: 100)
+                                            .overlay(
+                                                Text(widget.title)
+                                                    .font(.system(size: 14, weight: .medium))
+                                                    .foregroundColor(.black)
+                                                    .lineLimit(1)
+                                                    .padding(.horizontal, 8)
+                                            )
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
+                        )
+                    }
+                )
+                
+                // カレンダーセクション
+                GenericSectionView<WidgetItem, AnyView>(
+                    title: "widget_calendar".localized,
+                    seeMoreText: "button_see_more".localized,
+                    items: viewModel.widgetItems.filter { $0.category == WidgetCategory.calendar.rawValue },
+                    destination: WidgetListView(
+                        viewModel: WidgetListViewModel(category: .calendar),
+                        itemBuilder: { size in
+                            WidgetSizeView(size: size)
+                        }
+                    ),
+                    itemBuilder: { item, _ in
+                        AnyView(
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                LazyHGrid(rows: [GridItem(.fixed(100))], spacing: 16) {
+                                    ForEach(viewModel.widgetItems.filter { $0.category == WidgetCategory.calendar.rawValue }) { widget in
+                                        WidgetSizeView(size: .small)
+                                            .frame(width: 100, height: 100)
+                                            .overlay(
+                                                Text(widget.title)
+                                                    .font(.system(size: 14, weight: .medium))
+                                                    .foregroundColor(.black)
+                                                    .lineLimit(1)
+                                                    .padding(.horizontal, 8)
+                                            )
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
+                        )
+                    }
+                )
             }
             .padding(.vertical)
         }
