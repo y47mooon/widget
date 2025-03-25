@@ -20,31 +20,24 @@ class ClockPresetsViewModel: ObservableObject {
     
     // デフォルトプリセットの追加処理
     private func loadDefaultPresetsIfNeeded() async {
-        let currentPresets = try? await presetRepository.fetchPresets()
-        if currentPresets?.isEmpty ?? true {
-            let defaults = [
-                ClockPreset(
-                    title: "シンプルデジタル",
-                    description: "シンプルなデジタル時計",
-                    thumbnailImageName: "clock_digital",
-                    configuration: ClockConfiguration(style: .digital),
-                    category: .simple,
-                    createdBy: "system"
-                ),
-                ClockPreset(
-                    title: "クラシックアナログ",
-                    description: "クラシックなアナログ時計",
-                    thumbnailImageName: "clock_analog",
-                    configuration: ClockConfiguration(style: .analog),
-                    category: .classic,
-                    createdBy: "system"
-                )
-                // 他のデフォルトプリセットも追加可能
-            ]
-            
-            for preset in defaults {
-                try? await presetRepository.savePreset(preset)
+        do {
+            let currentPresets = try await presetRepository.fetchPresets()
+            if currentPresets.isEmpty {
+                let defaults = presetRepository.getDefaultPresets()
+                
+                for preset in defaults {
+                    do {
+                        try await presetRepository.savePreset(preset)
+                    } catch {
+                        // エラーログ出力
+                        print("プリセット保存エラー: \(error.localizedDescription)")
+                    }
+                }
             }
+        } catch {
+            // エラーハンドリング
+            self.error = error
+            print("プリセット取得エラー: \(error.localizedDescription)")
         }
     }
     

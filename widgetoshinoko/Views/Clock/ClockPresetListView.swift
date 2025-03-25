@@ -10,6 +10,16 @@ struct ClockPresetListView: View {
         _viewModel = StateObject(wrappedValue: ClockPresetsViewModel())
     }
     
+    private func addWidgetToHomeScreen(_ preset: ClockPreset) {
+        do {
+            let data = try JSONEncoder().encode(preset.configuration)
+            UserDefaults(suiteName: Constants.appGroupID)?.set(data, forKey: Constants.clockPresetKey)
+            showingWidgetSheet = false
+        } catch {
+            print("設定の保存に失敗しました: \(error.localizedDescription)")
+        }
+    }
+    
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [
@@ -36,10 +46,7 @@ struct ClockPresetListView: View {
         .sheet(isPresented: $showingWidgetSheet) {
             if let preset = selectedPreset {
                 WidgetAddSheet(preset: preset) {
-                    if let data = try? JSONEncoder().encode(preset.configuration) {
-                        UserDefaults(suiteName: Constants.appGroupID)?.set(data, forKey: Constants.clockPresetKey)
-                    }
-                    showingWidgetSheet = false
+                    addWidgetToHomeScreen(preset)
                 }
             }
         }

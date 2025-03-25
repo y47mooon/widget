@@ -31,7 +31,7 @@ final class MainContentViewModel: ObservableObject {
     @Published var widgetCategories: [WidgetCategory] = []
     @Published var selectedSection: String = ""
     
-    @Published var clockPresets: [ClockPreset] = [
+    @Published private var _clockPresets: [ClockPreset] = [
         ClockPreset(
             title: "シンプルデジタル",
             description: "シンプルなデジタル時計",
@@ -49,6 +49,11 @@ final class MainContentViewModel: ObservableObject {
             createdBy: "system"
         )
     ]
+    
+    // 公開プロパティはcomputedプロパティ経由で提供
+    var clockPresets: [ClockPreset] {
+        return _clockPresets
+    }
     
     // 初期化
     init(
