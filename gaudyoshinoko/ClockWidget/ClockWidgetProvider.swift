@@ -1,24 +1,24 @@
 import WidgetKit
+import Foundation
 
 struct ClockWidgetProvider: TimelineProvider {
+    // アプリグループIDをハードコード
+    private let userDefaults = UserDefaults(suiteName: "group.gaudy.widgetoshinoko")!
+    
     func placeholder(in context: Context) -> ClockEntry {
-        ClockEntry(date: Date(), configuration: ClockConfiguration())
+        ClockEntry()
     }
     
     func getSnapshot(in context: Context, completion: @escaping (ClockEntry) -> Void) {
-        let entry = ClockEntry(date: Date(), configuration: ClockConfiguration())
+        let entry = ClockEntry()
         completion(entry)
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<ClockEntry>) -> Void) {
-        // 1分ごとに更新
         let currentDate = Date()
         let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 1, to: currentDate)!
         
-        let entry = ClockEntry(
-            date: currentDate,
-            configuration: ClockConfiguration()
-        )
+        let entry = ClockEntry(date: currentDate)
         
         let timeline = Timeline(entries: [entry], policy: .after(nextUpdateDate))
         completion(timeline)

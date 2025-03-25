@@ -1,4 +1,5 @@
 import SwiftUI
+import GaudiyWidgetShared
 
 struct WidgetCategoryListView: View {
     @ObservedObject var viewModel: MainContentViewModel
@@ -21,7 +22,7 @@ struct WidgetCategoryListView: View {
                             WidgetSizeView(size: .small)
                                 .widgetFrame(for: .small)
                                 .overlay(
-                                    ClockWidgetView(size: .small)
+                                    ClockWidgetView(size: .small, configuration: item.configuration)
                                 )
                         )
                     }

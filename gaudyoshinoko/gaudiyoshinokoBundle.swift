@@ -9,9 +9,9 @@ import WidgetKit
 import SwiftUI
 
 @main
-struct gaudiyoshinokoBundle: WidgetBundle {
+struct GaudyWidgetBundle: WidgetBundle {
     var body: some Widget {
-        gaudiyoshinoko()
-        gaudiyoshinokoLiveActivity()
+        ClockWidget()
+        // 他のウィジェットがある場合はここに追加
     }
 }

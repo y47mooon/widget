@@ -1,4 +1,9 @@
 import Foundation
+import GaudiyWidgetShared
+
+// 独自の定義を削除し、GaudiyWidgetSharedの型を使用
+typealias ClockConfiguration = GaudiyWidgetShared.ClockConfiguration
+typealias ClockStyle = GaudiyWidgetShared.ClockStyle
 
 struct ClockPreset: Identifiable, Codable {
     var id = UUID()
@@ -21,3 +26,6 @@ struct ClockPreset: Identifiable, Codable {
         case custom = "カスタム"
     }
 }
+
+// CodableのためのExtensionは不要（GaudiyWidgetShared.ClockConfigurationは既にCodable）
+// extension ClockConfiguration: Codable {}

@@ -1,70 +1,53 @@
 import SwiftUI
+import GaudiyWidgetShared
 
 struct ClockPresetListView: View {
-    @StateObject private var viewModel: WidgetListViewModel
+    @StateObject private var viewModel: ClockPresetsViewModel
+    @State private var showingWidgetSheet = false
+    @State private var selectedPreset: ClockPreset?
     
     init() {
-        // 時計専用のViewModelを初期化
-        _viewModel = StateObject(wrappedValue: WidgetListViewModel(
-            repository: MockWidgetRepository(),
-            category: .clock
-        ))
+        _viewModel = StateObject(wrappedValue: ClockPresetsViewModel())
     }
     
     var body: some View {
-        WidgetListView(
-            viewModel: viewModel,
-            itemBuilder: { size in
-                WidgetSizeView(size: size)
-                    .overlay(
-                        ClockWidgetView(size: size)
-                    )
+        ScrollView {
+            LazyVGrid(columns: [
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ], spacing: 16) {
+                ForEach(viewModel.presets) { preset in
+                    VStack {
+                        WidgetSizeView(size: .small)
+                            .overlay(
+                                ClockWidgetView(size: .small, configuration: preset.configuration)
+                            )
+                        Text(preset.title)
+                            .font(.caption)
+                    }
+                    .onTapGesture {
+                        selectedPreset = preset
+                        showingWidgetSheet = true
+                    }
+                }
             }
-        )
+            .padding()
+        }
+        .sheet(isPresented: $showingWidgetSheet) {
+            if let preset = selectedPreset {
+                WidgetAddSheet(preset: preset) {
+                    if let data = try? JSONEncoder().encode(preset.configuration) {
+                        UserDefaults(suiteName: Constants.appGroupID)?.set(data, forKey: Constants.clockPresetKey)
+                    }
+                    showingWidgetSheet = false
+                }
+            }
+        }
         .navigationTitle("時計ウィジェット")
-    }
-}
-
-// 時計の表示部分
-struct ClockWidgetView: View {
-    let size: WidgetSize
-    @State private var currentTime = Date()
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
-    var body: some View {
-        VStack {
-            Text(timeString)
-                .font(.system(size: fontSize, weight: .medium, design: .rounded))
-                .monospacedDigit()
-            if size != .small {
-                Text(dateString)
-                    .font(.system(size: fontSize * 0.4))
-                    .foregroundColor(.gray)
+        .onAppear {
+            Task {
+                await viewModel.fetchPresets()
             }
-        }
-        .onReceive(timer) { input in
-            currentTime = input
-        }
-    }
-    
-    private var timeString: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        return formatter.string(from: currentTime)
-    }
-    
-    private var dateString: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "M月d日(E)"
-        formatter.locale = Locale(identifier: "ja_JP")
-        return formatter.string(from: currentTime)
-    }
-    
-    private var fontSize: CGFloat {
-        switch size {
-        case .small: return 24
-        case .medium: return 32
-        case .large: return 40
         }
     }
 }

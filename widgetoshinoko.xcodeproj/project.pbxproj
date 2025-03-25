@@ -13,6 +13,9 @@
 		CA49F3092D747E780021F472 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA49F3082D747E780021F472 /* WidgetKit.framework */; };
 		CA49F30B2D747E780021F472 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA49F30A2D747E780021F472 /* SwiftUI.framework */; };
 		CA49F31C2D747E7A0021F472 /* gaudyoshinokoExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA49F3062D747E780021F472 /* gaudyoshinokoExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CA72B3AB2D929F090090D319 /* GaudiyWidgetShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA72B3A12D929F080090D319 /* GaudiyWidgetShared.framework */; };
+		CA72B3B62D929F090090D319 /* GaudiyWidgetShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA72B3A12D929F080090D319 /* GaudiyWidgetShared.framework */; };
+		CA72B3B82D929F090090D319 /* GaudiyWidgetShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CA72B3A12D929F080090D319 /* GaudiyWidgetShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CAB05BA82D82D9B4000CFE6C /* SwiftUI.framework in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA49F30A2D747E780021F472 /* SwiftUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CAB05BA92D82D9C3000CFE6C /* WidgetKit.framework in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA49F3082D747E780021F472 /* WidgetKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4C44F46BD00E3DB191256E7 /* Pods_widgetoshinokoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08585EB37470B0F3CC235175 /* Pods_widgetoshinokoTests.framework */; };
@@ -40,6 +43,27 @@
 			remoteGlobalIDString = CA49F3052D747E780021F472;
 			remoteInfo = gaudyoshinokoExtension;
 		};
+		CA72B3AC2D929F090090D319 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA49F2CD2D747E2D0021F472 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA72B3A02D929F080090D319;
+			remoteInfo = GaudiyWidgetShared;
+		};
+		CA72B3AE2D929F090090D319 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA49F2CD2D747E2D0021F472 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA49F2D42D747E2D0021F472;
+			remoteInfo = widgetoshinoko;
+		};
+		CA72B3B42D929F090090D319 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA49F2CD2D747E2D0021F472 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA72B3A02D929F080090D319;
+			remoteInfo = GaudiyWidgetShared;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -54,6 +78,17 @@
 				CA49F31C2D747E7A0021F472 /* gaudyoshinokoExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA72B3B72D929F090090D319 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CA72B3B82D929F090090D319 /* GaudiyWidgetShared.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -76,6 +111,8 @@
 		CA49F3082D747E780021F472 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		CA49F30A2D747E780021F472 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		CA49F3272D7485E70021F472 /* gaudyoshinokoExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = gaudyoshinokoExtension.entitlements; sourceTree = "<group>"; };
+		CA72B3A12D929F080090D319 /* GaudiyWidgetShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GaudiyWidgetShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA72B3AA2D929F090090D319 /* GaudiyWidgetSharedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GaudiyWidgetSharedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D34DE3590063C1C3091EE608 /* Pods-gaudyoshinokoExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gaudyoshinokoExtension.release.xcconfig"; path = "Target Support Files/Pods-gaudyoshinokoExtension/Pods-gaudyoshinokoExtension.release.xcconfig"; sourceTree = "<group>"; };
 		E69E2B77F60CAD1C6DA5A274 /* Pods-widgetoshinoko.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widgetoshinoko.debug.xcconfig"; path = "Target Support Files/Pods-widgetoshinoko/Pods-widgetoshinoko.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,6 +131,13 @@
 				Info.plist,
 			);
 			target = CA49F2D42D747E2D0021F472 /* widgetoshinoko */;
+		};
+		CA72B3BC2D929F090090D319 /* Exceptions for "GaudiyWidgetShared" folder in "GaudiyWidgetShared" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			publicHeaders = (
+				GaudiyWidgetShared.h,
+			);
+			target = CA72B3A02D929F080090D319 /* GaudiyWidgetShared */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -124,6 +168,19 @@
 			path = gaudyoshinoko;
 			sourceTree = "<group>";
 		};
+		CA72B3A22D929F080090D319 /* GaudiyWidgetShared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CA72B3BC2D929F090090D319 /* Exceptions for "GaudiyWidgetShared" folder in "GaudiyWidgetShared" target */,
+			);
+			path = GaudiyWidgetShared;
+			sourceTree = "<group>";
+		};
+		CA72B3B02D929F090090D319 /* GaudiyWidgetSharedTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GaudiyWidgetSharedTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +188,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA72B3B62D929F090090D319 /* GaudiyWidgetShared.framework in Frameworks */,
 				10E34071845E92C86FD88528 /* Pods_widgetoshinoko.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,6 +219,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CA72B39E2D929F080090D319 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA72B3A72D929F090090D319 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA72B3AB2D929F090090D319 /* GaudiyWidgetShared.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -187,6 +260,8 @@
 				CA49F2E82D747E2E0021F472 /* widgetoshinokoTests */,
 				CA49F2F22D747E2E0021F472 /* widgetoshinokoUITests */,
 				CA49F30C2D747E780021F472 /* gaudyoshinoko */,
+				CA72B3A22D929F080090D319 /* GaudiyWidgetShared */,
+				CA72B3B02D929F090090D319 /* GaudiyWidgetSharedTests */,
 				CA49F3072D747E780021F472 /* Frameworks */,
 				CA49F2D62D747E2D0021F472 /* Products */,
 				1ACF74DFCFB66701B4882585 /* Pods */,
@@ -200,6 +275,8 @@
 				CA49F2E52D747E2E0021F472 /* widgetoshinokoTests.xctest */,
 				CA49F2EF2D747E2E0021F472 /* widgetoshinokoUITests.xctest */,
 				CA49F3062D747E780021F472 /* gaudyoshinokoExtension.appex */,
+				CA72B3A12D929F080090D319 /* GaudiyWidgetShared.framework */,
+				CA72B3AA2D929F090090D319 /* GaudiyWidgetSharedTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -219,6 +296,16 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		CA72B39C2D929F080090D319 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		CA49F2D42D747E2D0021F472 /* widgetoshinoko */ = {
 			isa = PBXNativeTarget;
@@ -230,11 +317,13 @@
 				CA49F2D32D747E2D0021F472 /* Resources */,
 				CA49F3212D747E7A0021F472 /* Embed Foundation Extensions */,
 				9637971D9BFFEF420021681D /* [CP] Embed Pods Frameworks */,
+				CA72B3B72D929F090090D319 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				CA49F31B2D747E7A0021F472 /* PBXTargetDependency */,
+				CA72B3B52D929F090090D319 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				CA49F2D72D747E2D0021F472 /* widgetoshinoko */,
@@ -310,6 +399,53 @@
 			productReference = CA49F3062D747E780021F472 /* gaudyoshinokoExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		CA72B3A02D929F080090D319 /* GaudiyWidgetShared */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA72B3B92D929F090090D319 /* Build configuration list for PBXNativeTarget "GaudiyWidgetShared" */;
+			buildPhases = (
+				CA72B39C2D929F080090D319 /* Headers */,
+				CA72B39D2D929F080090D319 /* Sources */,
+				CA72B39E2D929F080090D319 /* Frameworks */,
+				CA72B39F2D929F080090D319 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CA72B3A22D929F080090D319 /* GaudiyWidgetShared */,
+			);
+			name = GaudiyWidgetShared;
+			packageProductDependencies = (
+			);
+			productName = GaudiyWidgetShared;
+			productReference = CA72B3A12D929F080090D319 /* GaudiyWidgetShared.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		CA72B3A92D929F090090D319 /* GaudiyWidgetSharedTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA72B3BD2D929F090090D319 /* Build configuration list for PBXNativeTarget "GaudiyWidgetSharedTests" */;
+			buildPhases = (
+				CA72B3A62D929F090090D319 /* Sources */,
+				CA72B3A72D929F090090D319 /* Frameworks */,
+				CA72B3A82D929F090090D319 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CA72B3AD2D929F090090D319 /* PBXTargetDependency */,
+				CA72B3AF2D929F090090D319 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CA72B3B02D929F090090D319 /* GaudiyWidgetSharedTests */,
+			);
+			name = GaudiyWidgetSharedTests;
+			packageProductDependencies = (
+			);
+			productName = GaudiyWidgetSharedTests;
+			productReference = CA72B3AA2D929F090090D319 /* GaudiyWidgetSharedTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -334,6 +470,13 @@
 					CA49F3052D747E780021F472 = {
 						CreatedOnToolsVersion = 16.2;
 					};
+					CA72B3A02D929F080090D319 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					CA72B3A92D929F090090D319 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = CA49F2D42D747E2D0021F472;
+					};
 				};
 			};
 			buildConfigurationList = CA49F2D02D747E2D0021F472 /* Build configuration list for PBXProject "widgetoshinoko" */;
@@ -355,6 +498,8 @@
 				CA49F2E42D747E2E0021F472 /* widgetoshinokoTests */,
 				CA49F2EE2D747E2E0021F472 /* widgetoshinokoUITests */,
 				CA49F3052D747E780021F472 /* gaudyoshinokoExtension */,
+				CA72B3A02D929F080090D319 /* GaudiyWidgetShared */,
+				CA72B3A92D929F090090D319 /* GaudiyWidgetSharedTests */,
 			);
 		};
 /* End PBXProject section */
@@ -382,6 +527,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CA49F3042D747E780021F472 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA72B39F2D929F080090D319 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA72B3A82D929F090090D319 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -544,6 +703,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CA72B39D2D929F080090D319 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA72B3A62D929F090090D319 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -561,6 +734,21 @@
 			isa = PBXTargetDependency;
 			target = CA49F3052D747E780021F472 /* gaudyoshinokoExtension */;
 			targetProxy = CA49F31A2D747E7A0021F472 /* PBXContainerItemProxy */;
+		};
+		CA72B3AD2D929F090090D319 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA72B3A02D929F080090D319 /* GaudiyWidgetShared */;
+			targetProxy = CA72B3AC2D929F090090D319 /* PBXContainerItemProxy */;
+		};
+		CA72B3AF2D929F090090D319 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA49F2D42D747E2D0021F472 /* widgetoshinoko */;
+			targetProxy = CA72B3AE2D929F090090D319 /* PBXContainerItemProxy */;
+		};
+		CA72B3B52D929F090090D319 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA72B3A02D929F080090D319 /* GaudiyWidgetShared */;
+			targetProxy = CA72B3B42D929F090090D319 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -886,6 +1074,110 @@
 			};
 			name = Release;
 		};
+		CA72B3BA2D929F090090D319 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 5SKZVB6NZF;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = gaudiy.widgetoshinoko.GaudiyWidgetShared.GaudiyWidgetShared;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		CA72B3BB2D929F090090D319 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 5SKZVB6NZF;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = gaudiy.widgetoshinoko.GaudiyWidgetShared.GaudiyWidgetShared;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		CA72B3BE2D929F090090D319 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5SKZVB6NZF;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudiy.widgetoshinoko.GaudiyWidgetShared.GaudiyWidgetSharedTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/widgetoshinoko.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/widgetoshinoko";
+			};
+			name = Debug;
+		};
+		CA72B3BF2D929F090090D319 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5SKZVB6NZF;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gaudiy.widgetoshinoko.GaudiyWidgetShared.GaudiyWidgetSharedTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/widgetoshinoko.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/widgetoshinoko";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -930,6 +1222,24 @@
 			buildConfigurations = (
 				CA49F31F2D747E7A0021F472 /* Debug */,
 				CA49F3202D747E7A0021F472 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA72B3B92D929F090090D319 /* Build configuration list for PBXNativeTarget "GaudiyWidgetShared" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA72B3BA2D929F090090D319 /* Debug */,
+				CA72B3BB2D929F090090D319 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA72B3BD2D929F090090D319 /* Build configuration list for PBXNativeTarget "GaudiyWidgetSharedTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA72B3BE2D929F090090D319 /* Debug */,
+				CA72B3BF2D929F090090D319 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
