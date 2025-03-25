@@ -18,10 +18,10 @@ target 'widgetoshinoko' do
   # 最小限のFirebase依存関係
   pod 'FirebaseCore'
   pod 'FirebaseAnalytics'
-  # 他のFirebase関連ポッドは一時的にコメントアウト
-  # pod 'FirebaseFirestore'
-  # pod 'FirebaseStorage'
-  # pod 'FirebaseAuth'
+  # 必要なFirebase関連ポッドのコメントを外す
+  pod 'FirebaseFirestore'
+  pod 'FirebaseStorage'
+  pod 'FirebaseAuth'
 
   target 'widgetoshinokoTests' do
     inherit! :search_paths

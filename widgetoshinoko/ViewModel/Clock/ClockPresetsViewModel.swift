@@ -10,7 +10,7 @@ class ClockPresetsViewModel: ObservableObject {
     
     private let presetRepository: ClockPresetRepository
     
-    init(repository: ClockPresetRepository = ClockPresetRepositoryImpl()) {
+    init(repository: ClockPresetRepository = RepositoryFactory.shared.makeClockPresetRepository()) {
         self.presetRepository = repository
         // デフォルトプリセットの追加
         Task {
