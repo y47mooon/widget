@@ -11,7 +11,9 @@ import SwiftUI
 @main
 struct GaudyWidgetBundle: WidgetBundle {
     var body: some Widget {
+        // すべてのウィジェットを登録
         ClockWidget()
-        // 他のウィジェットがある場合はここに追加
+        gaudiyoshinoko()
+        gaudiyoshinokoControl()
     }
 }

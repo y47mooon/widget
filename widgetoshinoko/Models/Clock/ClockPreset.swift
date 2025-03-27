@@ -1,31 +1,12 @@
 import Foundation
 import GaudiyWidgetShared
 
-// 独自の定義を削除し、GaudiyWidgetSharedの型を使用
+// 共有フレームワークから型をインポート
+typealias ClockPreset = GaudiyWidgetShared.ClockPreset
 typealias ClockConfiguration = GaudiyWidgetShared.ClockConfiguration
 typealias ClockStyle = GaudiyWidgetShared.ClockStyle
 
-struct ClockPreset: Identifiable, Codable {
-    var id = UUID()
-    var title: String
-    var description: String
-    var thumbnailImageName: String
-    var configuration: ClockConfiguration
-    var category: PresetCategory
-    var popularity: Int = 0
-    var isFavorite: Bool = false
-    var isPublic: Bool = true
-    var createdBy: String
-    var createdAt: Date = Date()
-    var updatedAt: Date = Date()
-    
-    enum PresetCategory: String, Codable, CaseIterable {
-        case simple = "シンプル"
-        case modern = "モダン"
-        case classic = "クラシック"
-        case custom = "カスタム"
-    }
-}
+
 
 // CodableのためのExtensionは不要（GaudiyWidgetShared.ClockConfigurationは既にCodable）
 // extension ClockConfiguration: Codable {}

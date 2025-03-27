@@ -115,7 +115,7 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "_XCWidgetKind"
-            value = ""
+            value = "ClockWidget.oshinoko"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
@@ -131,6 +131,16 @@
          <EnvironmentVariable
             key = "_XCWidgetKind"
             value = "gaudiyoshinoko"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "_XCWidgetKind"
+            value = "ClockWidget.oshinoko"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "_XCWidgetShowsWidgetDebugInfo"
+            value = "YES"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

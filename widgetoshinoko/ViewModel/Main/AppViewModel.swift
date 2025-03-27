@@ -1,5 +1,7 @@
 import Foundation
 import SwiftUI
+import GaudiyWidgetShared
+import Combine
 
 @MainActor
 class AppViewModel: ObservableObject {
@@ -8,10 +10,10 @@ class AppViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
     
-    private let repository: FirestoreRepositoryProtocol
+    private let firestoreRepository: FirestoreRepositoryProtocol
     
-    init(repository: FirestoreRepositoryProtocol = FirestoreRepository()) {
-        self.repository = repository
+    init(repository: FirestoreRepositoryProtocol = RepositoryFactory.shared.makeFirestoreRepository()) {
+        self.firestoreRepository = repository
         
         // 起動時に認証状態を確認
         Task {
@@ -23,7 +25,7 @@ class AppViewModel: ObservableObject {
         isLoading = true
         
         do {
-            if let user = try await repository.fetchCurrentUser() {
+            if let user = try await firestoreRepository.fetchCurrentUser() {
                 currentUser = user
                 isAuthenticated = true
             } else {
@@ -43,7 +45,7 @@ class AppViewModel: ObservableObject {
         errorMessage = nil
         
         do {
-            let user = try await repository.signIn(email: email, password: password)
+            let user = try await firestoreRepository.signIn(email: email, password: password)
             currentUser = user
             isAuthenticated = true
         } catch {
@@ -59,7 +61,7 @@ class AppViewModel: ObservableObject {
         errorMessage = nil
         
         do {
-            let user = try await repository.createUser(email: email, password: password)
+            let user = try await firestoreRepository.createUser(email: email, password: password)
             currentUser = user
             isAuthenticated = true
         } catch {
@@ -74,7 +76,7 @@ class AppViewModel: ObservableObject {
         isLoading = true
         
         do {
-            try await repository.signOut()
+            try await firestoreRepository.signOut()
             currentUser = nil
             isAuthenticated = false
         } catch {

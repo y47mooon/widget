@@ -13,7 +13,7 @@ struct ClockPresetListView: View {
     private func addWidgetToHomeScreen(_ preset: ClockPreset) {
         do {
             let data = try JSONEncoder().encode(preset.configuration)
-            UserDefaults(suiteName: Constants.appGroupID)?.set(data, forKey: Constants.clockPresetKey)
+            UserDefaults(suiteName: SharedConstants.UserDefaults.appGroupID)?.set(data, forKey: Constants.clockPresetKey)
             showingWidgetSheet = false
         } catch {
             print("設定の保存に失敗しました: \(error.localizedDescription)")

@@ -71,9 +71,12 @@ struct gaudiyoshinokoEntryView : View {
 }
 
 struct gaudiyoshinoko: Widget {
+    // 修正：固有のkind値
+    let kind = "SimpleWidget.oshinoko"  // 別の適切な名前に変更
+    
     var body: some WidgetConfiguration {
         StaticConfiguration(
-            kind: "gaudiyoshinoko",
+            kind: kind,  // ここで変数を参照
             provider: Provider()
         ) { entry in
             gaudiyoshinokoEntryView(entry: entry)

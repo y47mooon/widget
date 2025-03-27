@@ -9,7 +9,7 @@ import WidgetKit
 import SwiftUI
 
 struct ClockWidget: Widget {
-    let kind = "ClockWidget"
+    let kind = "ClockWidget.oshinoko"
     
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: ClockWidgetProvider()) { entry in

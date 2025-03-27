@@ -1,12 +1,16 @@
 import SwiftUI
+#if canImport(FirebaseCore)
 import FirebaseCore
 import FirebaseAnalytics
 import FirebaseFirestore
-import FirebaseAuth
+import FirebaseDatabase
+// 他の必要なFirebaseモジュール
+#endif
 
 @main
 struct widgetoshinokoApp: App {
     init() {
+        #if canImport(FirebaseCore)
         // Firebase初期化
         do {
             FirebaseApp.configure()
@@ -16,8 +20,6 @@ struct widgetoshinokoApp: App {
             settings.isPersistenceEnabled = true  // オフラインキャッシュを有効化
             Firestore.firestore().settings = settings
             
-            // Authの設定（必要に応じて）
-            Auth.auth().languageCode = "ja"  // 認証メールを日本語に設定
             
             // ログイベント
             Analytics.logEvent(AnalyticsEventAppOpen, parameters: nil)
@@ -26,6 +28,7 @@ struct widgetoshinokoApp: App {
             print("Firebase初期化エラー: \(error.localizedDescription)")
             // 実運用環境では適切なエラー処理（例：クラッシュレポート送信など）
         }
+        #endif
     }
     
     var body: some Scene {

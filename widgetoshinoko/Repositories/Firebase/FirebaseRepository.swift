@@ -1,29 +1,15 @@
 import Foundation
+import GaudiyWidgetShared
+
+#if canImport(FirebaseFirestore)
 import FirebaseFirestore
 import FirebaseAuth
+#endif
 
-protocol FirestoreRepositoryProtocol {
-    // コンテンツ関連
-    func fetchContents(category: String, limit: Int) async throws -> [ContentItem]
-    func saveContent(_ content: ContentItem) async throws
-    func updateContent(_ content: ContentItem) async throws
-    func deleteContent(id: String) async throws
-    
-    // ユーザー関連
-    func fetchCurrentUser() async throws -> User?
-    func createUser(email: String, password: String) async throws -> User
-    func signIn(email: String, password: String) async throws -> User
-    func signOut() async throws
-    
-    // ユーザーコンテンツ関連
-    func fetchUserContents(userId: String) async throws -> [UserContent]
-    func saveUserContent(_ userContent: UserContent) async throws
-    
-    // 支払い関連
-    func fetchPayments(userId: String) async throws -> [Payment]
-    func savePayment(_ payment: Payment) async throws
-}
+// 型の曖昧さを回避するためにFirebaseAuth.Userと区別するエイリアス
+typealias AppUser = GaudiyWidgetShared.User
 
+#if canImport(FirebaseFirestore)
 class FirestoreRepository: FirestoreRepositoryProtocol {
     private let db = Firestore.firestore()
     private let auth = Auth.auth()
@@ -32,44 +18,97 @@ class FirestoreRepository: FirestoreRepositoryProtocol {
     private enum Collection {
         static let contents = "contents"
         static let users = "users"
-        static let admins = "admins"
         static let userContents = "user_contents"
         static let payments = "payments"
     }
     
-    // コンテンツ関連
-    func fetchContents(category: String, limit: Int) async throws -> [ContentItem] {
-        let query = db.collection(Collection.contents)
-            .whereField("content_type", isEqualTo: category)
-            .limit(to: limit)
+    // MARK: - コンテンツ関連
+    func fetchContents(category: String, limit: Int) async throws -> [FirebaseContentItem] {
+        // Queryを直接CollectionReferenceに代入できないエラーを修正
+        let collectionRef = db.collection(Collection.contents)
+        var query: Query = collectionRef
+        
+        if !category.isEmpty {
+            query = query.whereField("contentType", isEqualTo: category)
+        }
+        
+        // limitを適用
+        query = query.limit(to: limit)
         
         let snapshot = try await query.getDocuments()
-        return snapshot.documents.compactMap { document in
-            do {
-                return try document.data(as: ContentItem.self)
-            } catch {
-                print("ドキュメント変換エラー: \(error)")
+        
+        // 手動デコード
+        let contents = snapshot.documents.compactMap { document -> FirebaseContentItem? in
+            let data = document.data()
+            guard let type = data["type"] as? String,
+                  let contentType = data["contentType"] as? String else {
                 return nil
             }
+            
+            // データを変換
+            var contentData: [String: AnyCodable] = [:]
+            for (key, value) in data {
+                if key != "id" && key != "type" && key != "contentType" {
+                    contentData[key] = AnyCodable(value)
+                }
+            }
+            
+            return FirebaseContentItem(
+                id: document.documentID,
+                type: type,
+                contentType: contentType, 
+                data: contentData
+            )
         }
+        
+        // ウィジェット用にキャッシュ
+        WidgetDataService.shared.cacheContents(contents)
+        
+        return contents
     }
     
-    func saveContent(_ content: ContentItem) async throws {
-        let documentRef = db.collection(Collection.contents).document(content.id.uuidString)
-        try documentRef.setData(from: content)
+    func saveContent(_ content: FirebaseContentItem) async throws {
+        let documentRef = db.collection(Collection.contents).document(content.id)
+        
+        // 手動でデータをエンコード
+        var data: [String: Any] = [
+            "type": content.type,
+            "contentType": content.contentType
+        ]
+        
+        // データを追加 - エラー修正: Initializer for conditional binding must have Optional type, not 'Any'
+        for (key, value) in content.data {
+            // unwrappedValueをOptionalとして扱わない
+            data[key] = value.value
+        }
+        
+        try await documentRef.setData(data)
     }
     
-    func updateContent(_ content: ContentItem) async throws {
-        let documentRef = db.collection(Collection.contents).document(content.id.uuidString)
-        try documentRef.setData(from: content, merge: true)
+    func updateContent(_ content: FirebaseContentItem) async throws {
+        let documentRef = db.collection(Collection.contents).document(content.id)
+        
+        // 手動でデータをエンコード
+        var data: [String: Any] = [
+            "type": content.type,
+            "contentType": content.contentType
+        ]
+        
+        // データを追加 - エラー修正: Initializer for conditional binding must have Optional type, not 'Any'
+        for (key, value) in content.data {
+            // unwrappedValueをOptionalとして扱わない
+            data[key] = value.value
+        }
+        
+        try await documentRef.updateData(data)
     }
     
     func deleteContent(id: String) async throws {
         try await db.collection(Collection.contents).document(id).delete()
     }
     
-    // ユーザー関連
-    func fetchCurrentUser() async throws -> User? {
+    // MARK: - ユーザー関連
+    func fetchCurrentUser() async throws -> AppUser? {
         guard let authUser = auth.currentUser else {
             return nil
         }
@@ -78,47 +117,68 @@ class FirestoreRepository: FirestoreRepositoryProtocol {
         let document = try await documentRef.getDocument()
         
         if document.exists {
-            return try document.data(as: User.self)
+            // 手動デコード
+            let data = document.data() ?? [:]
+            guard let name = data["name"] as? String else {
+                return nil
+            }
+            
+            return AppUser(
+                id: authUser.uid,
+                name: name
+            )
         }
+        
         return nil
     }
     
-    func createUser(email: String, password: String) async throws -> User {
-        let result = try await auth.createUser(withEmail: email, password: password)
-        let newUser = User(
-            id: result.user.uid,
-            externalUserId: result.user.uid,
-            email: email,
-            membershipStatus: "free",
-            createdAt: Date()
+    func createUser(email: String, password: String) async throws -> AppUser {
+        let authResult = try await auth.createUser(withEmail: email, password: password)
+        let user = authResult.user
+        
+        // ユーザープロファイルを作成
+        let userData: [String: Any] = [
+            "id": user.uid,
+            "name": email.components(separatedBy: "@").first ?? "User"
+        ]
+        
+        // Firestoreにユーザー情報を保存
+        try await db.collection(Collection.users).document(user.uid).setData(userData)
+        
+        return AppUser(
+            id: user.uid,
+            name: userData["name"] as! String
         )
-        
-        let documentRef = db.collection(Collection.users).document(result.user.uid)
-        try documentRef.setData(from: newUser)
-        
-        return newUser
     }
     
-    func signIn(email: String, password: String) async throws -> User {
-        let result = try await auth.signIn(withEmail: email, password: password)
+    func signIn(email: String, password: String) async throws -> AppUser {
+        let authResult = try await auth.signIn(withEmail: email, password: password)
+        let user = authResult.user
         
-        let documentRef = db.collection(Collection.users).document(result.user.uid)
+        // Firestoreからユーザー情報を取得
+        let documentRef = db.collection(Collection.users).document(user.uid)
         let document = try await documentRef.getDocument()
         
-        if document.exists {
-            return try document.data(as: User.self)
-        } else {
-            // ユーザードキュメントが存在しない場合は作成
-            let newUser = User(
-                id: result.user.uid,
-                externalUserId: result.user.uid,
-                email: email,
-                membershipStatus: "free",
-                createdAt: Date()
-            )
+        if document.exists, let data = document.data() {
+            let name = data["name"] as? String ?? email.components(separatedBy: "@").first ?? "User"
             
-            try documentRef.setData(from: newUser)
-            return newUser
+            return AppUser(
+                id: user.uid,
+                name: name
+            )
+        } else {
+            // ユーザー情報がない場合は新規作成
+            let userData: [String: Any] = [
+                "id": user.uid,
+                "name": email.components(separatedBy: "@").first ?? "User"
+            ]
+            
+            try await documentRef.setData(userData)
+            
+            return AppUser(
+                id: user.uid,
+                name: userData["name"] as! String
+            )
         }
     }
     
@@ -126,35 +186,86 @@ class FirestoreRepository: FirestoreRepositoryProtocol {
         try auth.signOut()
     }
     
-    // ユーザーコンテンツ関連
+    // MARK: - ユーザーコンテンツ関連
     func fetchUserContents(userId: String) async throws -> [UserContent] {
-        let query = db.collection(Collection.userContents)
-            .whereField("user_id", isEqualTo: userId)
+        let snapshot = try await db.collection(Collection.userContents)
+            .whereField("userId", isEqualTo: userId)
+            .getDocuments()
         
-        let snapshot = try await query.getDocuments()
-        return snapshot.documents.compactMap { document in
-            try? document.data(as: UserContent.self)
+        // UserContentのモデル定義を確認し、適切にマッピング
+        // エラー修正: Extra argument 'type' in call
+        return snapshot.documents.compactMap { document -> UserContent? in
+            let data = document.data()
+            guard let contentId = data["contentId"] as? String,
+                  let userId = data["userId"] as? String else {
+                return nil
+            }
+            
+            // 'type'引数を削除してUserContentを初期化
+            return UserContent(
+                userId: userId,
+                contentId: contentId
+            )
         }
     }
     
     func saveUserContent(_ userContent: UserContent) async throws {
-        let documentRef = db.collection(Collection.userContents).document(userContent.id.uuidString)
-        try documentRef.setData(from: userContent)
+        // UserContentにidがない場合は一意のIDを生成
+        let documentId = "\(userContent.userId)_\(userContent.contentId)"
+        let documentRef = db.collection(Collection.userContents).document(documentId)
+        
+        // 手動でデータをエンコード
+        // エラー修正: Value of type 'UserContent' has no member 'type'
+        let data: [String: Any] = [
+            "contentId": userContent.contentId,
+            "userId": userContent.userId
+            // typeプロパティを削除
+        ]
+        
+        try await documentRef.setData(data)
     }
     
-    // 支払い関連
+    // MARK: - 支払い関連
     func fetchPayments(userId: String) async throws -> [Payment] {
-        let query = db.collection(Collection.payments)
-            .whereField("user_id", isEqualTo: userId)
+        let snapshot = try await db.collection(Collection.payments)
+            .whereField("userId", isEqualTo: userId)
+            .getDocuments()
         
-        let snapshot = try await query.getDocuments()
-        return snapshot.documents.compactMap { document in
-            try? document.data(as: Payment.self)
+        // Paymentモデルをマッピング
+        return snapshot.documents.compactMap { document -> Payment? in
+            let data = document.data()
+            guard let userId = data["userId"] as? String,
+                  let amount = data["amount"] as? Double else {
+                return nil
+            }
+            
+            // Dateのパース
+            let dateTimestamp = data["date"] as? Timestamp
+            let date = dateTimestamp?.dateValue() ?? Date()
+            
+            // UUIDの生成
+            let uuid = UUID(uuidString: document.documentID) ?? UUID()
+            
+            return Payment(
+                id: uuid,
+                userId: userId,
+                amount: amount,
+                date: date
+            )
         }
     }
     
     func savePayment(_ payment: Payment) async throws {
         let documentRef = db.collection(Collection.payments).document(payment.id.uuidString)
-        try documentRef.setData(from: payment)
+        
+        // 手動でデータをエンコード
+        let data: [String: Any] = [
+            "userId": payment.userId,
+            "amount": payment.amount,
+            "date": payment.date
+        ]
+        
+        try await documentRef.setData(data)
     }
 }
+#endif

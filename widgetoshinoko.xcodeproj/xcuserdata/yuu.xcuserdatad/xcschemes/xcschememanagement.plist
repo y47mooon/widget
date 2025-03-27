@@ -7,7 +7,32 @@
 		<key>GaudiyWidgetShared.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>46</integer>
+			<integer>2</integer>
+		</dict>
+		<key>Promises (Playground) 1.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
+		<key>Promises (Playground) 2.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
+		<key>Promises (Playground) 3.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
+		<key>Promises (Playground) 4.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
+		<key>Promises (Playground).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
 		</dict>
 		<key>gaudyoshinokoExtension.xcscheme_^#shared#^_</key>
 		<dict>
@@ -23,6 +48,21 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>CA49F2D42D747E2D0021F472</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CA49F2E42D747E2E0021F472</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CA49F2EE2D747E2E0021F472</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CA72B3A92D929F090090D319</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -1,7 +1,9 @@
 public enum SharedConstants {
     public enum UserDefaults {
-        public static let appGroupID = "group.gaudy.widgetoshinoko"
-        public static let clockPresetKey = "selectedClockPreset"
+        public static let appGroupID = "group.gaudiy.widgetoshinoko"
+        public static let clockPresetKey = "clock_presets"
+        public static let cachedContentsKey = "cached_contents"
+        public static let customWidgetsKey = "custom_widgets"
     }
     
     public enum Layout {
