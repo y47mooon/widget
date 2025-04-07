@@ -1,7 +1,8 @@
 import SwiftUI
+import GaudiyWidgetShared
 
 /// レイアウト計算のためのユーティリティクラス
-struct LayoutCalculator {
+public struct LayoutCalculator {
     
     // MARK: - 基本計算メソッド
     
@@ -86,12 +87,11 @@ struct LayoutCalculator {
     static func gridColumns(for size: WidgetSize) -> [GridItem] {
         switch size {
         case .small:
-            return [
-                GridItem(.flexible(), spacing: DesignConstants.Layout.standardSpacing),
-                GridItem(.flexible(), spacing: DesignConstants.Layout.standardSpacing)
-            ]
-        case .medium, .large:
-            return [GridItem(.flexible())]
+            return [GridItem(.adaptive(minimum: 100), spacing: 16)]
+        case .medium:
+            return [GridItem(.adaptive(minimum: 150), spacing: 16)]
+        case .large:
+            return [GridItem(.adaptive(minimum: 300), spacing: 16)]
         }
     }
     
@@ -157,6 +157,22 @@ struct LayoutCalculator {
             return Array(repeating: GridItem(.flexible(), spacing: DesignConstants.Layout.smallSpacing), count: baseCount)
         } else {
             return gridColumns(for: context)
+        }
+    }
+    
+    public static func itemWidth(for size: WidgetSize) -> CGFloat {
+        switch size {
+        case .small: return 100
+        case .medium: return 150
+        case .large: return 300
+        }
+    }
+    
+    public static func itemHeight(for size: WidgetSize) -> CGFloat {
+        switch size {
+        case .small: return 100
+        case .medium: return 150
+        case .large: return 300
         }
     }
 }

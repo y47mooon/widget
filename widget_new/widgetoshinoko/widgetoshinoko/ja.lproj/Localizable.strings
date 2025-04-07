@@ -114,6 +114,46 @@
 "mypage_notification" = "通知";
 "mypage_contact" = "お問い合わせ";
 "mypage_logout" = "ログアウト";
+"mypage_favorites" = "お気に入り";
 
 // Popular Widgetsの部分を修正
 "section_popular_widgets" = "人気のウィジェット";
+
+// Download History
+"download_history_title" = "ダウンロード履歴";
+"download_history_empty" = "ダウンロード履歴がありません";
+"download_history_empty_message" = "コンテンツをダウンロードすると\nここに表示されます";
+"download_history_category_empty" = "この種類のダウンロード履歴はまだありません";
+"download_history_all" = "全て";
+
+// Favorites
+"favorites_title" = "お気に入り";
+"favorites_empty" = "お気に入りがありません";
+"favorites_empty_message" = "コンテンツを閲覧中にハートアイコンを\nタップするとお気に入りに追加されます";
+"favorites_all" = "全て";
+
+// カテゴリ
+"favorites_all" = "全て";
+"download_history_all" = "全て";
+"favorites_title" = "お気に入り";
+"favorites_empty" = "お気に入りがありません";
+"favorites_empty_message" = "コンテンツを閲覧中にハートアイコンを\nタップするとお気に入りに追加されます";
+"download_history_title" = "ダウンロード履歴";
+"download_history_empty" = "ダウンロード履歴がありません";
+"download_history_empty_message" = "コンテンツをダウンロードすると\nここに表示されます";
+
+// コンテンツタイプ
+"category_template" = "テンプレート";
+"category_widget" = "ウィジェット";
+"category_icon" = "アイコン";
+"category_lockscreen" = "ロック画面";
+"category_wallpaper" = "壁紙";
+"category_moving_wallpaper" = "動く壁紙";
+
+// 言語設定
+"mypage_language" = "言語設定";
+"settings_language_title" = "言語設定";
+"settings_language_header" = "アプリの言語";
+"settings_language_restart_note" = "言語設定を適用するには、アプリを再起動してください";
+"settings_restart_app" = "アプリを再起動";
+"system" = "システム設定に従う";

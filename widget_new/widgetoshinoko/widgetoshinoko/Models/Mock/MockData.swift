@@ -1,6 +1,10 @@
 import Foundation
+import GaudiyWidgetShared
 
+// モックデータを提供するユーティリティクラス
+// 注意: このクラスは移行期間のみ使用し、データベースによる実装に完全に移行後は削除する予定
 struct MockData {
+    // モックウィジェットアイテム
     static let widgets: [WidgetItem] = [
         WidgetItem(
             id: UUID(),
@@ -22,10 +26,35 @@ struct MockData {
             popularity: 150,
             createdAt: Date() // 現在
         ),
-        // 他のモックデータ
+        WidgetItem(
+            id: UUID(),
+            title: "カレンダー",
+            description: "シンプルなカレンダーウィジェット",
+            imageUrl: "mock_calendar",
+            category: "カレンダー",
+            isFavorite: false,
+            popularity: 120,
+            createdAt: Date()
+        )
     ]
     
+    // モックテンプレートアイテム
     static let templates: [TemplateItem] = [
-        // テンプレートのモックデータ
+        TemplateItem(
+            id: UUID(),
+            title: "シンプルモダン",
+            description: "シンプルで使いやすいテンプレート",
+            imageUrl: "",
+            category: GaudiyWidgetShared.TemplateCategory.simple,
+            popularity: 850
+        ),
+        TemplateItem(
+            id: UUID(),
+            title: "スタイリッシュポップ",
+            description: "鮮やかな色使いのテンプレート",
+            imageUrl: "",
+            category: GaudiyWidgetShared.TemplateCategory.stylish,
+            popularity: 720
+        )
     ]
 }

@@ -29,6 +29,12 @@ struct MyPageListItem: View {
 }
 
 struct MyPageView: View {
+    #if DEBUG
+    @State private var showDeveloperMenu = true
+    #else
+    @State private var showDeveloperMenu = false
+    #endif
+    
     var body: some View {
         NavigationView {
             List {
@@ -82,6 +88,16 @@ struct MyPageView: View {
                             showChevron: false
                         )
                     }
+                    
+                    NavigationLink {
+                        LanguageSettingsView()
+                    } label: {
+                        MyPageListItem(
+                            iconName: "globe",
+                            title: "mypage_language".localized,
+                            showChevron: false
+                        )
+                    }
                 }
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.white)
@@ -109,6 +125,23 @@ struct MyPageView: View {
                 }
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.white)
+                
+                // デバッグセクション
+                if showDeveloperMenu {
+                    Section(header: Text("開発者メニュー")) {
+                        NavigationLink {
+                            DebugMenuView()
+                        } label: {
+                            MyPageListItem(
+                                iconName: "ladybug",
+                                title: "デバッグメニュー",
+                                showChevron: false
+                            )
+                        }
+                    }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color(UIColor.systemGray6))
+                }
                 
                 Button(action: {
                     // ログアウト処理をここに実装

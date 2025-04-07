@@ -1,53 +1,39 @@
 import Foundation
+import GaudiyWidgetShared
 
 // 共通のカテゴリープロトコル
-protocol CategoryType {
+public protocol CategoryType {
     var rawValue: String { get }
     static var allCases: [Self] { get }
     var displayName: String { get }
 }
 
-// コンテンツタイプの定義
-enum ContentType {
-    case template
-    case icon
-    case widget
-    case wallpaper
-    case lockScreen
-    case movingWallpaper
-}
+// GaudiyContentTypeの定義を削除（別ファイルに移動済み）
 
 // ウィジェット用カテゴリー
-enum WidgetCategory: String, CaseIterable, CategoryType {
-    case popular = "widget_popular"
-    case weather = "widget_weather"
-    case clock = "widget_clock"
-    case calendar = "widget_calendar"
-    case reminder = "widget_reminder"
-    case date = "widget_date"
-    case anniversary = "widget_anniversary"
-    case fortune = "widget_fortune"
-    case memo = "widget_memo"
-    
-    var displayName: String {
-        return self.rawValue.localized
-    }
-}
+public typealias WidgetCategory = GaudiyWidgetShared.WidgetCategory
 
 // テンプレート用カテゴリー
-enum TemplateCategory: String, CaseIterable, CategoryType {
-    case popular = "template_popular"
-    case new = "template_new"
-    case recommended = "template_recommended"
-    case seasonal = "template_seasonal"
-    case simple = "template_simple"
-    case minimal = "template_minimal"
-    case stylish = "template_stylish"
-    
-    var displayName: String {
-        return self.rawValue.localized
-    }
-}
+// GaudiyWidgetSharedで定義済みの型を使用するためコメントアウト
+//enum TemplateCategory: String, CaseIterable, CategoryType {
+//    case popular = "template_popular"
+//    case new = "template_new"
+//    case recommended = "template_recommended"
+//    case seasonal = "template_seasonal"
+//    case simple = "template_simple"
+//    case minimal = "template_minimal"
+//    case stylish = "template_stylish"
+//    
+//    var displayName: String {
+//        return self.rawValue.localized
+//    }
+//}
+
+// GaudiyWidgetSharedからTemplateCategory型を使用
+public typealias TemplateCategory = GaudiyWidgetShared.TemplateCategory
+
+// GaudiyWidgetSharedパッケージのTemplateCategoryをCategoryTypeに明示的に準拠させる
+extension GaudiyWidgetShared.TemplateCategory: CategoryType {}
 
 // 壁紙用カテゴリー
 enum WallpaperCategory: String, CaseIterable, CategoryType {
@@ -129,12 +115,50 @@ enum WidgetCreationType: String, CaseIterable, CategoryType {
     }
 }
 
-enum WidgetSize: String, CaseIterable {
-    case small = "Small"
-    case medium = "Medium"
-    case large = "Large"
+// WidgetTemplateTypeの追加（既存のものがない場合）
+public enum WidgetTemplateType: String, Codable, CaseIterable {
+    case analogClock = "analog_clock"
+    case digitalClock = "digital_clock"
+    case weather = "weather"
+    case calendar = "calendar"
+    case photo = "photo"
     
-    var displayName: String {
-        return self.rawValue
+    public var displayName: String {
+        switch self {
+        case .analogClock: return "アナログ時計"
+        case .digitalClock: return "デジタル時計"
+        case .weather: return "天気"
+        case .calendar: return "カレンダー"
+        case .photo: return "写真"
+        }
+    }
+    
+    // WidgetTypeとの変換（必要に応じて）
+    public var widgetType: WidgetType {
+        switch self {
+        case .analogClock: return .analogClock
+        case .digitalClock: return .digitalClock
+        case .weather: return .weather
+        case .calendar: return .calendar
+        case .photo: return .photo
+        }
+    }
+}
+
+// 表示名などの拡張が必要な場合は拡張で対応
+extension WidgetCategory {
+    public var displayName: String {
+        switch self {
+        case .popular: return "widget_popular".localized
+        case .weather: return "widget_weather".localized
+        case .clock: return "widget_clock".localized
+        case .calendar: return "widget_calendar".localized
+        case .photo: return "widget_photo".localized
+        case .reminder: return "widget_reminder".localized
+        case .date: return "widget_date".localized
+        case .anniversary: return "widget_anniversary".localized
+        case .fortune: return "widget_fortune".localized
+        case .memo: return "widget_memo".localized
+        }
     }
 }

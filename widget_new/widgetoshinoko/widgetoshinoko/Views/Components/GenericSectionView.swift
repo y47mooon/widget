@@ -1,50 +1,44 @@
 import SwiftUI
 
-struct GenericSectionView<Item, Destination: View>: View {
+struct GenericSectionView<T: Identifiable, Content: View>: View {
     // プロパティ
     let title: String
     let seeMoreText: String
-    let items: [Item]
-    let destination: Destination
-    let itemsPerRow: Int
-    let itemBuilder: (Item, Int) -> AnyView
+    let items: [T]
+    let destination: any View
+    let itemBuilder: (T, Int) -> Content
     
     // 初期化
     init(
         title: String,
         seeMoreText: String = "button_see_more".localized,
-        items: [Item],
-        destination: Destination,
-        itemsPerRow: Int = 1,
-        @ViewBuilder itemBuilder: @escaping (Item, Int) -> AnyView
+        items: [T],
+        destination: any View,
+        @ViewBuilder itemBuilder: @escaping (T, Int) -> Content
     ) {
         self.title = title
         self.seeMoreText = seeMoreText
         self.items = items
         self.destination = destination
-        self.itemsPerRow = itemsPerRow
         self.itemBuilder = itemBuilder
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            // ヘッダー
+        VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Text(title.localized)
+                Text(title)
                     .font(.headline)
                 Spacer()
-                NavigationLink(destination: destination) {
+                NavigationLink(destination: AnyView(destination)) {
                     Text(seeMoreText)
-                        .font(.subheadline)
                         .foregroundColor(.blue)
                 }
             }
             .padding(.horizontal)
             
-            // コンテンツ
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 15) {
-                    ForEach(Array(items.enumerated()), id: \.offset) { index, item in
+                LazyHStack(spacing: 16) {
+                    ForEach(Array(items.enumerated()), id: \.element.id) { index, item in
                         itemBuilder(item, index)
                     }
                 }
@@ -59,16 +53,25 @@ struct GenericSectionView<Item, Destination: View>: View {
     NavigationView {
         GenericSectionView(
             title: "サンプルセクション",
-            items: [1, 2, 3, 4, 5],
-            destination: Text("詳細ビュー"),
+            seeMoreText: "もっと見る",
+            items: [1, 2, 3, 4, 5].map { 
+                PreviewItem(id: UUID(), value: $0) 
+            },
+            destination: AnyView(Text("詳細ビュー")),
             itemBuilder: { item, index in
                 AnyView(
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color.gray.opacity(0.2))
                         .frame(width: 160, height: 80)
-                        .overlay(Text("\(item)"))
+                        .overlay(Text("\(item.value)"))
                 )
             }
         )
     }
+}
+
+// プレビュー用のIdentifiableな構造体
+private struct PreviewItem: Identifiable {
+    let id: UUID
+    let value: Int
 }

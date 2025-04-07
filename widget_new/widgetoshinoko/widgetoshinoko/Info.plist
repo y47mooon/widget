@@ -19,5 +19,7 @@
 	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>写真フォルダに画像を保存するために使用します</string>
 </dict>
 </plist>

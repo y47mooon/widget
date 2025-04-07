@@ -4,13 +4,56 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>GaudiyWidgetShared.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>OshinokoWidgetExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>Promises (Playground) 1.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
+		<key>Promises (Playground) 2.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
+		<key>Promises (Playground) 3.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
+		<key>Promises (Playground) 4.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
+		<key>Promises (Playground).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
 		<key>gaudyoshinokoExtension.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
 		<key>widgetoshinoko.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
@@ -18,6 +61,31 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>CA49F2D42D747E2D0021F472</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CA49F2E42D747E2E0021F472</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CA49F2EE2D747E2E0021F472</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CA72B3A02D929F080090D319</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CA72B3A92D929F090090D319</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CAADB05C2D9F7D3600353635</key>
 		<dict>
 			<key>primary</key>
 			<true/>

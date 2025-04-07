@@ -1,6 +1,7 @@
 import SwiftUI      // ObservableObjectのために必要
 import Combine      // @Publishedのために必要
 
+@MainActor
 protocol IconListViewModelProtocol: ObservableObject {
     associatedtype Item
     var items: [Item] { get }
@@ -10,6 +11,7 @@ protocol IconListViewModelProtocol: ObservableObject {
     func loadInitialItems() async
 }
 
+@MainActor
 class IconListViewModel: IconListViewModelProtocol {
     @Published private(set) var items: [IconSet] = []
     @Published private(set) var isLoading = false
@@ -25,21 +27,28 @@ class IconListViewModel: IconListViewModelProtocol {
     func loadMoreItems() async {
         guard !isLoading, hasMoreItems else { return }
         
-        await MainActor.run { isLoading = true }
+        isLoading = true
         
-        // TODO: 実際のAPI呼び出しに置き換え
-        // 仮実装としてダミーデータを遅延生成
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
-        let newItems = (0..<10).map { index in
-            createDummyIconSet(index: currentPage * 10 + index)
-        }
-        
-        await MainActor.run {
+        do {
+            // 時間のかかる処理をシミュレート（実際のAPIリクエストなど）
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+            
+            // データ生成（すでにMainActorコンテキストにいるので直接呼び出せる）
+            let newItems = (0..<10).map { index in
+                createDummyIconSet(index: currentPage * 10 + index)
+            }
+            
+            // UI更新（すでにMainActorコンテキストにいるので直接更新できる）
             items.append(contentsOf: newItems)
             currentPage += 1
             hasMoreItems = currentPage < 3 // デモ用に3ページまで
-            isLoading = false
+        } catch {
+            // エラー処理（実際のアプリではユーザーに通知するなど）
+            print("データの読み込み中にエラーが発生しました: \(error)")
         }
+        
+        // 処理完了後、ローディング状態を解除
+        isLoading = false
     }
     
     func loadInitialItems() async {
@@ -49,13 +58,14 @@ class IconListViewModel: IconListViewModelProtocol {
     }
     
     private func createDummyIconSet(index: Int) -> IconSet {
-        IconSet(
+        let categoryValue = self.category // 明示的に参照
+        return IconSet(
             id: UUID(),
-            title: "\(category.rawValue) セット \(index + 1)",
+            title: "\(categoryValue.rawValue) セット \(index + 1)",
             icons: (0..<4).map { _ in 
                 IconSet.Icon(id: UUID(), imageUrl: "placeholder", targetAppBundleId: nil)
             },
-            category: category,
+            category: categoryValue,
             popularity: 100,
             createdAt: Date()
         )

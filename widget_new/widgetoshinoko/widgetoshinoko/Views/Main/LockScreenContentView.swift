@@ -10,9 +10,9 @@ struct LockScreenContentView: View {
                 ForEach(LockScreenCategory.allCases, id: \.self) { category in
                     GenericSectionView(
                         title: category.rawValue,
-                        items: viewModel.getLockScreenItems(for: category), // カテゴリー別データを使用
+                        items: viewModel.getLockScreenItems(for: category),
                         destination: ContentListView(
-                            category: category,
+                            category: category.rawValue,
                             contentType: .lockScreen
                         ),
                         itemBuilder: { item, index in

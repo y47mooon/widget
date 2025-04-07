@@ -11,7 +11,7 @@ struct MovingWallpaperContentView: View {
                         title: category.rawValue,
                         items: viewModel.getMovingWallpaperItems(for: category),
                         destination: ContentListView(
-                            category: category,
+                            category: category.rawValue,
                             contentType: .movingWallpaper
                         ),
                         itemBuilder: { item, index in

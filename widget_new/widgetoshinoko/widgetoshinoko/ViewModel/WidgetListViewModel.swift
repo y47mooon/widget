@@ -54,8 +54,8 @@ final class WidgetListViewModel: ObservableObject {
             widgetItems.sort { $0.popularity > $1.popularity }
         case .newest:
             widgetItems.sort { $0.createdAt > $1.createdAt }
-        case .oldest:
-            widgetItems.sort { $0.createdAt < $1.createdAt }
+        case .favorite:
+            widgetItems.sort { $0.isFavorite && !$1.isFavorite }
         }
     }
     

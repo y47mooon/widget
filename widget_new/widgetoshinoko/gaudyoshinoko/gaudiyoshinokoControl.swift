@@ -10,7 +10,7 @@ import SwiftUI
 import WidgetKit
 
 struct gaudiyoshinokoControl: ControlWidget {
-    static let kind: String = "gaudiy.widgetoshinoko.gaudiyoshinoko"
+    static let kind: String = "ControlWidget.oshinoko"
 
     var body: some ControlWidgetConfiguration {
         AppIntentControlConfiguration(

@@ -113,4 +113,34 @@
 "mypage_help" = "Help";
 "mypage_contact" = "Contact Us";
 "mypage_logout" = "Log Out";
+"mypage_favorites" = "Favorites";
+
+// Download History
+"download_history_title" = "Download History";
+"download_history_empty" = "No Download History";
+"download_history_empty_message" = "Your download history will appear here\nwhen you save widgets and wallpapers";
+"download_history_category_empty" = "No download history for this category yet";
+"download_history_all" = "All";
+
+// Favorites
+"favorites_title" = "Favorites";
+"favorites_empty" = "No Favorites";
+"favorites_empty_message" = "Tap the heart icon while browsing content\nto add items to your favorites";
+"favorites_all" = "All";
+
+// Content Types
+"category_template" = "Template";
+"category_widget" = "Widget";
+"category_icon" = "Icon";
+"category_lockscreen" = "Lock Screen";
+"category_wallpaper" = "Wallpaper";
+"category_moving_wallpaper" = "Moving Wallpaper";
+
+// Language Settings
+"mypage_language" = "Language";
+"settings_language_title" = "Language Settings";
+"settings_language_header" = "App Language";
+"settings_language_restart_note" = "Please restart the app to apply language changes";
+"settings_restart_app" = "Restart App";
+"system" = "System Default";
 

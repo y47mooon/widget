@@ -1,17 +1,15 @@
 import SwiftUI
+import GaudiyWidgetShared
 
-struct ContentListView<Category: CategoryType>: View {
-    let category: Category
-    let contentType: ContentType
-    @StateObject private var viewModel: ContentListViewModel<Category>
+struct ContentListView: View {
+    let category: String?
+    let contentType: GaudiyContentType
+    @StateObject private var viewModel: ContentListViewModel
     
-    init(category: Category, contentType: ContentType) {
+    init(category: String? = nil, contentType: GaudiyContentType) {
         self.category = category
         self.contentType = contentType
-        _viewModel = StateObject(wrappedValue: ContentListViewModel(
-            repository: MockContentRepository(),
-            category: category
-        ))
+        _viewModel = StateObject(wrappedValue: ContentListViewModel())
     }
     
     var body: some View {
@@ -23,13 +21,8 @@ struct ContentListView<Category: CategoryType>: View {
                 ],
                 spacing: 16
             ) {
-                ForEach(Array(viewModel.items.enumerated()), id: \.element.id) { index, item in
-                    ContentItemView(
-                        item: item,
-                        contentType: contentType,
-                        index: index,
-                        isInList: true
-                    )
+                ForEach(viewModel.contents) { content in
+                    FirebaseContentItemView(content: content)
                 }
                 
                 if viewModel.isLoading {
@@ -40,9 +33,48 @@ struct ContentListView<Category: CategoryType>: View {
             }
             .padding()
         }
-        .navigationTitle(category.rawValue)
+        .navigationTitle(category ?? "すべてのコンテンツ")
         .task {
-            await viewModel.loadItems(limit: 10)
+            await viewModel.loadContents(category: category)
         }
+    }
+}
+
+struct FirebaseContentItemView: View {
+    let content: Content
+    
+    var body: some View {
+        VStack {
+            AsyncImage(url: URL(string: content.previewImageUrl)) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            } placeholder: {
+                ProgressView()
+            }
+            
+            Text(content.description)
+                .lineLimit(2)
+                .padding(.horizontal)
+            
+            if !content.tags.isEmpty {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(content.tags, id: \.self) { tag in
+                            Text(tag)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Color.gray.opacity(0.2))
+                                .cornerRadius(8)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .background(Color.white)
+        .cornerRadius(12)
+        .shadow(radius: 4)
     }
 }

@@ -1,27 +1,48 @@
 import Foundation
+import GaudiyWidgetShared
 
 @MainActor
-final class ContentListViewModel<Category: CategoryType>: ObservableObject {
-    @Published private(set) var items: [ContentItem<Category>] = []
+final class ContentListViewModel: ObservableObject {
+    @Published private(set) var contents: [Content] = []
     @Published private(set) var isLoading = false
     @Published var errorMessage: String?
     
-    private let repository: ContentRepositoryProtocol
-    let category: Category
+    private let repository: FirestoreRepositoryProtocol
     
-    init(repository: ContentRepositoryProtocol = MockContentRepository(), category: Category) {
+    init(repository: FirestoreRepositoryProtocol = RepositoryFactory.shared.makeFirestoreRepository()) {
         self.repository = repository
-        self.category = category
     }
     
-    func loadItems(limit: Int = 5) async {
+    func loadContents(category: String? = nil, limit: Int = 20) async {
+        Logger.shared.info("Loading contents - category: \(category ?? "all")")
         isLoading = true
         errorMessage = nil
         
         do {
-            items = try await repository.fetchItems(category: category, limit: limit)
+            let firebaseContents = try await repository.fetchContents(category: category ?? "", limit: limit)
+            print("📦 Loaded \(firebaseContents.count) items from Firestore")
+            contents = firebaseContents.compactMap { ContentAdapter.toContent($0) }
+            print("🎯 Converted to \(contents.count) Content items")
         } catch {
+            print("❌ Error loading contents: \(error)")
             errorMessage = "データの読み込みに失敗しました"
+            Logger.shared.error("Error loading contents", error: error)
+        }
+        
+        isLoading = false
+    }
+    
+    func saveContent(_ content: Content) async {
+        isLoading = true
+        errorMessage = nil
+        
+        do {
+            let firebaseContent = ContentAdapter.toFirebaseContentItem(content)
+            try await repository.saveContent(firebaseContent)
+            await loadContents()
+        } catch {
+            errorMessage = "コンテンツの保存に失敗しました"
+            print("Error: \(error)")
         }
         
         isLoading = false

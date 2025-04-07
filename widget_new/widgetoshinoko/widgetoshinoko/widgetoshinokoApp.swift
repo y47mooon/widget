@@ -1,19 +1,24 @@
 import SwiftUI
-import Firebase
+#if canImport(FirebaseCore)
+import FirebaseCore
+import FirebaseAnalytics
+import FirebaseFirestore
+import FirebaseDatabase
+// 他の必要なFirebaseモジュール
+#endif
 
 @main
 struct widgetoshinokoApp: App {
-    init() {
-        FirebaseApp.configure()
-    }
+    // AppDelegateを使用
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .onAppear {
-                    // ここでログを出力
-                    print("ContentView appeared")
-                    print("アプリが正常に起動しました")
+                    print("ContentView表示")
+                    // 画面表示のアナリティクスイベントを送信
+                    AnalyticsService.shared.logScreenView("ContentView", screenClass: "ContentView")
                 }
         }
     }

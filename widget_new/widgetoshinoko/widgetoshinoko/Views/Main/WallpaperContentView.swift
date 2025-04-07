@@ -11,7 +11,7 @@ struct WallpaperContentView: View {
                         title: category.rawValue,
                         items: viewModel.getWallpaperItems(for: category),
                         destination: ContentListView(
-                            category: category,
+                            category: category.rawValue,
                             contentType: .wallpaper
                         ),
                         itemBuilder: { item, index in

@@ -1,31 +1,47 @@
 import SwiftUI
+import GaudiyWidgetShared
 
 /// ホーム画面の「全て」タブで表示するコンテンツビュー
 struct HomeContentView: View {
     @ObservedObject var viewModel: MainContentViewModel
     
     var body: some View {
-        VStack(spacing: 24) {
-            // テンプレートセクション
-            templateSection
-            
-            // ウィジェットセクション
-            widgetSection
-            
-            // ロック画面セクション
-            lockScreenSection
-            
-            // 壁紙セクション
-            wallpaperSection
-            
-            // 動く壁紙セクション
-            movingWallpaperSection
-            
-            // 下部に余白を追加してスクロール時の見やすさを改善
-            Spacer()
-                .frame(height: 40)
+        ScrollView {
+            VStack(spacing: 24) {
+                // テンプレートセクション
+                if !viewModel.templateItems.isEmpty {
+                    templateSection
+                }
+                
+                // ウィジェットセクション
+                if !viewModel.widgetItems.isEmpty {
+                    widgetSection
+                }
+                
+                // ロック画面セクション
+                if !viewModel.lockScreenItems.isEmpty {
+                    lockScreenSection
+                }
+                
+                // 壁紙セクション
+                if !viewModel.wallpaperItems.isEmpty {
+                    wallpaperSection
+                }
+                
+                // 動く壁紙セクション
+                if !viewModel.movingWallpaperItems.isEmpty {
+                    movingWallpaperSection
+                }
+                
+                Spacer()
+                    .frame(height: 40)
+            }
+            .padding(.bottom, 16)
         }
-        .padding(.bottom, 16)
+        .task {
+            // 画面表示時にデータを読み込む
+            await viewModel.loadAllData()
+        }
     }
     
     // テンプレートセクション
@@ -35,7 +51,7 @@ struct HomeContentView: View {
             seeMoreText: "button_see_more".localized,
             items: viewModel.templateItems,
             destination: ContentListView(
-                category: TemplateCategory.popular,
+                category: TemplateCategory.popular.rawValue,
                 contentType: .template
             ),
             itemBuilder: { item, index in
@@ -52,7 +68,7 @@ struct HomeContentView: View {
     
     // ウィジェットセクション
     private var widgetSection: some View {
-        GenericSectionView(
+        GenericSectionView<WidgetItem, AnyView>(
             title: "section_popular_widgets".localized,
             seeMoreText: "button_see_more".localized,
             items: viewModel.widgetItems.isEmpty ? getDummyWidgets() : viewModel.widgetItems,
@@ -60,14 +76,15 @@ struct HomeContentView: View {
                 viewModel: WidgetListViewModel(
                     repository: MockWidgetRepository(),
                     category: .popular
-                )
+                ),
+                itemBuilder: { size in
+                    WidgetSizeView(size: size)
+                }
             ),
-            itemBuilder: { item, index in
+            itemBuilder: { widgetItem, index in
                 AnyView(
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.2))
+                    WidgetItemView(item: widgetItem)
                         .frame(width: calculateWidgetWidth(), height: 100)
-                        .cornerRadius(12)
                 )
             }
         )
@@ -88,7 +105,7 @@ struct HomeContentView: View {
             seeMoreText: "button_see_more".localized,
             items: viewModel.lockScreenItems,
             destination: ContentListView(
-                category: LockScreenCategory.popular,
+                category: LockScreenCategory.popular.rawValue,
                 contentType: .lockScreen
             ),
             itemBuilder: { item, index in
@@ -110,7 +127,7 @@ struct HomeContentView: View {
             seeMoreText: "button_see_more".localized,
             items: viewModel.wallpaperItems,
             destination: ContentListView(
-                category: WallpaperCategory.popular,
+                category: WallpaperCategory.popular.rawValue,
                 contentType: .wallpaper
             ),
             itemBuilder: { item, index in
@@ -128,11 +145,11 @@ struct HomeContentView: View {
     // 動く壁紙セクション
     private var movingWallpaperSection: some View {
         GenericSectionView(
-            title: MovingWallpaperCategory.popular.rawValue,
+            title: "movingwallpaper_popular".localized,
             seeMoreText: "button_see_more".localized,
             items: viewModel.movingWallpaperItems,
             destination: ContentListView(
-                category: MovingWallpaperCategory.popular,
+                category: MovingWallpaperCategory.popular.rawValue,
                 contentType: .movingWallpaper
             ),
             itemBuilder: { item, index in

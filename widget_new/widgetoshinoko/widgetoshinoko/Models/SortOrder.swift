@@ -1,11 +1,18 @@
 import Foundation
 
 enum SortOrder: String, CaseIterable {
-    case popular = "人気順"
-    case newest = "新着順"
-    case oldest = "古い順"
+    case popular = "popular"
+    case newest = "newest"
+    case favorite = "favorite"
     
     var displayName: String {
-        return self.rawValue
+        switch self {
+        case .popular:
+            return "人気順"
+        case .newest:
+            return "新着順"
+        case .favorite:
+            return "お気に入り順"
+        }
     }
 }
