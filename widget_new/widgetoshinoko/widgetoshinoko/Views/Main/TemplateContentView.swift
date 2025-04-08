@@ -1,43 +1,49 @@
 import SwiftUI
 import GaudiyWidgetShared
 
+/// テンプレート画面のコンテンツビュー
 struct TemplateContentView: View {
-    @ObservedObject var mainViewModel: MainContentViewModel
-    @StateObject private var viewModel = TemplateViewModel()
-    
-    init(viewModel: MainContentViewModel) {
-        self.mainViewModel = viewModel
-    }
+    @StateObject private var templateViewModel = TemplateViewModel()
     
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 24) {
-                // 特集セクション
+                // 注目のテンプレート
                 featuredSection
                 
-                // カテゴリーセクション
+                // カテゴリー別テンプレート
                 ForEach(TemplateCategory.allCases, id: \.self) { category in
-                    templateSection(for: category)
+                    if let templates = templateViewModel.templatesByCategory[category], !templates.isEmpty {
+                        templateSection(category: category, templates: templates)
+                    }
                 }
+                
+                Spacer()
+                    .frame(height: 40)
             }
-            .padding(.bottom)
+            .padding(.bottom, 16)
         }
-        .navigationTitle("テンプレート".localized)
+        .task {
+            await templateViewModel.loadTemplates()
+        }
     }
     
-    // 特集テンプレートセクション
+    // 注目のテンプレートセクション
     private var featuredSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("featured_templates".localized)
-                .font(.headline)
-                .padding(.leading)
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Text("template_featured".localized)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                Spacer()
+            }
+            .padding(.horizontal, 16)
             
-            // 特集テンプレートカルーセル
+            // 注目のテンプレートカルーセル
             TabView {
                 ForEach(getFeaturedTemplates(), id: \.id) { template in
-                    NavigationLink(destination: TemplatePreviewView(template: template, contentId: template.id)) {
-                        FeaturedTemplateView(template: template)
-                    }
+                    FeaturedTemplateView(template: template)
                 }
             }
             .frame(height: 220)
@@ -46,286 +52,236 @@ struct TemplateContentView: View {
     }
     
     // カテゴリー別テンプレートセクション
-    private func templateSection(for category: TemplateCategory) -> some View {
-        let templates = viewModel.loadTemplates(for: category)
-        
-        return VStack(alignment: .leading, spacing: 12) {
+    private func templateSection(category: TemplateCategory, templates: [TemplateItem]) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Text(category.displayName)
+                Text(category.localizedTitle.localized)
                     .font(.headline)
+                    .foregroundColor(.primary)
                 
                 Spacer()
                 
-                NavigationLink(
-                    destination: TemplateCategoryView(category: category)
-                ) {
-                    HStack {
-                        Text("button_see_more".localized)
-                            .font(.system(size: 14))
-                        Image(systemName: "chevron.right")
-                    }
-                    .foregroundColor(.gray)
+                NavigationLink(destination: TemplateCategoryView(category: category, viewModel: templateViewModel)) {
+                    Text("button_see_more".localized)
+                        .font(.subheadline)
+                        .foregroundColor(.blue)
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 16)
             
-            // 水平スクロールでテンプレート表示
+            // テンプレート横スクロール
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
-                    ForEach(templates.prefix(6)) { template in
-                        NavigationLink(
-                            destination: TemplatePreviewView(template: template, contentId: template.id)
-                        ) {
-                            TemplateItemView(item: template)
-                                .frame(width: 140)
+                    ForEach(templates, id: \.id) { template in
+                        NavigationLink(destination: TemplateSimplePreviewView(template: template)) {
+                            templateItemView(for: template)
                         }
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 16)
             }
-            .frame(height: 200)
         }
     }
     
-    // 特集テンプレート用のサンプルデータを取得
+    // テンプレートアイテムビュー
+    private func templateItemView(for template: TemplateItem) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            AsyncImage(url: URL(string: template.imageUrl)) { phase in
+                switch phase {
+                case .empty:
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.gray.opacity(0.2))
+                        .aspectRatio(3/4, contentMode: .fit)
+                        .overlay(ProgressView())
+                case .success(let image):
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 120, height: 160)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                case .failure:
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.gray.opacity(0.2))
+                        .aspectRatio(3/4, contentMode: .fit)
+                        .overlay(
+                            Image(systemName: "photo")
+                                .foregroundColor(.gray)
+                        )
+                @unknown default:
+                    EmptyView()
+                }
+            }
+            .frame(width: 120, height: 160)
+            
+            Text(template.title)
+                .font(.caption)
+                .foregroundColor(.primary)
+                .lineLimit(1)
+                .frame(width: 120, alignment: .leading)
+        }
+    }
+    
+    // 注目のテンプレートを取得
     private func getFeaturedTemplates() -> [TemplateItem] {
-        var featuredTemplates: [TemplateItem] = []
+        // 各カテゴリから一つずつ取得
+        var featured: [TemplateItem] = []
         
-        // 各カテゴリから1つずつ特集として表示
         for category in TemplateCategory.allCases {
-            if let firstTemplate = viewModel.loadTemplates(for: category).first {
-                featuredTemplates.append(firstTemplate)
+            if let templates = templateViewModel.templatesByCategory[category], 
+               let first = templates.first {
+                featured.append(first)
             }
         }
         
-        return featuredTemplates.prefix(5).map { $0 }
+        return featured.isEmpty ? templateViewModel.allTemplates.prefix(3).map { $0 } : featured
     }
 }
 
-// 特集テンプレートビュー
+// 注目のテンプレート表示用ビュー
 struct FeaturedTemplateView: View {
     let template: TemplateItem
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            // 背景画像
-            Rectangle()
-                .fill(Color.gray.opacity(0.2))
-                .overlay(
-                    // 実際の画像を表示（または、カテゴリに基づいた代替表示）
-                    Group {
-                        if !template.imageUrl.isEmpty && template.imageUrl != "dummy_url" {
-                            AsyncImage(url: URL(string: template.imageUrl)) { phase in
-                                switch phase {
-                                case .empty:
-                                    ProgressView()
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                case .failure:
-                                    Image(systemName: "photo")
-                                        .font(.system(size: 40))
-                                        .foregroundColor(.white)
-                                @unknown default:
-                                    EmptyView()
-                                }
-                            }
-                        } else {
-                            // カテゴリに基づいた代替表示
-                            let color: Color = {
-                                switch template.category {
-                                case .minimal: return .gray
-                                case .simple: return .blue
-                                case .stylish: return .purple
-                                case .new: return .green
-                                case .recommended: return .orange
-                                case .seasonal: return .pink
-                                case .popular: return .red
-                                }
-                            }()
-                            
-                            color.opacity(0.6)
-                                .overlay(
-                                    VStack {
-                                        Image(systemName: "square.grid.2x2")
-                                            .font(.system(size: 40))
-                                            .foregroundColor(.white)
-                                        Text(template.category.displayName)
-                                            .font(.title2)
-                                            .foregroundColor(.white)
-                                    }
-                                )
-                        }
+        NavigationLink(destination: TemplateSimplePreviewView(template: template)) {
+            ZStack(alignment: .bottomLeading) {
+                AsyncImage(url: URL(string: template.imageUrl)) { phase in
+                    switch phase {
+                    case .empty:
+                        Rectangle()
+                            .fill(Color.gray.opacity(0.2))
+                            .overlay(ProgressView())
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    case .failure:
+                        Rectangle()
+                            .fill(Color.gray.opacity(0.2))
+                            .overlay(
+                                Image(systemName: "photo")
+                                    .foregroundColor(.gray)
+                            )
+                    @unknown default:
+                        EmptyView()
                     }
-                )
-            
-            // テンプレート情報オーバーレイ
-            VStack(alignment: .leading, spacing: 4) {
-                Text(template.title)
-                    .font(.headline)
-                    .foregroundColor(.white)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
                 
-                Text(template.description ?? "")
-                    .font(.subheadline)
-                    .foregroundColor(.white.opacity(0.8))
-                    .lineLimit(2)
+                // テンプレート情報
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(template.title)
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                    
+                    Text(template.category.localizedTitle.localized)
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.8))
+                }
+                .padding(16)
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(colors: [Color.black.opacity(0.7), Color.black.opacity(0)]),
+                        startPoint: .bottom,
+                        endPoint: .top
+                    )
+                )
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: 16,
+                        style: .continuous
+                    )
+                )
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding()
-            .background(LinearGradient(
-                gradient: Gradient(colors: [Color.black.opacity(0.7), Color.black.opacity(0)]),
-                startPoint: .bottom,
-                endPoint: .top
-            ))
+            .frame(maxWidth: .infinity)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .padding(.horizontal, 16)
         }
-        .cornerRadius(16)
-        .padding(.horizontal)
     }
 }
 
-// カテゴリー別テンプレート一覧画面
+// カテゴリー別テンプレート表示画面
 struct TemplateCategoryView: View {
     let category: TemplateCategory
-    @StateObject private var viewModel: TemplateCategoryViewModel
-    
-    init(category: TemplateCategory) {
-        self.category = category
-        self._viewModel = StateObject(wrappedValue: TemplateCategoryViewModel(category: category))
-    }
+    @ObservedObject var viewModel: TemplateViewModel
+    @State private var currentPage = 0
     
     var body: some View {
         ScrollView {
-            LazyVGrid(
-                columns: [
-                    GridItem(.adaptive(minimum: 160), spacing: 16)
-                ],
-                spacing: 16
-            ) {
-                // テンプレート一覧
-                templatesContent
-                
-                // ローディングインジケータ
-                loadingIndicator
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                ForEach(templates, id: \.id) { template in
+                    NavigationLink(destination: TemplateSimplePreviewView(template: template)) {
+                        templateGridItemView(for: template)
+                    }
+                }
             }
             .padding()
-        }
-        .navigationTitle(category.displayName)
-    }
-    
-    // テンプレート一覧部分を分離
-    private var templatesContent: some View {
-        ForEach(viewModel.templates) { template in
-            templateLink(for: template)
-        }
-    }
-    
-    // 個別のテンプレートリンクを生成する関数
-    private func templateLink(for template: TemplateItem) -> some View {
-        NavigationLink(
-            destination: TemplatePreviewView(template: template, contentId: template.id)
-        ) {
-            TemplateItemView(item: template)
-                .onAppear {
-                    checkForMoreContent(template: template)
-                }
-        }
-    }
-    
-    // ロード処理を個別のメソッドに分離
-    private func checkForMoreContent(template: TemplateItem) {
-        if template.id == viewModel.templates.last?.id {
-            viewModel.loadNextPage()
-        }
-    }
-    
-    // ローディングインジケータ部分を分離
-    private var loadingIndicator: some View {
-        Group {
-            if viewModel.isLoading {
-                ProgressView()
-                    .frame(maxWidth: .infinity)
-                    .padding()
-            }
-        }
-    }
-}
-
-// テンプレートアイテムビュー
-struct TemplateItemView: View {
-    let item: TemplateItem
-    
-    var body: some View {
-        VStack {
-            ZStack {
-                // 背景画像またはカテゴリに基づいた代替表示
-                if !item.imageUrl.isEmpty && item.imageUrl != "dummy_url" {
-                    AsyncImage(url: URL(string: item.imageUrl)) { phase in
-                        switch phase {
-                        case .empty:
-                            ProgressView()
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        case .failure:
-                            categoryPlaceholder
-                        @unknown default:
-                            EmptyView()
-                        }
+            
+            // ページネーション
+            if viewModel.hasMoreTemplates(for: category) {
+                Button(action: {
+                    Task {
+                        currentPage += 1
+                        await viewModel.loadMoreTemplates(for: category, page: currentPage)
                     }
-                    .aspectRatio(3/4, contentMode: .fit)
-                    .clipped()
-                    .cornerRadius(12)
-                } else {
-                    categoryPlaceholder
+                }) {
+                    Text("button_load_more".localized)
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(8)
                 }
+                .padding(.bottom, 24)
             }
-            .frame(height: 180)
-            
-            Text(item.title)
-                .font(.subheadline)
-                .fontWeight(.medium)
-                .lineLimit(1)
-                .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .navigationTitle(category.localizedTitle.localized)
     }
     
-    // カテゴリ別プレースホルダー
-    private var categoryPlaceholder: some View {
-        let color: Color = {
-            switch item.category {
-            case .minimal: return .gray
-            case .simple: return .blue
-            case .stylish: return .purple
-            case .new: return .green
-            case .recommended: return .orange
-            case .seasonal: return .pink
-            case .popular: return .red
+    private var templates: [TemplateItem] {
+        viewModel.templatesByCategory[category] ?? []
+    }
+    
+    private func templateGridItemView(for template: TemplateItem) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            AsyncImage(url: URL(string: template.imageUrl)) { phase in
+                switch phase {
+                case .empty:
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.gray.opacity(0.2))
+                        .aspectRatio(3/4, contentMode: .fit)
+                        .overlay(ProgressView())
+                case .success(let image):
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .aspectRatio(3/4, contentMode: .fit)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                case .failure:
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.gray.opacity(0.2))
+                        .aspectRatio(3/4, contentMode: .fit)
+                        .overlay(
+                            Image(systemName: "photo")
+                                .foregroundColor(.gray)
+                        )
+                @unknown default:
+                    EmptyView()
+                }
             }
-        }()
-        
-        return ZStack {
-            RoundedRectangle(cornerRadius: 12)
-                .fill(color.opacity(0.3))
             
-            VStack(spacing: 8) {
-                Image(systemName: "square.grid.2x2")
-                    .font(.system(size: 24))
-                    .foregroundColor(color)
-                Text(item.category.displayName)
-                    .font(.caption)
-                    .foregroundColor(color)
-            }
+            Text(template.title)
+                .font(.caption)
+                .foregroundColor(.primary)
+                .lineLimit(1)
         }
     }
 }
 
 // プレビュー
-struct TemplateContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            TemplateContentView(viewModel: MainContentViewModel())
-        }
+#Preview {
+    NavigationView {
+        TemplateContentView()
     }
 }

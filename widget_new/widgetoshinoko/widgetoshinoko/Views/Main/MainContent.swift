@@ -119,7 +119,7 @@ struct MainContent: View {
                 case .all:
                     HomeContentView(viewModel: viewModel)
                 case .template:
-                    TemplateContentView(viewModel: viewModel)
+                    TemplateContentView()
                 case .widget:
                     WidgetCategoryListView(viewModel: viewModel)
                 case .icon:

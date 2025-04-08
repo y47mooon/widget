@@ -8,6 +8,7 @@ enum DownloadError: Error, LocalizedError {
     case invalidURL
     case downloadFailed
     case saveFailed
+    case cancelled
     case unknown
     
     var errorDescription: String? {
@@ -20,6 +21,8 @@ enum DownloadError: Error, LocalizedError {
             return "ダウンロードに失敗しました"
         case .saveFailed:
             return "保存に失敗しました"
+        case .cancelled:
+            return "ダウンロードがキャンセルされました"
         case .unknown:
             return "不明なエラーが発生しました"
         }
@@ -33,6 +36,9 @@ class ContentDownloadManager: ObservableObject {
     @Published var progress: Double = 0
     @Published var isDownloading = false
     @Published var errorMessage: String?
+    
+    private var currentTask: URLSessionDataTask?
+    private var progressObservation: NSKeyValueObservation?
     
     private init() {}
     
@@ -59,9 +65,18 @@ class ContentDownloadManager: ObservableObject {
             
             // URLSessionを使用してダウンロード進捗を追跡
             let (data, response) = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<(Data, URLResponse), Error>) in
-                let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+                    // タスク参照をクリア
+                    self?.currentTask = nil
+                    self?.progressObservation = nil
+                    
                     if let error = error {
-                        continuation.resume(throwing: error)
+                        if (error as NSError).domain == NSURLErrorDomain && 
+                           (error as NSError).code == NSURLErrorCancelled {
+                            continuation.resume(throwing: DownloadError.cancelled)
+                        } else {
+                            continuation.resume(throwing: error)
+                        }
                         return
                     }
                     
@@ -75,17 +90,17 @@ class ContentDownloadManager: ObservableObject {
                     continuation.resume(returning: (data, httpResponse))
                 }
                 
+                // 現在のタスクを保存
+                self.currentTask = task
+                
                 // 進捗監視
-                let observation = task.progress.observe(\.fractionCompleted) { [weak self] progress, _ in
+                self.progressObservation = task.progress.observe(\.fractionCompleted) { [weak self] progress, _ in
                     Task { @MainActor [weak self] in
                         self?.progress = progress.fractionCompleted
                     }
                 }
                 
                 task.resume()
-                
-                // 観測オブジェクトを保持
-                _ = observation
             }
             
             guard let httpResponse = response as? HTTPURLResponse,
@@ -111,6 +126,23 @@ class ContentDownloadManager: ObservableObject {
             }
             
             throw error
+        }
+    }
+    
+    /// 現在進行中のダウンロードをキャンセルする
+    func cancelDownload() {
+        if let task = currentTask, task.state == .running {
+            task.cancel()
+        }
+        
+        // 状態をリセット
+        Task { @MainActor in
+            self.isDownloading = false
+            self.progress = 0
+            self.errorMessage = DownloadError.cancelled.localizedDescription
+            self.currentTask = nil
+            self.progressObservation?.invalidate()
+            self.progressObservation = nil
         }
     }
 }

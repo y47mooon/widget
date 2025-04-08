@@ -1,252 +1,204 @@
 import Foundation
-import SwiftUI
-import Combine
 import GaudiyWidgetShared
+import Combine
 
 class TemplateViewModel: ObservableObject {
+    @Published var allTemplates: [TemplateItem] = []
     @Published var templatesByCategory: [TemplateCategory: [TemplateItem]] = [:]
-    @Published var isLoading = false
+    @Published var isLoading: Bool = false
     @Published var error: Error?
     
-    private var cancellables = Set<AnyCancellable>()
+    private var categoriesWithMoreTemplates: Set<TemplateCategory> = []
+    private let repository: TemplateRepositoryProtocol
     
-    // 初期化時にデータを読み込む
-    init() {
-        loadAllTemplates()
+    init(repository: TemplateRepositoryProtocol = TemplateRepository()) {
+        self.repository = repository
     }
     
-    // すべてのカテゴリのテンプレートを取得
-    func loadAllTemplates() {
+    /// すべてのテンプレートを読み込む
+    @MainActor
+    func loadTemplates() async {
         isLoading = true
+        error = nil
         
-        // MainContentViewModelからデータを取得する実装に変更
-        Task {
-            do {
-                // 各カテゴリのテンプレートを読み込む
-                for category in TemplateCategory.allCases {
-                    let contentItems = await MainContentViewModel.shared.getTemplateItems(for: category)
-                    
-                    // ContentItem<TemplateCategory>からTemplateItemに変換
-                    let templateItems = contentItems.map { contentItem in
-                        return TemplateItem(
-                            id: contentItem.id,
-                            title: contentItem.title,
-                            description: contentItem.description,
-                            imageUrl: contentItem.imageUrl,
-                            category: contentItem.category,
-                            popularity: contentItem.popularity,
-                            createdAt: contentItem.createdAt
-                        )
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.templatesByCategory[category] = templateItems
-                    }
+        do {
+            // 全カテゴリのテンプレートを取得
+            for category in TemplateCategory.allCases {
+                let templates = try await repository.getTemplates(category: category, page: 1, limit: 10)
+                
+                // 取得したテンプレートをカテゴリごとに保存
+                let templateItems = templates.map { TemplateItem(from: $0) }
+                templatesByCategory[category] = templateItems
+                
+                // 次のページがあるかどうかの判定
+                if templates.count == 10 {
+                    categoriesWithMoreTemplates.insert(category)
                 }
                 
-                DispatchQueue.main.async {
-                    self.isLoading = false
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self.error = error
-                    self.isLoading = false
-                }
+                // すべてのテンプレートにも追加
+                allTemplates.append(contentsOf: templateItems)
             }
+            
+            isLoading = false
+        } catch {
+            self.error = error
+            isLoading = false
         }
     }
     
-    // 特定のカテゴリのテンプレートを取得
-    func loadTemplates(for category: TemplateCategory) -> [TemplateItem] {
+    /// カテゴリごとに追加のテンプレートを読み込む
+    @MainActor
+    func loadMoreTemplates(for category: TemplateCategory, page: Int) async {
+        guard !isLoading else { return }
+        isLoading = true
+        
+        do {
+            let templates = try await repository.getTemplates(category: category, page: page, limit: 10)
+            let templateItems = templates.map { TemplateItem(from: $0) }
+            
+            // 既存のテンプレートに追加
+            var currentTemplates = templatesByCategory[category] ?? []
+            currentTemplates.append(contentsOf: templateItems)
+            templatesByCategory[category] = currentTemplates
+            
+            // 次のページがあるかどうかの判定
+            if templates.count < 10 {
+                categoriesWithMoreTemplates.remove(category)
+            } else {
+                categoriesWithMoreTemplates.insert(category)
+            }
+            
+            isLoading = false
+        } catch {
+            self.error = error
+            isLoading = false
+        }
+    }
+    
+    /// 特定のカテゴリに表示するテンプレートを取得
+    func getTemplates(for category: TemplateCategory) -> [TemplateItem] {
         return templatesByCategory[category] ?? []
     }
     
-    // 特定のテンプレートを取得
-    func getTemplate(with id: UUID) -> TemplateItem? {
-        for (_, templates) in templatesByCategory {
-            if let template = templates.first(where: { $0.id == id }) {
-                return template
-            }
+    /// 特定のIDのテンプレートを取得
+    func getTemplate(by id: UUID) -> TemplateItem? {
+        return allTemplates.first { $0.id == id }
+    }
+    
+    /// 特定のカテゴリに表示するテンプレートをお気に入り数順に並べ替える
+    func getSortedTemplates(for category: TemplateCategory, by sortOrder: TemplateSortOrder) -> [TemplateItem] {
+        let templates = templatesByCategory[category] ?? []
+        
+        switch sortOrder {
+        case .popularity:
+            return templates.sorted(by: { $0.popularity > $1.popularity })
+        case .newest:
+            return templates.sorted(by: { $0.createdAt > $1.createdAt })
         }
-        return nil
+    }
+    
+    /// 特定のカテゴリに続きのテンプレートがあるかどうか
+    func hasMoreTemplates(for category: TemplateCategory) -> Bool {
+        return categoriesWithMoreTemplates.contains(category)
     }
 }
 
-// カテゴリ別テンプレート一覧用ビューモデル
-class TemplateCategoryViewModel: ObservableObject {
-    @Published var templates: [TemplateItem] = []
-    @Published var isLoading = false
-    @Published var error: Error?
-    
-    private let category: TemplateCategory
-    
-    init(category: TemplateCategory) {
-        self.category = category
-        loadTemplates()
-    }
-    
-    // テンプレートを読み込む
-    func loadTemplates() {
-        isLoading = true
-        
-        Task {
-            do {
-                // MainContentViewModelからデータを取得
-                let contentItems = await MainContentViewModel.shared.getTemplateItems(for: category)
-                
-                // ContentItem<TemplateCategory>からTemplateItemに変換
-                let templateItems = contentItems.map { contentItem in
-                    return TemplateItem(
-                        id: contentItem.id,
-                        title: contentItem.title,
-                        description: contentItem.description,
-                        imageUrl: contentItem.imageUrl,
-                        category: contentItem.category,
-                        popularity: contentItem.popularity,
-                        createdAt: contentItem.createdAt
-                    )
-                }
-                
-                DispatchQueue.main.async {
-                    self.templates = templateItems
-                    self.isLoading = false
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self.error = error
-                    self.isLoading = false
-                }
-            }
-        }
-    }
-    
-    // ページネーション用のメソッドを追加
-    func loadNextPage() {
-        // 既に読み込み中なら何もしない
-        guard !isLoading else { return }
-        
-        isLoading = true
-        
-        // 実際の実装ではページ番号やオフセットを管理し、次のページのデータを取得する
-        // 今回はサンプル実装として、既存のloadTemplates()を呼び出すだけにする
-        Task {
-            do {
-                // 遅延を入れてロード中の表示を確認できるようにする
-                try await Task.sleep(nanoseconds: 1_000_000_000) // 1秒待機
-                
-                // 今回は単純に同じデータを取得（実際の実装では次のページデータを取得）
-                let contentItems = await MainContentViewModel.shared.getTemplateItems(for: category)
-                
-                // ContentItem<TemplateCategory>からTemplateItemに変換
-                let newTemplateItems = contentItems.map { contentItem in
-                    return TemplateItem(
-                        id: UUID(), // 新しいIDを生成して重複を避ける（実際の実装ではAPIから取得したIDを使用）
-                        title: contentItem.title,
-                        description: contentItem.description,
-                        imageUrl: contentItem.imageUrl,
-                        category: contentItem.category,
-                        popularity: contentItem.popularity,
-                        createdAt: contentItem.createdAt
-                    )
-                }
-                
-                DispatchQueue.main.async {
-                    // 既存のテンプレートに新しいテンプレートを追加
-                    self.templates.append(contentsOf: newTemplateItems)
-                    self.isLoading = false
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self.error = error
-                    self.isLoading = false
-                }
-            }
-        }
-    }
-    
-    // 特定のテンプレートを検索
-    func getTemplate(with id: UUID) -> TemplateItem? {
-        return templates.first(where: { $0.id == id })
-    }
-}
-
-// テンプレート詳細用ビューモデル
+/// テンプレート詳細画面用ViewModel
 class TemplateDetailViewModel: ObservableObject {
     @Published var template: TemplateItem?
     @Published var isLoading = false
     @Published var error: Error?
-    @Published var relatedTemplates: [TemplateItem] = []
     
-    // テンプレート詳細を読み込む
+    private let repository: TemplateRepositoryProtocol
+    
+    init(repository: TemplateRepositoryProtocol = TemplateRepository()) {
+        self.repository = repository
+    }
+    
+    /// テンプレート詳細の読み込み
+    @MainActor
     func loadTemplate(id: UUID) {
         isLoading = true
+        error = nil
         
-        // MainContentViewModelから該当するテンプレートを検索
         Task {
             do {
-                // すべてのカテゴリから該当するテンプレートを検索
-                for category in TemplateCategory.allCases {
-                    let contentItems = await MainContentViewModel.shared.getTemplateItems(for: category)
-                    if let contentItem = contentItems.first(where: { $0.id == id }) {
-                        let templateItem = TemplateItem(
-                            id: contentItem.id,
-                            title: contentItem.title,
-                            description: contentItem.description,
-                            imageUrl: contentItem.imageUrl,
-                            category: contentItem.category,
-                            popularity: contentItem.popularity,
-                            createdAt: contentItem.createdAt
-                        )
-                        
-                        DispatchQueue.main.async {
-                            self.template = templateItem
-                            self.loadRelatedTemplates(category: templateItem.category)
-                            self.isLoading = false
-                        }
-                        return
-                    }
-                }
-                
-                // テンプレートが見つからなかった場合
-                DispatchQueue.main.async {
-                    self.error = NSError(domain: "TemplateDetailViewModel", code: 404, userInfo: [NSLocalizedDescriptionKey: "テンプレートが見つかりませんでした"])
-                    self.isLoading = false
-                }
+                let templateBase = try await repository.getTemplateDetails(id: id)
+                self.template = TemplateItem(from: templateBase)
+                self.isLoading = false
             } catch {
-                DispatchQueue.main.async {
-                    self.error = error
-                    self.isLoading = false
-                }
+                self.error = error
+                self.isLoading = false
             }
         }
     }
+}
+
+/// テンプレートの並べ替え順
+enum TemplateSortOrder {
+    case popularity
+    case newest
+}
+
+// MARK: - レポジトリプロトコル
+protocol TemplateRepositoryProtocol {
+    func getTemplates(category: TemplateCategory, page: Int, limit: Int) async throws -> [TemplateBase]
+    func getTemplateDetails(id: UUID) async throws -> TemplateBase
+}
+
+// MARK: - 実装クラス
+class TemplateRepository: TemplateRepositoryProtocol {
+    // 本番ではAPIを呼び出す
+    func getTemplates(category: TemplateCategory, page: Int, limit: Int) async throws -> [TemplateBase] {
+        // ダミーデータを返す
+        return createDummyTemplates(for: category, count: limit)
+    }
     
-    // 関連テンプレートを読み込む
-    private func loadRelatedTemplates(category: TemplateCategory) {
-        Task {
-            let contentItems = await MainContentViewModel.shared.getTemplateItems(for: category)
+    func getTemplateDetails(id: UUID) async throws -> TemplateBase {
+        // ダミーデータを返す
+        return TemplateBase(
+            id: id,
+            title: "テンプレート詳細",
+            description: "詳細な説明文がここに表示されます。",
+            imageUrl: "https://picsum.photos/seed/\(id.uuidString)/400/600",
+            category: .popular,
+            popularity: Int.random(in: 50...500),
+            createdAt: Date().addingTimeInterval(-Double.random(in: 0...86400*30))
+        )
+    }
+    
+    // カテゴリごとのダミーデータ生成
+    private func createDummyTemplates(for category: TemplateCategory, count: Int) -> [TemplateBase] {
+        return (0..<count).map { index in
+            let id = UUID()
+            let title: String
             
-            // 同じカテゴリの他のテンプレートを最大4つまで取得
-            let relatedContentItems = contentItems
-                .filter { $0.id != template?.id }
-                .prefix(4)
-            
-            // ContentItem<TemplateCategory>からTemplateItemに変換
-            let relatedTemplateItems = relatedContentItems.map { contentItem in
-                return TemplateItem(
-                    id: contentItem.id,
-                    title: contentItem.title,
-                    description: contentItem.description,
-                    imageUrl: contentItem.imageUrl,
-                    category: contentItem.category,
-                    popularity: contentItem.popularity,
-                    createdAt: contentItem.createdAt
-                )
+            switch category {
+            case .popular:
+                title = "人気テンプレート \(index + 1)"
+            case .new:
+                title = "新着テンプレート \(index + 1)"
+            case .recommended:
+                title = "おすすめテンプレート \(index + 1)"
+            case .seasonal:
+                title = "季節のテンプレート \(index + 1)"
+            case .simple:
+                title = "シンプルテンプレート \(index + 1)"
+            case .minimal:
+                title = "ミニマルテンプレート \(index + 1)"
+            case .stylish:
+                title = "スタイリッシュテンプレート \(index + 1)"
             }
             
-            DispatchQueue.main.async {
-                self.relatedTemplates = relatedTemplateItems
-            }
+            return TemplateBase(
+                id: id,
+                title: title,
+                description: "テンプレートの説明文がここに表示されます。カテゴリ: \(category.displayName)",
+                imageUrl: "https://picsum.photos/seed/\(id.uuidString)/400/600",
+                category: category,
+                popularity: Int.random(in: 50...500),
+                createdAt: Date().addingTimeInterval(-Double.random(in: 0...86400*30))
+            )
         }
     }
 } 

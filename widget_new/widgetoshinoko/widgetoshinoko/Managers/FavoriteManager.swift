@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 import GaudiyWidgetShared
+// Modelsディレクトリの共通モデルをインポート
 
 // お気に入りアイテムのプロトコル
 protocol FavoriteItem: Identifiable, Codable {
@@ -164,52 +165,5 @@ class FavoriteManager: ObservableObject {
     // コンテンツタイプでフィルタリングされたダウンロード履歴を取得
     func getDownloadHistory(contentType: GaudiyContentType) -> [DownloadHistoryItem] {
         return downloadHistory.filter { $0.contentType == contentType }
-    }
-}
-
-// ダウンロード履歴アイテム
-struct DownloadHistoryItem: Identifiable, Codable {
-    let id: UUID
-    let itemId: UUID
-    let title: String
-    let imageUrl: String
-    let contentType: GaudiyContentType
-    let downloadDate: Date
-    
-    init(itemId: UUID, title: String, imageUrl: String, contentType: GaudiyContentType) {
-        self.id = UUID() // 履歴項目自体のID
-        self.itemId = itemId // コンテンツアイテムのID
-        self.title = title
-        self.imageUrl = imageUrl
-        self.contentType = contentType
-        self.downloadDate = Date()
-    }
-    
-    // Codable対応のためのCodingKeys
-    enum CodingKeys: String, CodingKey {
-        case id, itemId, title, imageUrl, contentType, downloadDate
-    }
-    
-    // カスタムエンコーディング
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(itemId, forKey: .itemId)
-        try container.encode(title, forKey: .title)
-        try container.encode(imageUrl, forKey: .imageUrl)
-        try container.encode(contentType.rawValue, forKey: .contentType)
-        try container.encode(downloadDate, forKey: .downloadDate)
-    }
-    
-    // カスタムデコーディング
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(UUID.self, forKey: .id)
-        itemId = try container.decode(UUID.self, forKey: .itemId)
-        title = try container.decode(String.self, forKey: .title)
-        imageUrl = try container.decode(String.self, forKey: .imageUrl)
-        let contentTypeRawValue = try container.decode(String.self, forKey: .contentType)
-        contentType = GaudiyContentType(rawValue: contentTypeRawValue) ?? .widget // デフォルト値を設定
-        downloadDate = try container.decode(Date.self, forKey: .downloadDate)
     }
 } 

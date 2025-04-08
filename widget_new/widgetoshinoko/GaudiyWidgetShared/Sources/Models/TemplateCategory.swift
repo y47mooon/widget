@@ -28,6 +28,10 @@ public enum TemplateCategory: String, CaseIterable, Codable, CategoryType {
         case .stylish: return "スタイリッシュ"
         }
     }
+    
+    public var localizedTitle: String {
+        return self.rawValue
+    }
 }
 
 /// テンプレートアイテムの基本情報

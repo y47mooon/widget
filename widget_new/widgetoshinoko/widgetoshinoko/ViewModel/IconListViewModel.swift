@@ -1,5 +1,7 @@
 import SwiftUI      // ObservableObjectのために必要
 import Combine      // @Publishedのために必要
+import Foundation
+import GaudiyWidgetShared
 
 @MainActor
 protocol IconListViewModelProtocol: ObservableObject {
@@ -11,6 +13,7 @@ protocol IconListViewModelProtocol: ObservableObject {
     func loadInitialItems() async
 }
 
+/// アイコンリスト画面用のViewModel
 @MainActor
 class IconListViewModel: IconListViewModelProtocol {
     @Published private(set) var items: [IconSet] = []
@@ -19,11 +22,13 @@ class IconListViewModel: IconListViewModelProtocol {
     
     private let category: IconCategory
     private var currentPage = 0
+    private let itemsPerPage = 10
     
     init(category: IconCategory) {
         self.category = category
     }
     
+    /// 追加のアイテムを読み込む
     func loadMoreItems() async {
         guard !isLoading, hasMoreItems else { return }
         
@@ -34,8 +39,8 @@ class IconListViewModel: IconListViewModelProtocol {
             try await Task.sleep(nanoseconds: 1_000_000_000)
             
             // データ生成（すでにMainActorコンテキストにいるので直接呼び出せる）
-            let newItems = (0..<10).map { index in
-                createDummyIconSet(index: currentPage * 10 + index)
+            let newItems = (0..<itemsPerPage).map { index in
+                createDummyIconSet(index: currentPage * itemsPerPage + index)
             }
             
             // UI更新（すでにMainActorコンテキストにいるので直接更新できる）
@@ -51,23 +56,48 @@ class IconListViewModel: IconListViewModelProtocol {
         isLoading = false
     }
     
+    /// 初期アイテムを読み込む
     func loadInitialItems() async {
         currentPage = 0
         items = []
+        hasMoreItems = true
         await loadMoreItems()
     }
     
+    /// ダミーのアイコンセットを作成
     private func createDummyIconSet(index: Int) -> IconSet {
         let categoryValue = self.category // 明示的に参照
+        let id = UUID()
+        
+        // アイコンを生成
+        let icons = (0..<4).map { iconIndex in 
+            IconSet.Icon(
+                id: UUID(), 
+                imageUrl: "https://picsum.photos/seed/icon\(index)_\(iconIndex)/200", 
+                targetAppBundleId: getRandomAppBundleId()
+            )
+        }
+        
         return IconSet(
-            id: UUID(),
-            title: "\(categoryValue.rawValue) セット \(index + 1)",
-            icons: (0..<4).map { _ in 
-                IconSet.Icon(id: UUID(), imageUrl: "placeholder", targetAppBundleId: nil)
-            },
+            id: id,
+            title: "\(categoryValue.displayName) セット \(index + 1)",
+            icons: icons,
             category: categoryValue,
-            popularity: 100,
-            createdAt: Date()
+            createdAt: Date().addingTimeInterval(-Double.random(in: 0...86400*30)),
+            popularity: Int.random(in: 50...500),
+            previewUrl: "https://picsum.photos/seed/icon\(index)/400"
         )
+    }
+    
+    /// ランダムなアプリのバンドルIDを取得（デモ用）
+    private func getRandomAppBundleId() -> String? {
+        let bundleIds = [
+            "com.apple.MobileSMS",
+            "com.apple.mobilephone",
+            "com.apple.mobilesafari",
+            "com.apple.camera",
+            nil
+        ]
+        return bundleIds.randomElement() ?? nil
     }
 }

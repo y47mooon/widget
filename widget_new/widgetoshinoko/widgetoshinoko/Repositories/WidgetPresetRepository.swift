@@ -46,7 +46,7 @@ class FirebaseWidgetPresetRepository: WidgetPresetRepositoryProtocol {
         
         // IDを取得または生成
         let idString = data["id"] as? String ?? document.documentID
-        guard let id = UUID(uuidString: idString) ?? nil else {
+        guard let id = UUID(uuidString: idString) else {
             return nil
         }
         

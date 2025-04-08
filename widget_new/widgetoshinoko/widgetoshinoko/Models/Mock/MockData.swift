@@ -46,7 +46,8 @@ struct MockData {
             description: "シンプルで使いやすいテンプレート",
             imageUrl: "",
             category: GaudiyWidgetShared.TemplateCategory.simple,
-            popularity: 850
+            popularity: 850,
+            createdAt: Date().addingTimeInterval(-86400) // 1日前
         ),
         TemplateItem(
             id: UUID(),
@@ -54,7 +55,8 @@ struct MockData {
             description: "鮮やかな色使いのテンプレート",
             imageUrl: "",
             category: GaudiyWidgetShared.TemplateCategory.stylish,
-            popularity: 720
+            popularity: 720,
+            createdAt: Date().addingTimeInterval(-43200) // 12時間前
         )
     ]
 }
