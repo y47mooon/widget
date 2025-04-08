@@ -2,7 +2,9 @@ import Foundation
 import SwiftUI
 import GaudiyWidgetShared
 
-struct WidgetPresetListView: View {
+/// カレンダーウィジェットのリストを表示するビュー
+/// - Note: 実際には任意のウィジェットテンプレートタイプに対応するプリセットを表示できます
+struct CalendarWidgetListView: View {
     let templateType: WidgetTemplateType
     @State private var selectedSize: WidgetSize = .small
     @StateObject private var viewModel = WidgetPresetViewModel()
@@ -43,8 +45,26 @@ struct WidgetPresetListView: View {
     }
 }
 
+/// 任意のウィジェットタイプのプリセットリストを表示するための汎用ビュー
+/// このビューは後でCalendarWidgetListViewを置き換える可能性があります
+struct WidgetPresetListView: View {
+    let templateType: WidgetTemplateType
+    @State private var selectedSize: WidgetSize = .small
+    @StateObject private var viewModel = WidgetPresetViewModel()
+    
+    var body: some View {
+        CalendarWidgetListView(templateType: templateType)
+    }
+}
+
 #Preview {
     NavigationView {
-        WidgetPresetListView(templateType: .analogClock)
+        CalendarWidgetListView(templateType: .calendar)
+    }
+}
+
+#Preview("アナログ時計") {
+    NavigationView {
+        CalendarWidgetListView(templateType: .analogClock)
     }
 }

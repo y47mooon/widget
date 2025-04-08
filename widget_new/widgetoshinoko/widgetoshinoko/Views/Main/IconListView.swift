@@ -30,7 +30,7 @@ struct IconListView: View {
                 ForEach(viewModel.items) { iconSet in
                     IconSetView(
                         iconSet: iconSet,
-                        isLargeStyle: category == .new,
+                        isLargeStyle: category == .newItems,
                         isInList: true
                     )
                     .frame(width: itemWidth, height: itemWidth) // 正方形で表示
@@ -44,7 +44,7 @@ struct IconListView: View {
                     .padding()
             }
         }
-        .navigationTitle(category.rawValue)
+        .navigationTitle(category.displayName)
         .task {
             await viewModel.loadInitialItems()
         }

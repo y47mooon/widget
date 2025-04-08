@@ -44,6 +44,13 @@ public struct TemplateBase: Identifiable, Codable {
     public let popularity: Int
     public let createdAt: Date
     
+    // 追加プロパティ
+    public let images: [String]?
+    public let widgets: [String]?  // WidgetPresetが共有されていない場合はStringで代用
+    public let icons: [String]?    // IconSetが共有されていない場合はStringで代用
+    public let hasMovingWallpaper: Bool
+    public let hasIcons: Bool
+    
     public init(
         id: UUID = UUID(),
         title: String,
@@ -51,7 +58,12 @@ public struct TemplateBase: Identifiable, Codable {
         imageUrl: String,
         category: TemplateCategory = .popular,
         popularity: Int = 0,
-        createdAt: Date = Date()
+        createdAt: Date = Date(),
+        images: [String]? = nil,
+        widgets: [String]? = nil,
+        icons: [String]? = nil,
+        hasMovingWallpaper: Bool = false,
+        hasIcons: Bool = false
     ) {
         self.id = id
         self.title = title
@@ -60,5 +72,10 @@ public struct TemplateBase: Identifiable, Codable {
         self.category = category
         self.popularity = popularity
         self.createdAt = createdAt
+        self.images = images
+        self.widgets = widgets
+        self.icons = icons
+        self.hasMovingWallpaper = hasMovingWallpaper
+        self.hasIcons = hasIcons
     }
 } 

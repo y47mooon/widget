@@ -1,39 +1,24 @@
 import Foundation
 import GaudiyWidgetShared
 
-// 共通のカテゴリープロトコル
-public protocol CategoryType {
-    var rawValue: String { get }
-    static var allCases: [Self] { get }
-    var displayName: String { get }
-}
-
-// GaudiyContentTypeの定義を削除（別ファイルに移動済み）
+// CategoryTypeプロトコルは共有モジュールから使用
+public typealias CategoryType = GaudiyWidgetShared.CategoryType
 
 // ウィジェット用カテゴリー
 public typealias WidgetCategory = GaudiyWidgetShared.WidgetCategory
 
-// テンプレート用カテゴリー
-// GaudiyWidgetSharedで定義済みの型を使用するためコメントアウト
-//enum TemplateCategory: String, CaseIterable, CategoryType {
-//    case popular = "template_popular"
-//    case new = "template_new"
-//    case recommended = "template_recommended"
-//    case seasonal = "template_seasonal"
-//    case simple = "template_simple"
-//    case minimal = "template_minimal"
-//    case stylish = "template_stylish"
-//    
-//    var displayName: String {
-//        return self.rawValue.localized
-//    }
-//}
-
-// GaudiyWidgetSharedからTemplateCategory型を使用
+// テンプレート用カテゴリーは共有モジュールから使用
 public typealias TemplateCategory = GaudiyWidgetShared.TemplateCategory
 
-// GaudiyWidgetSharedパッケージのTemplateCategoryをCategoryTypeに明示的に準拠させる
-extension GaudiyWidgetShared.TemplateCategory: CategoryType {}
+// GaudiyWidgetSharedからWidgetTemplateType型を使用
+public typealias WidgetTemplateType = GaudiyWidgetShared.WidgetTemplateType
+
+// WidgetTemplateTypeをCategoryTypeプロトコルに準拠させる
+extension WidgetTemplateType: CategoryType {
+    public static var allCases: [WidgetTemplateType] {
+        return WidgetTemplateType.allCases
+    }
+}
 
 // 壁紙用カテゴリー
 enum WallpaperCategory: String, CaseIterable, CategoryType {
@@ -76,20 +61,6 @@ enum MovingWallpaperCategory: String, CaseIterable, CategoryType {
     }
 }
 
-// アイコン用カテゴリー
-enum IconCategory: String, CaseIterable, CategoryType {
-    case popular = "icon_popular"
-    case new = "icon_new"
-    case cute = "icon_cute"
-    case cool = "icon_cool"
-    case white = "icon_white"
-    case dark = "icon_dark"
-    
-    var displayName: String {
-        return self.rawValue.localized
-    }
-}
-
 // 作成タイプの定義
 enum WidgetCreationType: String, CaseIterable, CategoryType {
     case widget = "category_widget"
@@ -115,32 +86,108 @@ enum WidgetCreationType: String, CaseIterable, CategoryType {
     }
 }
 
-// WidgetTemplateTypeの追加（既存のものがない場合）
-public enum WidgetTemplateType: String, Codable, CaseIterable {
-    case analogClock = "analog_clock"
-    case digitalClock = "digital_clock"
-    case weather = "weather"
-    case calendar = "calendar"
-    case photo = "photo"
-    
-    public var displayName: String {
-        switch self {
-        case .analogClock: return "アナログ時計"
-        case .digitalClock: return "デジタル時計"
-        case .weather: return "天気"
-        case .calendar: return "カレンダー"
-        case .photo: return "写真"
-        }
-    }
-    
-    // WidgetTypeとの変換（必要に応じて）
-    public var widgetType: WidgetType {
+// WidgetTemplateTypeとWidgetTypeの変換ヘルパー
+extension WidgetTemplateType {
+    public var widgetType: WidgetType? {
         switch self {
         case .analogClock: return .analogClock
         case .digitalClock: return .digitalClock
         case .weather: return .weather
         case .calendar: return .calendar
         case .photo: return .photo
+        case .clock: return nil // clock is a category, not a specific type
+        }
+    }
+}
+
+// Contentの種類を表す列挙型
+public enum ContentCategory: String, Codable, CaseIterable, Identifiable {
+    case popular = "popular"
+    case icon = "icon"
+    case widget = "widget"
+    case template = "template"
+    
+    public var id: String { self.rawValue }
+    
+    public var displayName: String {
+        switch self {
+        case .popular: return "content_popular".localized
+        case .icon: return "content_icon".localized
+        case .widget: return "content_widget".localized
+        case .template: return "content_template".localized
+        }
+    }
+    
+    // システムアイコン名
+    public var iconName: String {
+        switch self {
+        case .popular: return "star.fill"
+        case .icon: return "app.fill"
+        case .widget: return "square.grid.2x2.fill"
+        case .template: return "doc.fill"
+        }
+    }
+}
+
+// アイコンカテゴリ - CategoryTypeプロトコルに準拠
+public enum IconCategory: String, Codable, CaseIterable, CategoryType {
+    case popular = "popular"
+    case newItems = "new_items"
+    case social = "social"
+    case utility = "utility"
+    case game = "game"
+    case finance = "finance"
+    case lifestyle = "lifestyle"
+    case entertainment = "entertainment"
+    case health = "health"
+    case education = "education"
+    case other = "other"
+    
+    public var displayName: String {
+        switch self {
+        case .popular: return "icon_popular".localized
+        case .newItems: return "icon_new".localized
+        case .social: return "icon_social".localized
+        case .utility: return "icon_utility".localized
+        case .game: return "icon_game".localized
+        case .finance: return "icon_finance".localized
+        case .lifestyle: return "icon_lifestyle".localized
+        case .entertainment: return "icon_entertainment".localized
+        case .health: return "icon_health".localized
+        case .education: return "icon_education".localized
+        case .other: return "icon_other".localized
+        }
+    }
+}
+
+// ダウンロードアクションタイプ
+public enum DownloadActionType: String, Codable, CaseIterable {
+    case icon = "icon"
+    case widget = "widget"
+    case template = "template"
+    case lockScreen = "lock_screen"
+    case liveWallpaper = "live_wallpaper"
+    case cancel = "cancel"
+    
+    public var displayName: String {
+        switch self {
+        case .icon: return "action_icon".localized
+        case .widget: return "action_widget".localized
+        case .template: return "action_template".localized
+        case .lockScreen: return "action_lock_screen".localized
+        case .liveWallpaper: return "action_live_wallpaper".localized
+        case .cancel: return "action_cancel".localized
+        }
+    }
+    
+    public var iconName: String {
+        switch self {
+        case .icon: return "app.badge"
+        case .widget: return "square.grid.2x2"
+        case .template: return "doc.text"
+        case .lockScreen: return "lock"
+        case .liveWallpaper: return "photo.fill"
+        case .cancel: return "xmark"
         }
     }
 }

@@ -59,32 +59,32 @@ struct WidgetItemView: View {
         }
         .sheet(isPresented: $showPreview) {
             NavigationView {
-                // WidgetItemからWidgetPresetを作成
-                let widgetType: WidgetType = {
-                    if item.category.contains("Clock") {
-                        return item.title.contains("アナログ") ? .analogClock : .digitalClock
-                    } else if item.category.contains("Weather") {
-                        return .weather
-                    } else {
-                        return .calendar
-                    }
-                }()
+            // WidgetItemからWidgetPresetを作成
+            let widgetType: WidgetType = {
+                if item.category.contains("Clock") {
+                    return item.title.contains("アナログ") ? .analogClock : .digitalClock
+                } else if item.category.contains("Weather") {
+                    return .weather
+                } else {
+                    return .calendar
+                }
+            }()
 
-                let preset = WidgetPreset(
-                    id: item.id,
-                    title: item.title,
+            let preset = WidgetPreset(
+                id: item.id,
+                title: item.title,
                     description: item.description ?? "",
-                    type: widgetType,
-                    size: size,
-                    style: "default",
-                    imageUrl: item.imageUrl,
-                    backgroundColor: nil,
-                    requiresPurchase: item.requiresPurchase,
-                    isPurchased: item.isPurchased,
-                    configuration: [:]
-                )
-                
-                // 課金が必要なアイテムの場合
+                type: widgetType,
+                size: size,
+                style: "default",
+                imageUrl: item.imageUrl,
+                backgroundColor: nil,
+                requiresPurchase: item.requiresPurchase,
+                isPurchased: item.isPurchased,
+                configuration: [:]
+            )
+            
+            // 課金が必要なアイテムの場合
                 if item.requiresPurchase && !item.isPurchased {
                     // 未購入の有料アイテム
                     WidgetPresetPreviewView(preset: preset)
@@ -107,7 +107,7 @@ struct WidgetItemView: View {
                                     .cornerRadius(8)
                             }
                         )
-                } else {
+            } else {
                     // 無料または購入済みアイテム
                     WidgetPresetPreviewView(
                         preset: preset,
@@ -116,7 +116,7 @@ struct WidgetItemView: View {
                             hasCompletedSetup = true
                         }
                     )
-                }
+            }
             }
         }
         .alert(isPresented: $hasCompletedSetup) {

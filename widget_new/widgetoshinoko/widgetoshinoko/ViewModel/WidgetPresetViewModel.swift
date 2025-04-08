@@ -15,7 +15,7 @@ class WidgetPresetViewModel: ObservableObject {
     private let repository: WidgetPresetRepositoryProtocol
     
     init(
-        repository: WidgetPresetRepositoryProtocol = MockWidgetPresetRepository(),
+        repository: WidgetPresetRepositoryProtocol = FirebaseWidgetPresetRepository(),
         presetService: WidgetPresetService = .shared
     ) {
         self.repository = repository
@@ -60,7 +60,11 @@ class WidgetPresetViewModel: ObservableObject {
         filteredPresets = presets.filter { $0.size == size }
     }
 
+    // ウィジェットの基本タイプによるロード
     func loadPresets(type: WidgetType) async {
+        isLoading = true
+        error = nil
+        
         do {
             let loadedPresets = try await repository.loadPresets()
             await MainActor.run {
@@ -73,6 +77,28 @@ class WidgetPresetViewModel: ObservableObject {
                 self.error = .fetchFailed(error)
             }
         }
+        
+        isLoading = false
+    }
+
+    // テンプレートタイプによるロード（統合版）
+    @MainActor
+    func loadPresets(templateType: WidgetTemplateType, size: WidgetSize? = nil) async {
+        isLoading = true
+        error = nil
+        
+        do {
+            if let size = size {
+                presets = try await repository.fetchPresetsBySize(templateType: templateType, size: size)
+            } else {
+                presets = try await repository.fetchPresets(templateType: templateType)
+            }
+        } catch {
+            // Error型をWidgetError型に変換
+            self.error = .fetchFailed(error)
+        }
+        
+        isLoading = false
     }
 
     func getPresets(for category: WidgetCategory, size: WidgetSize? = nil) -> [WidgetPreset] {
@@ -222,20 +248,6 @@ class WidgetPresetViewModel: ObservableObject {
         return homeScreenPresets
     }
     
-    // ここから修正が必要なメソッド
-    func loadPresets(templateType: WidgetTemplateType, size: WidgetSize) async {
-        let type: WidgetType
-        switch templateType {
-        case .analogClock: type = .analogClock
-        case .digitalClock: type = .digitalClock
-        case .weather: type = .weather
-        case .calendar: type = .calendar
-        case .photo: type = .photo
-        }
-        allPresets = presetService.getPresets(type: type, size: size)
-        filterBySize(size)
-    }
-    
     func saveWidget(_ widget: WidgetPreset) async throws {
         isLoading = true
         
@@ -268,7 +280,7 @@ class WidgetPresetViewModel: ObservableObject {
 }
 
 // モック用のリポジトリ（開発用）
-class MockWidgetPresetRepository: WidgetPresetRepositoryProtocol {
+class ViewModelMockWidgetPresetRepository: WidgetPresetRepositoryProtocol {
     func loadPresets() async throws -> [WidgetPreset] {
         // 実装
         var allPresets: [WidgetPreset] = []
@@ -291,115 +303,38 @@ class MockWidgetPresetRepository: WidgetPresetRepositoryProtocol {
     // 既存のメソッド
     private func getMockPresets(templateType: WidgetTemplateType, size: WidgetSize? = nil) -> [WidgetPreset] {
         var presets: [WidgetPreset] = []
+        let sizes = size != nil ? [size!] : WidgetSize.allCases
         
-        switch templateType {
-        case .analogClock, .digitalClock:
-            // 時計のモックデータ
-            let sizes = size != nil ? [size!] : WidgetSize.allCases
-            
-            for s in sizes {
-                // シンプル時計プリセット
-                presets.append(
-                    WidgetPreset(
-                        id: UUID(),
-                        title: "シンプル\(templateType == .analogClock ? "アナログ" : "デジタル")時計",
-                        description: "シンプルなデザインの時計ウィジェット",
-                        type: templateType == .analogClock ? .analogClock : .digitalClock,
-                        size: s,
-                        style: "simple",
-                        imageUrl: "clock_simple",
-                        backgroundColor: "#FFFFFF",
-                        requiresPurchase: false,
-                        isPurchased: false,
-                        configuration: [
-                            "textColor": "#000000",
-                            "fontSize": 24.0,
-                            "showSeconds": true
-                        ]
-                    )
-                )
+        // テンプレートタイプに対応するウィジェットタイプを取得
+        let widgetTypes = WidgetType.getTypes(for: templateType)
+        
+        for s in sizes {
+            for widgetType in widgetTypes {
+                // テンプレートタイプとウィジェットタイプに基づいた設定
+                let isDigitalClock = widgetType == .digitalClock
+                let isDark = isDigitalClock || arc4random_uniform(2) == 1 // デジタル時計は常にダーク、他はランダム
+                let style = isDark ? "dark" : "simple"
+                let backgroundColor = isDark ? "#000000" : "#FFFFFF"
+                let textColor = isDark ? "#FFFFFF" : "#000000"
+                let title = "\(isDark ? "ダーク" : "シンプル")\(widgetType.displayName)"
                 
-                // ダーク時計プリセット
                 presets.append(
                     WidgetPreset(
                         id: UUID(),
-                        title: "ダーク\(templateType == .analogClock ? "アナログ" : "デジタル")時計",
-                        description: "ダークテーマの時計ウィジェット",
-                        type: templateType == .analogClock ? .analogClock : .digitalClock,
+                        title: title,
+                        description: "\(isDark ? "ダークテーマ" : "シンプルなデザイン")の\(widgetType.displayName)ウィジェット",
+                        type: widgetType,
                         size: s,
-                        style: "dark",
-                        imageUrl: "clock_dark",
-                        backgroundColor: "#000000",
-                        requiresPurchase: true,
+                        style: style,
+                        imageUrl: "\(widgetType.rawValue)_\(style)",
+                        backgroundColor: backgroundColor,
+                        requiresPurchase: isDark, // ダークテーマは購入必要
                         isPurchased: false,
                         configuration: [
-                            "textColor": "#FFFFFF",
+                            "textColor": textColor,
                             "fontSize": 24.0,
                             "showSeconds": true
                         ]
-                    )
-                )
-            }
-            
-        case .weather:
-            // 天気のモックデータ
-            let sizes = size != nil ? [size!] : WidgetSize.allCases
-            
-            for s in sizes {
-                presets.append(
-                    WidgetPreset(
-                        id: UUID(),
-                        title: "標準天気ウィジェット",
-                        description: "シンプルな天気表示",
-                        type: .weather,
-                        size: s,
-                        style: "standard",
-                        imageUrl: "weather_standard",
-                        backgroundColor: "#E0F7FF",
-                        requiresPurchase: false,
-                        isPurchased: false,
-                        configuration: [:]
-                    )
-                )
-            }
-            
-        case .calendar:
-            // カレンダーのモックデータ
-            let sizes = size != nil ? [size!] : WidgetSize.allCases
-            
-            for s in sizes {
-                presets.append(
-                    WidgetPreset(
-                        id: UUID(),
-                        title: "月間カレンダー",
-                        description: "シンプルな月間カレンダー",
-                        type: .calendar,
-                        size: s,
-                        style: "monthly",
-                        imageUrl: "calendar_monthly",
-                        backgroundColor: "#FFFFFF",
-                        requiresPurchase: false,
-                        isPurchased: false,
-                        configuration: [:]
-                    )
-                )
-            }
-        case .photo:
-            let sizes = size != nil ? [size!] : WidgetSize.allCases
-            for s in sizes {
-                presets.append(
-                    WidgetPreset(
-                        id: UUID(),
-                        title: "写真ウィジェット",
-                        description: "お気に入りの写真を表示",
-                        type: .photo,
-                        size: s,
-                        style: "standard",
-                        imageUrl: "photo_widget",
-                        backgroundColor: "#FFFFFF",
-                        requiresPurchase: false,
-                        isPurchased: false,
-                        configuration: [:]
                     )
                 )
             }

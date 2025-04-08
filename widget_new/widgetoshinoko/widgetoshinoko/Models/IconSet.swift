@@ -1,12 +1,17 @@
 import Foundation // UUID, Dateのために必要
 import GaudiyWidgetShared
 
+// アイコンカテゴリ、コンテンツアイテム、カテゴリータイププロトコルを参照するために必要
+// ContentTypes.swiftで定義されているIconCategoryを使用する
+import UIKit
+
 /// アイコンセットのモデル
 struct IconSet: Identifiable {
     let id: UUID
     let title: String
     let icons: [Icon]
-    let category: IconCategory
+    // explicit import is not possible in Swift, but we ensure IconCategory conforms to CategoryType
+    let category: IconCategory // from ContentTypes.swift
     let popularity: Int
     let createdAt: Date
     /// プレビュー用URL（サムネイル等に使用）

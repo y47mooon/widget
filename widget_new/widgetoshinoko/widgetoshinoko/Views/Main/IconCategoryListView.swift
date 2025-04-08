@@ -8,16 +8,25 @@ struct IconCategoryListView: View {
             VStack(spacing: 24) {
                 ForEach(IconCategory.allCases, id: \.self) { category in
                     GenericSectionView(
-                        title: category.rawValue,
+                        title: category.displayName,
                         items: viewModel.getIconItems(for: category),
                         destination: IconListView(category: category),
                         itemBuilder: { item, index in
-                            AnyView(
-                                IconSetView(
-                                    iconSet: item as! IconSet,
-                                    isLargeStyle: category == .new
+                            if let iconSet = item as? IconSet {
+                                AnyView(
+                                    IconSetView(
+                                        iconSet: iconSet,
+                                        isLargeStyle: category == .newItems
+                                    )
                                 )
-                            )
+                            } else {
+                                AnyView(
+                                    Text("アイコンデータが無効です")
+                                        .frame(width: 100, height: 100)
+                                        .background(Color.gray.opacity(0.2))
+                                        .cornerRadius(8)
+                                )
+                            }
                         }
                     )
                 }
